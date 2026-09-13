@@ -10,7 +10,7 @@ import { DashboardService, type DashboardSummary } from '@/services/DashboardSer
 import { ApiError } from '@/services/ApiError';
 
 export const metadata: Metadata = {
-   title: 'Dashboard | Onreco Stablecoin Accounting',
+   title: 'Dashboard | Onreco',
    description:
       'Monitor USDT and USDC transactions, reconciliation status, and QuickBooks or Xero sync in one place.',
    robots: {

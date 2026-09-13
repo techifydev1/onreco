@@ -42,14 +42,12 @@ export default function NavBar() {
           >
             Demo
           </Link>
-          <a
-            href="https://myhappr.com/onreco"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/#pricing"
             className="text-xs font-medium tracking-widest uppercase text-on-surface-variant hover:text-primary transition-colors duration-200"
           >
-            Support us
-          </a>
+            Pricing
+          </Link>
         </div>
 
         {/* Right side navigation actions (Blog + CTA) */}

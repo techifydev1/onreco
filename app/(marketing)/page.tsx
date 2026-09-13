@@ -4,6 +4,7 @@ import IntegrationBar from "@/components/landing-page/IntegrationBar";
 import FeatureGrid from "@/components/landing-page/FeatureGrid";
 import HowItWorks from "@/components/landing-page/HowItWorks";
 import TrustSection from "@/components/landing-page/TrustSection";
+import PricingSection from "@/components/landing-page/PricingSection";
 import CTASection from "@/components/landing-page/CTASection";
 import Footer from "@/components/landing-page/Footer";
 
@@ -45,21 +46,7 @@ export default function Home() {
         <FeatureGrid />
         <HowItWorks />
         <TrustSection />
-        <section className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-10 pb-4">
-          <div className="text-center mb-4">
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-on-surface">Support Onreco</h2>
-            <p className="mt-1 text-on-surface-variant">If Onreco has saved you time, consider sending us a smile.</p>
-          </div>
-          <iframe
-            src="https://myhappr.com/embed/onreco"
-            width="100%"
-            height="600"
-            frameBorder="0"
-            scrolling="no"
-            style={{ borderRadius: '12px' }}
-            title="Support Onreco"
-          />
-        </section>
+        <PricingSection />
         <CTASection />
       </main>
       <Footer />

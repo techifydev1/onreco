@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import { ArrowUpRight } from 'lucide-react';
 import StatRow from '@/components/dashboard/integration/StatRow';
 import ConnectedSection from '@/components/dashboard/integration/ConnectedSection';
@@ -7,6 +8,10 @@ import IntegrationStoreInitializer from '@/providers/IntegrationStoreInitializer
 import IntegrationService from '@/services/IntegrationService';
 import { ApiError } from '@/services/ApiError';
 import { Integration } from '@/app/app/_data/integrations';
+
+export const metadata: Metadata = {
+   title: 'Integrations | Onreco',
+};
 
 export default async function Page() {
   let integrations: Integration[] = [];

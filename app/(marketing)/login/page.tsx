@@ -6,6 +6,7 @@ import {
   Users,
 } from 'lucide-react'
 
+import { Suspense } from 'react'
 import NavBar from '@/components/auth/NavBar'
 import Footer from '@/components/landing-page/Footer'
 import Image from 'next/image'
@@ -165,7 +166,9 @@ export default function LoginPage() {
                 ))}
               </ul>
 
-              <LoginForm />
+              <Suspense fallback={null}>
+                <LoginForm />
+              </Suspense>
 
               <p className="mt-8 text-center text-sm leading-5 text-on-surface-variant/60">
                 By signing in, you agree to our{' '}

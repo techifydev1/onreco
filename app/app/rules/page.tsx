@@ -5,7 +5,7 @@ import AccountService from '@/services/AccountService';
 import type { QuickBooksAccount } from '@/services/AccountService';
 
 export const metadata: Metadata = {
-   title: 'Rules · Onreco',
+   title: 'Rules | Onreco',
    description:
       'Automate how Onreco categorizes and routes stablecoin transactions before they sync to QuickBooks.',
    robots: {

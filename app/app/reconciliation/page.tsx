@@ -6,7 +6,7 @@ import { ApiError } from '@/services/ApiError';
 import type { ReconcileResponse } from '../_data/reconciliation';
 
 export const metadata: Metadata = {
-   title: 'Reconciliation - Onreco',
+   title: 'Reconciliation | Onreco',
 };
 
 export default async function Page() {
