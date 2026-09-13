@@ -1,11 +1,24 @@
 import ApiClient from './ApiClient'
 
+export type PlanName = 'BASIC' | 'STANDARD' | 'PROFESSIONAL'
+
+export const PLAN_DISPLAY_NAMES: Record<PlanName, string> = {
+  BASIC: 'Basic',
+  STANDARD: 'Standard',
+  PROFESSIONAL: 'Professional',
+}
+
+export function getPlanDisplayName(plan?: PlanName | null): string {
+  return plan ? PLAN_DISPLAY_NAMES[plan] : 'Basic'
+}
+
 export interface UserProfileState {
   email: string
   firstName: string
   lastName: string
   emailVerified: boolean
   id: string
+  plan?: PlanName | null
 }
 
 export default class UserService {

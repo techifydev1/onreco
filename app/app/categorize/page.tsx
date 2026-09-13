@@ -5,7 +5,7 @@ import AccountService from '@/services/AccountService';
 import type { QuickBooksAccount } from '@/services/AccountService';
 
 export const metadata: Metadata = {
-   title: 'Categorize - Onreco',
+   title: 'Categorize | Onreco',
 };
 
 export default async function Page() {

@@ -7,7 +7,7 @@ import { ApiError } from '@/services/ApiError';
 import { Wallet } from '@/app/app/_data/wallets';
 
 export const metadata = {
-   title: 'Wallets · Onreco',
+   title: 'Wallets | Onreco',
    description: 'Connect and monitor wallets across Tron, Solana, Base, and other supported networks.',
 };
 

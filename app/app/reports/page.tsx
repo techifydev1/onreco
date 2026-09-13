@@ -5,7 +5,7 @@ import { ApiError } from '@/services/ApiError';
 import { DEFAULT_REPORTS, ReportTypeDescriptor } from '../_data/reports';
 
 export const metadata: Metadata = {
-   title: 'Reports - Onreco',
+   title: 'Reports | Onreco',
 };
 
 export default async function ReportsPage() {

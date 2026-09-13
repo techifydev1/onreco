@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import FilterHeader from '@/components/dashboard/transaction/FilterHeader';
 import FilterStrip from '@/components/dashboard/transaction/FilterStrip';
 import TransactionBody from '@/components/dashboard/transaction/TransactionBody';
@@ -6,6 +7,10 @@ import TransactionStoreInitializer from '@/providers/TransactionStoreInitializer
 import { TransactionService } from '@/services/TransactionService';
 import { ApiError } from '@/services/ApiError';
 import { Transaction } from '@/app/app/_data/transactions';
+
+export const metadata: Metadata = {
+   title: 'Transactions | Onreco',
+};
 
 export default async function Page() {
    let transactions: Transaction[] = [];

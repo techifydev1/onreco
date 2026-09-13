@@ -4,20 +4,33 @@ import { useToastStore } from '@/providers/toast-provider'
 import { useUserProfileStore } from '@/providers/user-profile-store'
 import { ArrowRight, Lock, Mail } from 'lucide-react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useActionState, useEffect } from 'react'
+
+const SAFE_REDIRECT = (value: string | null): string | null => {
+  if (!value) return null
+  if (!value.startsWith('/') || value.startsWith('//')) return null
+  try {
+    const url = new URL(value, 'http://localhost')
+    if (url.origin !== 'http://localhost') return null
+  } catch {
+    return null
+  }
+  return value
+}
 
 export default function LoginForm() {
   const [state, formAction, isPending] = useActionState(handleLogin, null)
   const { setUserProfile } = useUserProfileStore()
   const { show } = useToastStore()
   const router = useRouter()
+  const redirect = SAFE_REDIRECT(useSearchParams().get('redirect'))
   useEffect(() => {
     if (!state) return
     if (state.ok) {
       setUserProfile(state.data)
       show('Successfully signed up', 'success')
-      router.push('/app')
+      router.push(redirect || '/app')
     } else {
       if (state.fieldErrors) {
         const validations = Object.values(state.fieldErrors)
@@ -26,7 +39,7 @@ export default function LoginForm() {
         show(state.message, 'error')
       }
     }
-  }, [router, setUserProfile, show, state])
+  }, [redirect, router, setUserProfile, show, state])
   return (
     <form className="space-y-6" action={formAction}>
       <div>

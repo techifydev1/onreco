@@ -91,8 +91,13 @@ export async function proxy(request: NextRequest) {
    const isProd = process.env.NODE_ENV === 'production';
    const backendUrl = process.env.BACKEND_URL || 'http://localhost:8080';
 
-   // 1. Authentication Pipeline Forwarder (Direct Proxy)
-   if (path.includes('/auth/login') || path.includes('/auth/register') || path.includes('/auth/logout')) {
+   // 1. Public Pipeline Forwarder (Direct Proxy)
+   if (
+      path.includes('/auth/login') ||
+      path.includes('/auth/register') ||
+      path.includes('/auth/logout') ||
+      path.includes('/api/subscription')
+   ) {
       const backendAuthUrl = `${backendUrl}${path}${url.search}`;
       const requestHeaders = new Headers(request.headers);
 

@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, LogOut, User as UserIcon } from 'lucide-react';
+import { ChevronDown, CreditCard, LogOut, User as UserIcon } from 'lucide-react';
 
 import { useUserProfileStore } from '@/providers/user-profile-store';
 import LogoutDialog from './LogoutDialog';
 import AuthService from '@/services/AuthService';
+import ApiClient from '@/services/ApiClient';
 
 function getInitials(firstName?: string, lastName?: string): string {
    return ((firstName?.[0] ?? '') + (lastName?.[0] ?? '')).toUpperCase() || 'U';
@@ -15,6 +16,7 @@ function getInitials(firstName?: string, lastName?: string): string {
 export default function AccountMenu() {
    const [open, setOpen] = useState(false);
    const [showLogout, setShowLogout] = useState(false);
+   const [openingBilling, setOpeningBilling] = useState(false);
    const ref = useRef<HTMLDivElement>(null);
    const { userProfile } = useUserProfileStore();
 
@@ -47,6 +49,18 @@ export default function AccountMenu() {
       setOpen(false);
       await AuthService.logout();
       window.location.href = '/login';
+   };
+
+   const handleManageBilling = async () => {
+      if (openingBilling) return;
+      setOpeningBilling(true);
+      try {
+         const { data } = await ApiClient.post<{ customerPortalUrl: string }, object>('/payment/portal', {});
+         setOpen(false);
+         window.location.href = data.customerPortalUrl;
+      } catch {
+         setOpeningBilling(false);
+      }
    };
 
    return (
@@ -102,6 +116,15 @@ export default function AccountMenu() {
                            <span className="font-medium">{label}</span>
                         </Link>
                      ))}
+                     <button
+                        type="button"
+                        role="menuitem"
+                        onClick={handleManageBilling}
+                        className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-on-surface hover:bg-surface-container transition-colors"
+                     >
+                        <CreditCard className="w-4 h-4 text-on-surface-variant" strokeWidth={1.75} />
+                        <span className="font-medium">{openingBilling ? 'Opening...' : 'Manage Billing'}</span>
+                     </button>
                   </div>
 
                   {/* Divider + sign out */}

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
-import { HelpCircle, ShieldCheck, User } from 'lucide-react';
+import { CreditCard, HelpCircle, ShieldCheck, User } from 'lucide-react';
 
+import BillingSection from '@/components/dashboard/settings/BillingSection';
 import EmailVerificationSection from '@/components/dashboard/settings/EmailVerificationSection';
 import SupportSection from '@/components/dashboard/settings/SupportSection';
 import UserProfileSection from '@/components/dashboard/settings/UserProfileSection';
@@ -47,42 +48,46 @@ export default function Page() {
                   <span className="font-medium">Email Verification</span>
                 </a>
               </li>
-              <li>
-                <a
-                  href="#support"
-                  className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
-                >
-                  <HelpCircle className="w-4.5 h-4.5" strokeWidth={1.75} />
-                  <span className="font-medium">Support</span>
-                </a>
-              </li>
-              {/* TODO: uncomment when sections are ready
-              <li>
-                <a href="#organization" className="...">
-                  <Building2 ... /> Organization
-                </a>
-              </li>
-              <li>
-                <a href="#team" className="...">
-                  <Users ... /> Team Members
-                </a>
-              </li>
-              <li>
-                <a href="#notifications" className="...">
-                  <Bell ... /> Notifications
-                </a>
-              </li>
-              <li>
-                <a href="#security" className="...">
-                  <ShieldCheck ... /> Security
-                </a>
-              </li>
-              <li>
-                <a href="#billing" className="...">
-                  <CreditCard ... /> Billing
-                </a>
-              </li>
-              */}
+<li>
+                  <a
+                     href="#support"
+                     className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
+                  >
+                     <HelpCircle className="w-4.5 h-4.5" strokeWidth={1.75} />
+                     <span className="font-medium">Support</span>
+                  </a>
+               </li>
+               <li>
+                  <a
+                     href="#billing"
+                     className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
+                  >
+                     <CreditCard className="w-4.5 h-4.5" strokeWidth={1.75} />
+                     <span className="font-medium">Billing</span>
+                  </a>
+               </li>
+               {/* TODO: uncomment when sections are ready
+               <li>
+                 <a href="#organization" className="...">
+                   <Building2 ... /> Organization
+                 </a>
+               </li>
+               <li>
+                 <a href="#team" className="...">
+                   <Users ... /> Team Members
+                 </a>
+               </li>
+               <li>
+                 <a href="#notifications" className="...">
+                   <Bell ... /> Notifications
+                 </a>
+               </li>
+               <li>
+                 <a href="#security" className="...">
+                   <ShieldCheck ... /> Security
+                 </a>
+               </li>
+               */}
             </ul>
           </nav>
         </aside>
@@ -92,6 +97,7 @@ export default function Page() {
           <UserProfileSection />
           <EmailVerificationSection />
           <SupportSection />
+          <BillingSection />
 
           {/* TODO: uncomment when sections are ready
           <SectionCard id="organization">
@@ -112,11 +118,6 @@ export default function Page() {
           <SectionCard id="security">
             <SectionHeading icon={ShieldCheck} title="Security" blurb="Two-factor authentication, sessions, and API keys." />
             ... security options + danger zone ...
-          </SectionCard>
-
-          <SectionCard id="billing">
-            <SectionHeading icon={CreditCard} title="Billing" blurb="Current plan, payment method, and invoices." />
-            ... plan card, payment method, invoices ...
           </SectionCard>
           */}
         </div>
