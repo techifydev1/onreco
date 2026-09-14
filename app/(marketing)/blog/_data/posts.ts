@@ -22,6 +22,149 @@ export type BlogBlock =
     | { type: "cta" };
 
 export const blogPosts: Record<string, BlogPost> = {
+    "lightweight-stablecoin-accounting": {
+        slug: "lightweight-stablecoin-accounting",
+        title: "Lightweight Stablecoin Accounting: A Better Way to Close Your Books",
+        description:
+            "Why the best stablecoin bookkeeping is lightweight and how a fast, automated ledger replaces heavy spreadsheet workflows.",
+        publishedTime: "2026-09-14T00:00:00.000Z",
+        author: "Onreco",
+        category: "Guides",
+        readingMinutes: 7,
+        content: [
+            {
+                type: "p",
+                text: "Manual stablecoin bookkeeping is heavy. It is a wall of CSV exports, wallet addresses, duplicate entries, and month-end reconciliation sprints.",
+            },
+            {
+                type: "p",
+                text: "Most accounting workflows that handle USDT and USDC started life as a spreadsheet. The heavier they get, the more they cost your finance team in time, errors, and context switching.",
+            },
+            {
+                type: "p",
+                text: "In this guide, you\u2019ll learn what lightweight stablecoin accounting actually looks like, why it beats spreadsheet workflows, and how a small automated ledger replaces the heavy lift.",
+            },
+            { type: "hr" },
+
+            {
+                type: "h2",
+                text: "Why Most Stablecoin Accounting Feels Heavy",
+            },
+            {
+                type: "p",
+                text: "Traditional stablecoin bookkeeping is heavy because it was assembled from parts that were never designed to work together.",
+            },
+            {
+                type: "ul",
+                items: [
+                    "Manual CSV exports from wallets and exchanges",
+                    "A spreadsheet of wallet addresses that drifts out of date",
+                    "Duplicate entries recorded by hand",
+                    "Reconciliation that waits until the end of the month",
+                    "Reports that have to be rebuilt every cycle",
+                    "Constant manual review to catch mistakes",
+                ],
+            },
+            {
+                type: "p",
+                text: "Every one of these tasks is a small weight on its own. Together they become the reason books lag reality.",
+            },
+            { type: "hr" },
+
+            {
+                type: "h2",
+                text: "What Lightweight Accounting Looks Like",
+            },
+            {
+                type: "p",
+                text: "A lightweight system is small by design. It automates the repetitive parts, keeps your data current, and shrinks the surface area where errors can appear.",
+            },
+            {
+                type: "ul",
+                items: [
+                    "Wallet activity is detected on chain, not copied and pasted",
+                    "Categorization is driven by rules that learn from confirmed entries",
+                    "Payments are matched to open invoices automatically",
+                    "Journal entries are generated for review instead of typed out",
+                    "Syncing to QuickBooks or Xero happens in one step",
+                ],
+            },
+            {
+                type: "p",
+                text: "You keep the accounting rigor. You lose the manual labor.",
+            },
+            { type: "hr" },
+
+            {
+                type: "h2",
+                text: "A Three-Step Lightweight Workflow",
+            },
+            {
+                type: "p",
+                text: "A lightweight workflow collapses the old seven-step process into three steps:",
+            },
+            {
+                type: "ol",
+                items: [
+                    "Connect your wallets",
+                    "Categorize and match transactions automatically",
+                    "Sync approved entries to QuickBooks or Xero",
+                ],
+            },
+            {
+                type: "p",
+                text: "Each step is small, auditable, and reversible. Nothing is hidden inside a spreadsheet formula.",
+            },
+            { type: "hr" },
+
+            {
+                type: "h2",
+                text: "Where Onreco Fits In",
+            },
+            {
+                type: "p",
+                text: "Onreco is purpose-built to keep stablecoin bookkeeping light.",
+            },
+            {
+                type: "p",
+                text: "Onreco provides:",
+            },
+            {
+                type: "ul",
+                items: [
+                    "Monitoring for USDT and USDC wallets on Base and Solana",
+                    "Automatic transaction detection with read-only wallet access",
+                    "Rules-based categorization that improves as you confirm entries",
+                    "Invoice matching for stablecoin payments",
+                    "Clean journal entries synced directly to QuickBooks and Xero",
+                    "A full audit trail without manual record keeping",
+                ],
+            },
+            {
+                type: "p",
+                text: "There are no CSV imports, no stale spreadsheets, and no guessing at wallet addresses. The books stay current because the workflow is light enough to run on its own.",
+            },
+            { type: "hr" },
+
+            { type: "h2", text: "Final Thoughts" },
+            {
+                type: "p",
+                text: "Heavy bookkeeping processes do not make your books more accurate. They just make them more expensive to maintain.",
+            },
+            {
+                type: "p",
+                text: "For teams that run on stablecoins, the shift is simple: keep the accounting standard, drop the manual work. When the ledger is lightweight, the close is faster, the reports are cleaner, and your team finally trusts the numbers.",
+            },
+            { type: "hr" },
+
+            { type: "h2", text: "Learn More" },
+            {
+                type: "p",
+                text: "Onreco helps teams keep stablecoin accounting lightweight, automated, and synced to QuickBooks and Xero.",
+            },
+            { type: "cta" },
+        ],
+    },
     "how-to-record-usdt-transactions-in-quickbooks": {
         slug: "how-to-record-usdt-transactions-in-quickbooks",
         title: "How to Record USDT Transactions in QuickBooks (Without Manual Journal Entries)",

@@ -32,12 +32,12 @@ export default function HeroSection() {
         {/* Left: copy */}
         <div className="flex flex-col gap-6 z-10">
           <h1 className="text-[48px] leading-14 font-bold tracking-tight text-on-surface">
-            Automate Stablecoin Accounting{" "}
+            Lightweight Stablecoin Accounting{" "}
             <span className="text-primary">for QuickBooks &amp; Xero.</span>
           </h1>
 
           <p className="text-[18px] leading-7 text-on-surface-variant max-w-lg">
-            Onreco monitors your wallets on Base and Solana. Every USDC and USDT transaction is detected, categorized, matched to invoices, and synced to QuickBooks or Xero without manual entry.
+            Onreco is a lightweight ledger for USDC and USDT. It monitors your wallets on Base and Solana, detects every incoming and outgoing transaction, categorizes and matches them to invoices, then syncs clean journal entries to QuickBooks or Xero — without manual entry.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 pt-4">
