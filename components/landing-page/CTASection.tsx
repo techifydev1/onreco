@@ -14,10 +14,10 @@ export default function CTASection() {
 
       <div className="max-w-3xl mx-auto text-center relative z-10">
         <h2 className="text-[32px] leading-10 font-semibold tracking-tight text-on-surface mb-6">
-          Stop entering stablecoin transactions by hand.
+          The lightweight way to close your stablecoin books.
         </h2>
         <p className="text-base text-on-surface-variant mb-10">
-          Create your free account to start automating stablecoin bookkeeping, reconciliation, and QuickBooks or Xero sync, so your team can focus on what matters.
+          Create your free account to start automating stablecoin bookkeeping, reconciliation, and QuickBooks or Xero sync — lightweight setup, so your team can focus on what matters.
         </p>
         <Link
           href="/signup"

@@ -34,10 +34,10 @@ export default function HowItWorks() {
         {/* Heading */}
         <div className="text-center mb-16">
           <h2 className="text-[32px] leading-10 font-semibold tracking-tight text-on-surface mb-4">
-            How Stablecoin Accounting Works with Onreco
+            How Lightweight Stablecoin Accounting Works with Onreco
           </h2>
           <p className="text-[18px] leading-7 text-on-surface-variant max-w-2xl mx-auto">
-            From wallet connection to reconciled books in four steps. No spreadsheets, no manual journal entries.
+            From wallet connection to reconciled books in four steps — lightweight setup, no spreadsheets, no manual journal entries.
           </p>
         </div>
 

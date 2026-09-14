@@ -21,9 +21,9 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? 'localhost:3000'}`
   ),
-  title: 'Stablecoin Accounting for QuickBooks & Xero | Onreco',
+  title: 'Lightweight Stablecoin Accounting for QuickBooks & Xero | Onreco',
   description:
-    'Automate stablecoin accounting with Onreco. Detect USDT and USDC transactions, reconcile payments, categorize activity, and sync directly to QuickBooks and Xero.',
+    'A lightweight stablecoin accounting platform. Detect USDT and USDC transactions, reconcile payments, categorize activity, and sync directly to QuickBooks and Xero without manual bookkeeping.',
   keywords: [
     // Core
     'stablecoin accounting',
@@ -116,9 +116,9 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   openGraph: {
-    title: 'Stablecoin Accounting for QuickBooks & Xero | Onreco',
+    title: 'Lightweight Stablecoin Accounting for QuickBooks & Xero | Onreco',
     description:
-      'Connect your wallet. Onreco detects USDT and USDC transactions on Base and Solana, then syncs them directly to QuickBooks or Xero.',
+      'Connect your wallet. Onreco is a lightweight stablecoin accounting platform that detects USDT and USDC transactions on Base and Solana, then syncs them directly to QuickBooks or Xero.',
     type: 'website',
     url: `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL ?? 'localhost:3000'}`,
     siteName: 'Onreco',
@@ -134,9 +134,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Onreco | Stablecoin Accounting, Automated',
+    title: 'Onreco | Lightweight Stablecoin Accounting, Automated',
     description:
-      'Stop entering stablecoin transactions by hand. Onreco automates bookkeeping, reconciliation, and QuickBooks/Xero sync for USDT and USDC.',
+      'Stop entering stablecoin transactions by hand. Onreco is the lightweight way to automate bookkeeping, reconciliation, and QuickBooks/Xero sync for USDT and USDC.',
     images: ['/onreco_banner.jpg'],
   },
   verification: {
