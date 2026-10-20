@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Space_Grotesk, JetBrains_Mono } from 'next/font/google'
+import { Space_Grotesk, JetBrains_Mono, Lora, Inter } from 'next/font/google'
 import './globals.css'
 import { ReactNode } from 'react'
 import Toast from '@/components/shared/Toast'
@@ -14,6 +14,20 @@ const spaceGrotesk = Space_Grotesk({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ['latin'],
   variable: '--font-mono',
+  display: 'swap',
+})
+
+const lora = Lora({
+  subsets: ['latin'],
+  weight: ['400'],
+  style: ['normal', 'italic'],
+  variable: '--font-lora',
+  display: 'swap',
+})
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
   display: 'swap',
 })
 
@@ -159,7 +173,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="dark" data-scroll-behavior="smooth">
       <body
-        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans antialiased bg-background text-on-surface`}
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} ${lora.variable} ${inter.variable} font-sans antialiased bg-background text-on-surface`}
       >
         <Toast />
         <NextTopLoader

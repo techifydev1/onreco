@@ -1,6 +1,47 @@
 @import 'tailwindcss';
 
 @theme {
+  /* ── Marketing redesign palette (Figma "Untitled") ──────── */
+  /* Values mirror onreco-redesign/styles.css — the faithful build. */
+  /* Scope these to the marketing route group only.             */
+  --color-paper: #f7f6f0; /* page background            */
+  --color-paper-warm: #eeede5; /* alternating section bg  */
+  --color-cream: #fffefa; /* card surfaces              */
+  --color-sage: #f0f3ea; /* app sidebar, tinted panels  */
+  --color-sage2: #e8ede1; /* compat strip, audience bg  */
+  --color-sand: #f4eedd; /* pending states              */
+
+  --color-forest: #233d32; /* primary text, headings     */
+  --color-pine: #285742; /* green accent, links         */
+  --color-moss: #4f5b51; /* secondary text              */
+  --color-stone: #7a8176; /* tertiary text, labels       */
+
+  --color-forest-deep: #203d31; /* dark section bg        */
+  --color-dark-text: #f3f4e9; /* text on dark bg          */
+  --color-dark-muted: #bac8bb; /* muted on dark bg        */
+  --color-dark-border: #476052; /* borders on dark bg     */
+
+  --color-hairline: #daddd2; /* general borders          */
+  --color-hairline-strong: #cfccbc;
+  --color-amber: #89652c; /* pending status text         */
+
+  /* Legacy aliases kept so older primitives keep resolving. */
+  --color-mint: #e8ede1;
+  --color-mint-deep: #bac8bb;
+  --color-linen: #eeede5;
+  --color-panel: #f0f3ea;
+
+  /* ── Marketing typography ───────────────────────────────── */
+  --font-serif: var(--font-lora), ui-serif, Georgia, serif;
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* ── Marketing radii ────────────────────────────────────── */
+  --radius-pill: 999px;
+  --radius-sm: 4px;
+  --radius-card: 6px;
+  --radius-panel: 8px;
+  --radius-demo: 12px;
+
   /* ── Brand palette ──────────────────────────────────────── */
   --color-cyber-carbon: #0F172A;
   --color-hyper-cobalt: #2563EB;
@@ -136,4 +177,97 @@ body {
 
 .animate-toast-progress {
   animation: toast-progress-shrink 5s linear forwards;
+}
+
+/* ── Marketing redesign scope ──────────────────────────────── */
+/* Applied on the (marketing) route group wrapper. Overrides the
+   dashboard/dark defaults locally without touching app/app. */
+[data-theme='marketing'] {
+  background-color: var(--color-paper);
+  color: var(--color-moss);
+  font-family: var(--font-body);
+}
+
+[data-theme='marketing'] ::selection {
+  background-color: var(--color-pine);
+  color: var(--color-cream);
+}
+
+/* Mono eyebrow label utility used across marketing sections */
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+
+/* ── Marketing motion ─────────────────────────────────────── */
+/* Reveal-on-scroll: elements start hidden and settle in when
+   they enter the viewport. The observer toggles [data-reveal]. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+[data-reveal='in'] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Soft continuous drift used on ambient shapes */
+@keyframes marketing-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+.animate-drift {
+  animation: marketing-drift 7s ease-in-out infinite;
+}
+
+/* Caret / scan shimmer for the demo panel status dot */
+@keyframes marketing-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.animate-pulse-soft {
+  animation: marketing-pulse 2.4s ease-in-out infinite;
+}
+
+/* Underline grow for editorial links */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.link-underline:hover {
+  background-size: 100% 1px;
 }
