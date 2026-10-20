@@ -1,5 +1,7 @@
 'use client'
 import { handleLogin } from '@/app/actions/auth'
+import { auth } from '@/components/marketing/content'
+import { Check13 } from '@/components/marketing/ui/Icons'
 import { useToastStore } from '@/providers/toast-provider'
 import { useUserProfileStore } from '@/providers/user-profile-store'
 import { ArrowRight, Lock, Mail } from 'lucide-react'
@@ -40,76 +42,76 @@ export default function LoginForm() {
       }
     }
   }, [redirect, router, setUserProfile, show, state])
+
+  const benefits = auth.signIn.bullets
+
   return (
-    <form className="space-y-6" action={formAction}>
-      <div>
-        <label
-          htmlFor="email"
-          className="block text-xs font-semibold tracking-wider uppercase text-on-surface-variant mb-2"
-        >
-          Email
-        </label>
-        <div className="relative">
-          <input
-            id="email"
-            name="email"
-            type="email"
-            disabled={isPending}
-            autoComplete="email"
-            placeholder="name@email.com"
-            className="w-full bg-surface-container-low border border-outline-variant/20 rounded-lg px-4 py-3 pr-12 text-on-surface placeholder:text-on-surface-variant/40 focus:ring-2 focus:ring-primary-container focus:border-primary outline-none transition-all text-sm"
-          />
-          <Mail
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant/40 w-5 h-5"
-            strokeWidth={1.75}
-          />
-        </div>
-      </div>
+    <>
+      <ul className="auth-benefits">
+        {benefits.map((benefit) => (
+          <li key={benefit} className="auth-benefit">
+            <Check13 />
+            <span>{benefit}</span>
+          </li>
+        ))}
+      </ul>
 
-      <div>
-        <div className="flex items-center justify-between mb-2">
-          <label
-            htmlFor="password"
-            className="block text-xs font-semibold tracking-wider uppercase text-on-surface-variant"
-          >
-            Password
+      <form className="auth-form" action={formAction}>
+        <div className="auth-field">
+          <label htmlFor="email" className="auth-label">
+            Email
           </label>
-          <Link
-            href="/reset-password"
-            className="text-xs font-medium text-primary hover:opacity-90 transition-opacity"
-          >
-            Forgot password?
-          </Link>
+          <div className="auth-input-wrap">
+            <input
+              id="email"
+              name="email"
+              type="email"
+              disabled={isPending}
+              autoComplete="email"
+              placeholder="you@company.com"
+              className="auth-input"
+            />
+            <Mail className="auth-input-icon" width={18} height={18} strokeWidth={1.75} />
+          </div>
         </div>
-        <div className="relative">
-          <input
-            id="password"
-            disabled={isPending}
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            placeholder="*******"
-            className="w-full bg-surface-container-low border border-outline-variant/20 rounded-lg px-4 py-3 pr-12 text-on-surface placeholder:text-on-surface-variant/40 focus:ring-2 focus:ring-primary-container focus:border-primary outline-none transition-all text-sm"
-          />
-          <Lock
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant/40 w-5 h-5"
-            strokeWidth={1.75}
-          />
-        </div>
-      </div>
 
-      <button
-        type="submit"
-        disabled={isPending}
-        className="btn-primary w-full py-4 text-on-primary-container text-xs font-bold tracking-wider uppercase rounded-lg hover:opacity-90 active:scale-[0.98] transition-all shadow-lg glow-top flex items-center justify-center gap-2"
-      >
-        {isPending ? 'Signing you in' : 'Sign In to Onreco'}
-        {isPending ? (
-          <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
-        ) : (
-          <ArrowRight className="w-4.5 h-4.5" strokeWidth={2.5} />
-        )}
-      </button>
-    </form>
+        <div className="auth-field">
+          <div className="auth-label-row">
+            <label htmlFor="password" className="auth-label">
+              Password
+            </label>
+            <Link href="/reset-password" className="text-link" style={{ fontSize: 12 }}>
+              Forgot password?
+            </Link>
+          </div>
+          <div className="auth-input-wrap">
+            <input
+              id="password"
+              disabled={isPending}
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              placeholder="••••••••"
+              className="auth-input"
+            />
+            <Lock className="auth-input-icon" width={18} height={18} strokeWidth={1.75} />
+          </div>
+        </div>
+
+        <button type="submit" disabled={isPending} className="btn btn-primary">
+          {isPending ? (
+            <>
+              Signing you in
+              <span className="auth-spinner" />
+            </>
+          ) : (
+            <>
+              {auth.signIn.submit}
+              <ArrowRight width={16} height={16} strokeWidth={2.5} />
+            </>
+          )}
+        </button>
+      </form>
+    </>
   )
 }

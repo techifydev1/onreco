@@ -454,3 +454,60 @@ export const footer = {
     { label: 'Terms', href: '/eula' },
   ],
 }
+
+export const auth = {
+  brand: 'Onreco',
+  signIn: {
+    panel: {
+      eyebrow: 'Stablecoin payments. Familiar books.',
+      headingLead: 'The accounting layer',
+      headingAccent: 'stablecoin',
+      headingTail: 'teams actually use.',
+      body: 'Sync wallet activity straight into QuickBooks or Xero, match it to journal entries, and reconcile the books while everyone else is still copy-pasting.',
+      stats: [
+        { value: '19 transactions on Basic', label: 'Free. No card required.' },
+      ],
+    },
+    heading: 'Welcome back',
+    subheading: 'Sign in to pick up where you left off.',
+    bullets: [
+      'Automated stablecoin bookkeeping',
+      'USDT and USDC synced to QuickBooks and Xero',
+      'Reconciliation and categorization in real time',
+    ],
+    submit: 'Sign in',
+    alternate: { lead: "Don't have an account yet?", action: 'Start on Basic', href: '/signup' },
+  },
+  signUp: {
+    panel: {
+      eyebrow: 'Start on Basic — free',
+      headingLead: 'Turn onchain activity into',
+      headingAccent: 'clear books',
+      headingTail: 'from day one.',
+      body: 'Create your workspace, connect a wallet or accounting file, and let your rules route every payment to the right place.',
+      highlights: [
+        { title: 'Stablecoin reconciliation', sub: 'Match wallet activity to journal entries automatically' },
+        { title: 'AES-256 encryption', sub: 'Data encrypted at rest and in transit' },
+      ],
+    },
+    heading: 'Create your account',
+    subheading: 'Start automating stablecoin bookkeeping in minutes.',
+    bullets: [
+      'Stablecoin accounting automation',
+      'QuickBooks and Xero integration',
+      'USDT and USDC transaction tracking',
+      'Automated reconciliation workflows',
+    ],
+    submit: 'Start automating accounting',
+    alternate: { lead: 'Already have an account?', action: 'Sign in', href: '/login' },
+  },
+  agreement: {
+    lead: 'By continuing you agree to our',
+    terms: { label: 'Terms of Service', href: '/eula' },
+    and: 'and',
+    privacy: { label: 'Privacy Policy', href: '/privacy' },
+    note: 'Free forever on Basic — no card, no surprises.',
+  },
+  backHome: 'Back to home',
+}
+

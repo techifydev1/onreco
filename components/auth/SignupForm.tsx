@@ -1,5 +1,7 @@
 'use client'
 import { handleSignup } from '@/app/actions/auth'
+import { auth } from '@/components/marketing/content'
+import { Check13 } from '@/components/marketing/ui/Icons'
 import { useToastStore } from '@/providers/toast-provider'
 import { useUserProfileStore } from '@/providers/user-profile-store'
 import { UserPlus } from 'lucide-react'
@@ -26,95 +28,96 @@ export default function SignupForm() {
       }
     }
   }, [state, setUserProfile, show, router])
+
+  const benefits = auth.signUp.bullets
+
   return (
-    <form className="space-y-4" action={formAction}>
-      <div className="grid grid-cols-2 gap-4">
-        <div className="space-y-1">
-          <label
-            htmlFor="firstName"
-            className="block text-xs font-semibold tracking-wider uppercase text-on-surface-variant ml-1"
-          >
-            First name
+    <>
+      <ul className="auth-benefits">
+        {benefits.map((benefit) => (
+          <li key={benefit} className="auth-benefit">
+            <Check13 />
+            <span>{benefit}</span>
+          </li>
+        ))}
+      </ul>
+
+      <form className="auth-form" action={formAction}>
+        <div className="auth-row">
+          <div className="auth-field">
+            <label htmlFor="firstName" className="auth-label">
+              First name
+            </label>
+            <input
+              id="firstName"
+              name="firstName"
+              type="text"
+              disabled={isPending}
+              autoComplete="given-name"
+              placeholder="John"
+              className="auth-input auth-input-plain"
+            />
+          </div>
+          <div className="auth-field">
+            <label htmlFor="lastName" className="auth-label">
+              Last name
+            </label>
+            <input
+              id="lastName"
+              name="lastName"
+              type="text"
+              disabled={isPending}
+              autoComplete="family-name"
+              placeholder="Doe"
+              className="auth-input auth-input-plain"
+            />
+          </div>
+        </div>
+
+        <div className="auth-field">
+          <label htmlFor="email" className="auth-label">
+            Email address
           </label>
           <input
-            id="firstName"
-            name="firstName"
-            type="text"
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            placeholder="john@email.com"
             disabled={isPending}
-            autoComplete="firstName"
-            placeholder="John"
-            className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface placeholder:text-on-surface-variant/30 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none transition-all"
+            className="auth-input auth-input-plain"
           />
         </div>
-        <div className="space-y-1">
-          <label
-            htmlFor="lastName"
-            className="block text-xs font-semibold tracking-wider uppercase text-on-surface-variant ml-1"
-          >
-            Last Name
+
+        <div className="auth-field">
+          <label htmlFor="password" className="auth-label">
+            Password
           </label>
           <input
-            id="lastName"
-            name="lastName"
-            type="text"
+            id="password"
+            name="password"
+            type="password"
+            autoComplete="new-password"
             disabled={isPending}
-            autoComplete="lastName"
-            placeholder="Doe"
-            className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface placeholder:text-on-surface-variant/30 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none transition-all"
+            placeholder="••••••••"
+            className="auth-input auth-input-plain"
           />
         </div>
-      </div>
 
-      <div className="space-y-1">
-        <label
-          htmlFor="email"
-          className="block text-xs font-semibold tracking-wider uppercase text-on-surface-variant ml-1"
-        >
-          Email addrss
-        </label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          autoComplete="email"
-          placeholder="john@email.com"
-          disabled={isPending}
-          className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface placeholder:text-on-surface-variant/30 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none transition-all"
-        />
-      </div>
-
-      <div className="space-y-1">
-        <label
-          htmlFor="password"
-          className="block text-xs font-semibold tracking-wider uppercase text-on-surface-variant ml-1"
-        >
-          Password
-        </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          autoComplete="new-password"
-          disabled={isPending}
-          placeholder="••••••••"
-          className="w-full bg-surface-container-low border border-outline-variant/30 rounded-lg px-4 py-3 text-on-surface placeholder:text-on-surface-variant/30 focus:border-primary-container focus:ring-1 focus:ring-primary-container outline-none transition-all"
-        />
-      </div>
-
-      <button
-        type="submit"
-        disabled={isPending}
-        className="btn-primary w-full py-3.5 text-on-primary-container text-xl font-semibold leading-7 rounded-lg hover:opacity-90 active:scale-[0.98] transition-all shadow-lg glow-top mt-2 inline-flex items-center justify-center gap-2"
-      >
-        {isPending ? (
-          <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
-        ) : (
-          <UserPlus className="w-5 h-5" strokeWidth={2} />
-        )}
-        {isPending
-          ? 'Setting up your account...'
-          : 'Start Automating Accounting'}
-      </button>
-    </form>
+        <button type="submit" disabled={isPending} className="btn btn-primary">
+          {isPending ? (
+            <>
+              Setting up your account
+              <span className="auth-spinner" />
+            </>
+          ) : (
+            <>
+              <UserPlus width={16} height={16} strokeWidth={2} />
+              {auth.signUp.submit}
+            </>
+          )}
+        </button>
+      </form>
+    </>
   )
 }
