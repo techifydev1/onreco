@@ -1,15 +1,20 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { nav } from '@/components/marketing/content'
 import { ArrowUpRight } from '@/components/marketing/ui/Icons'
 
-// The onreco reconciliation mark: three "ledger strokes" of differing heights.
+// The onreco logo mark, rendered from the brand asset.
 export function Wordmark({ className = '' }: { className?: string }) {
   return (
-    <span className={`wordmark-mark ${className}`} aria-hidden="true">
-      <span className="mark-stroke mark-s1" />
-      <span className="mark-stroke mark-s2" />
-      <span className="mark-stroke mark-s3" />
-    </span>
+    <Image
+      src="/onreco-logo.png"
+      alt=""
+      width={34}
+      height={34}
+      className={`wordmark-mark ${className}`}
+      aria-hidden="true"
+      priority
+    />
   )
 }
 

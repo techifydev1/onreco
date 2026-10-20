@@ -192,22 +192,11 @@
   align-items: center;
   gap: 9px; }
 
-.mk .wordmark-mark { display: flex;
-  align-items: flex-end;
-  gap: 3px;
-  width: 28px;
-  height: 28px; }
-
-.mk .mark-stroke { background: var(--ink-dark);
-  border-radius: 2px;
-  width: 7px;
+.mk .wordmark-mark { width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  object-fit: contain;
   flex-shrink: 0; }
-
-.mk .mark-s1 { height: 19px; }
-
-.mk .mark-s2 { height: 28px; }
-
-.mk .mark-s3 { height: 13px; }
 
 .mk .nav-logo-text { font-size: 30px;
   font-weight: 600;
