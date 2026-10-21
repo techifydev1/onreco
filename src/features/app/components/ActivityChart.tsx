@@ -1,5 +1,7 @@
 import type { ChartPoint } from "../types";
 import { formatDayMonth } from "../format";
+import { overview } from "../content";
+import { AppIcon } from "./AppIcon";
 
 const WIDTH = 640;
 const HEIGHT = 200;
@@ -28,10 +30,18 @@ function buildPath(points: Array<{ x: number; y: number }>): string {
 }
 
 export function ActivityChart({ data }: { data: ChartPoint[] }) {
-  if (data.length === 0) {
+  const hasActivity = data.some(
+    (point) => Number(point.inFlow ?? 0) !== 0 || Number(point.outFlow ?? 0) !== 0,
+  );
+
+  if (!hasActivity) {
     return (
-      <div className="flex h-50 items-center justify-center text-[13px] text-stone">
-        No activity in the last 30 days.
+      <div className="flex min-h-50 flex-1 flex-col items-center justify-center gap-2 text-center">
+        <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sage text-forest">
+          <AppIcon name="activity" size={18} />
+        </span>
+        <p className="text-[13px] font-medium text-ink">{overview.chart.empty}</p>
+        <p className="max-w-80 text-[12px] leading-[1.6] text-stone">{overview.chart.emptyHint}</p>
       </div>
     );
   }
@@ -57,11 +67,12 @@ export function ActivityChart({ data }: { data: ChartPoint[] }) {
     ? `${first.path} L${first.points[first.points.length - 1].x},${HEIGHT} L0,${HEIGHT} Z`
     : "";
 
-  return (    <div className="flex flex-col gap-3">
-      <div className="w-full overflow-hidden">
+  return (
+    <div className="flex min-h-50 flex-1 flex-col gap-3">
+      <div className="min-h-0 flex-1">
         <svg
           viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
-          className="h-auto w-full"
+          className="h-full w-full"
           role="img"
           aria-label="Cash flow over the last 30 days"
           preserveAspectRatio="none"
@@ -122,7 +133,6 @@ export function ActivityChart({ data }: { data: ChartPoint[] }) {
             {item.label}
           </span>
         ))}
-        <span className="sr-only">{`${data.length} data points`}</span>
       </div>
     </div>
   );

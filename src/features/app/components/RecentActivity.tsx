@@ -5,8 +5,8 @@ import { AppCard, CardTitle, ChainTag, StatusPill } from "./primitives";
 
 export function RecentActivity({ transactions }: { transactions: JournalEntry[] }) {
   return (
-    <AppCard padded={false} className="flex flex-col gap-4 p-5">
-      <div className="px-5 pt-5">
+    <AppCard padded={false} className="flex flex-col">
+      <div className="px-5 pt-5 pb-4">
         <CardTitle
           action={
             <span className="text-[12px] text-moss">{overview.activity.cta} →</span>

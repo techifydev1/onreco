@@ -62,6 +62,8 @@ export const overview = {
     title: "Cash flow",
     periods: ["7d", "30d", "90d"],
     activePeriod: "30d",
+    empty: "No activity in the last 30 days.",
+    emptyHint: "Connect a wallet and the payments you receive will show up here.",
     legend: [
       { label: "Inflow", tone: "inflow" },
       { label: "Outflow", tone: "outflow" },

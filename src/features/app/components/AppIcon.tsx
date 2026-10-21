@@ -31,6 +31,7 @@ const PATHS = {
   menu: '<path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/>',
   close: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
   wallet: '<path d="M20 13v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2"/>',
+  activity: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
   bolt: '<path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/>',
   more: '<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>',
 } as const;

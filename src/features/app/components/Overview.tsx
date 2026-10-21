@@ -107,7 +107,7 @@ export function Overview() {
 
       {/* ── Chart + side column ─────────────────────────── */}
       <div className="grid grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-4 max-[1100px]:grid-cols-1">
-        <AppCard className="flex flex-col gap-5">
+        <AppCard className="flex h-full flex-col gap-5">
           <CardTitle
             action={
               <div className="flex items-center gap-1 rounded-pill bg-sage p-1">
@@ -139,7 +139,7 @@ export function Overview() {
       </div>
 
       {/* ── Recent activity + wallets ───────────────────── */}
-      <div className="grid grid-cols-[minmax(0,2fr)_minmax(0,1fr)] gap-4 max-[1100px]:grid-cols-1">
+      <div className="grid grid-cols-[minmax(0,2fr)_minmax(0,1fr)] items-start gap-4 max-[1100px]:grid-cols-1">
         <RecentActivity transactions={data.recentTransactions ?? []} />
         <WalletList wallets={data.connectedWallets ?? []} />
       </div>
