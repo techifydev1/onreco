@@ -111,6 +111,24 @@ export type CategorizeEntry = {
   errorMessage: string | null;
 };
 
+/* ── Categorize ─────────────────────────────────────────────────── */
+
+export type AccountingAccount = {
+  id: string;
+  label: string;
+  type: string | null;
+};
+
+export type BatchSyncResult = {
+  synced: number;
+  failed: number;
+  results: Array<{
+    journalEntryId: string;
+    status: SyncStatus;
+    error: string | null;
+  }>;
+};
+
 /* ── Rules ──────────────────────────────────────────────────────── */
 
 export type Rule = {

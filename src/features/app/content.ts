@@ -12,6 +12,7 @@ export type AppNavItem = {
 export const appNav: AppNavItem[] = [
   { id: "overview", label: "Overview", href: "/app", icon: "overview", available: true },
   { id: "transactions", label: "Transactions", href: "/app/transactions", icon: "transactions", available: true },
+  { id: "categorize", label: "Categorize", href: "/app/categorize", icon: "categorize", available: true },
   { id: "rules", label: "Rules", href: "/app/rules", icon: "rules", available: true },
   { id: "wallets", label: "Wallets", href: "/app/wallets", icon: "wallets", available: true },
   { id: "integrations", label: "Integrations", href: "/app/integrations", icon: "integrations", available: true },
@@ -100,9 +101,6 @@ export const transactions = {
     "Every detected payment, and where it ended up. Anything without a matching rule waits here for review.",
   filters: {
     all: "All",
-    synced: "Synced",
-    pending: "Needs review",
-    failed: "Failed",
     income: "Income",
     expense: "Expense",
     usdc: "USDC",
@@ -125,13 +123,7 @@ export const transactions = {
   },
   emptyFiltered: {
     title: "Nothing matches this filter",
-    hint: "Try a different status to see the rest of your ledger.",
-  },
-  summary: {
-    received: "Received",
-    sent: "Sent",
-    synced: "Synced",
-    pending: "Needs review",
+    hint: "Try a different filter to see the rest of your ledger.",
   },
 };
 
@@ -190,6 +182,47 @@ export const rules = {
     submit: "Create rule",
     cancel: "Cancel",
   },
+};
+
+export const categorize = {
+  eyebrow: "THE OTHER PATH",
+  title: "Categorize",
+  subtitle:
+    "Transactions no rule matched. Give them an account and they sync — nothing is ever sent to your books on a guess.",
+  tabs: {
+    pending: "Needs review",
+    failed: "Failed",
+  },
+  columns: {
+    transaction: "Transaction",
+    network: "Network",
+    date: "Date",
+    account: "Account",
+  },
+  select: "Select",
+  selected: (count: number) => `${count} selected`,
+  clear: "Clear",
+  syncSelected: "Sync selected",
+  syncOne: "Sync",
+  synced: (count: number) => `${count} transaction${count === 1 ? "" : "s"} synced`,
+  failed: (count: number) => `${count} could not be synced`,
+  empty: {
+    pending: {
+      title: "Nothing waiting for review",
+      hint: "Every detected transaction has a matching rule. New activity lands here when it does not.",
+    },
+    failed: {
+      title: "No failed syncs",
+      hint: "Transactions that could not reach your books would show up here.",
+    },
+  },
+  noProvider: {
+    title: "Connect your accounting software first",
+    hint: "We need to know which accounts exist before we can book a transaction against one.",
+    action: "Go to integrations",
+  },
+  accountPlaceholder: "Choose an account",
+  customAccount: "Or type an account name",
 };
 
 export const wallets = {

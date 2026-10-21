@@ -8,12 +8,11 @@ import { useApiData } from "@/lib/useApiData";
 import { getTransactions } from "../api";
 import { transactions as copy } from "../content";
 import { formatAmount, formatDate, shortHash } from "../format";
-import type { LedgerTransaction, SyncStatus } from "../types";
+import type { LedgerTransaction } from "../types";
 import { AppIcon } from "./AppIcon";
 import { AppCard, StatusPill } from "./primitives";
-import { AppButton, EmptyState, Figure, FilterChips, PageHeader } from "./page";
+import { AppButton, EmptyState, FilterChips, PageHeader } from "./page";
 
-type StatusFilter = "all" | "synced" | "pending" | "failed";
 type AssetFilter = "all" | "USDC" | "USDT";
 type DirectionFilter = "all" | "RECEIVED" | "SENT";
 
@@ -53,7 +52,6 @@ export function TransactionsPage() {
   const router = useRouter();
   const { data, error, loading, reload } = useApiData(getTransactions);
 
-  const [status, setStatus] = useState<StatusFilter>("all");
   const [asset, setAsset] = useState<AssetFilter>("all");
   const [direction, setDirection] = useState<DirectionFilter>("all");
   const [query, setQuery] = useState("");
@@ -64,11 +62,6 @@ export function TransactionsPage() {
     const term = query.trim().toLowerCase();
 
     return list.filter((tx) => {
-      const txStatus = String(tx.status).toUpperCase() as SyncStatus;
-      if (status === "synced" && txStatus !== "SYNCED") return false;
-      if (status === "pending" && txStatus !== "PENDING") return false;
-      if (status === "failed" && txStatus !== "FAILED") return false;
-
       if (asset !== "all" && tx.asset !== asset) return false;
       if (direction !== "all" && tx.direction !== direction) return false;
 
@@ -77,19 +70,7 @@ export function TransactionsPage() {
         .filter(Boolean)
         .some((field) => String(field).toLowerCase().includes(term));
     });
-  }, [list, status, asset, direction, query]);
-
-  const totals = useMemo(() => {
-    const sum = (predicate: (tx: LedgerTransaction) => boolean) =>
-      list.filter(predicate).reduce((acc, tx) => acc + Number(tx.amount ?? 0), 0);
-
-    return {
-      received: sum((tx) => tx.direction === "RECEIVED"),
-      sent: sum((tx) => tx.direction === "SENT"),
-      synced: list.filter((tx) => tx.status === "SYNCED").length,
-      pending: list.filter((tx) => tx.status === "PENDING").length,
-    };
-  }, [list]);
+  }, [list, asset, direction, query]);
 
   const count = {
     all: list.length,
@@ -101,13 +82,6 @@ export function TransactionsPage() {
     income: list.filter((tx) => tx.direction === "RECEIVED").length,
     expense: list.filter((tx) => tx.direction === "SENT").length,
   };
-
-  const statusFilters = [
-    { value: "all", label: copy.filters.all, count: count.all },
-    { value: "synced", label: copy.filters.synced, count: count.synced },
-    { value: "pending", label: copy.filters.pending, count: count.pending },
-    { value: "failed", label: copy.filters.failed, count: count.failed },
-  ];
 
   const assetFilters = [
     { value: "all", label: copy.filters.all },
@@ -149,11 +123,6 @@ export function TransactionsPage() {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-3">
             <FilterChips
-              options={statusFilters}
-              value={status}
-              onChange={(value) => setStatus(value as StatusFilter)}
-            />
-            <FilterChips
               options={assetFilters}
               value={asset}
               onChange={(value) => setAsset(value as AssetFilter)}
@@ -182,16 +151,6 @@ export function TransactionsPage() {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-8 border-t border-hairline pt-4">
-          <Figure label={copy.summary.received} value={formatAmount(totals.received)} tone="positive" />
-          <Figure label={copy.summary.sent} value={formatAmount(totals.sent)} />
-          <Figure label={copy.summary.synced} value={totals.synced.toLocaleString()} />
-          <Figure
-            label={copy.summary.pending}
-            value={totals.pending.toLocaleString()}
-            tone={totals.pending > 0 ? "warning" : "default"}
-          />
-        </div>
       </AppCard>
 
       {error ? (

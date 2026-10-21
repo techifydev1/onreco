@@ -1,6 +1,8 @@
 import { api } from "@/services/api/client";
 
 import type {
+  AccountingAccount,
+  BatchSyncResult,
   CategorizeEntry,
   DashboardSummary,
   LedgerTransaction,
@@ -37,6 +39,16 @@ export function getPendingEntries(): Promise<CategorizeEntry[]> {
 
 export function getFailedEntries(): Promise<CategorizeEntry[]> {
   return api.get<CategorizeEntry[]>("/api/categorize/failed");
+}
+
+export function batchSync(
+  entries: Array<{ journalEntryId: string; offsetAccountId: string }>,
+): Promise<BatchSyncResult> {
+  return api.post<BatchSyncResult>("/api/categorize/batch-sync", { entries });
+}
+
+export function getAccountingAccounts(provider: string): Promise<AccountingAccount[]> {
+  return api.get<AccountingAccount[]>(`/api/integration/${provider}/accounts`);
 }
 
 /* ── Rules ──────────────────────────────────────────────────────── */

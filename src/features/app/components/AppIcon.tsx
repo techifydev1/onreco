@@ -8,6 +8,8 @@ const PATHS = {
     '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
   transactions:
     '<path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/>',
+  categorize:
+    '<path d="M2.5 12v-2A2.5 2.5 0 0 1 5 7.5h2v-2A2.5 2.5 0 0 1 9.5 3h1a2.5 2.5 0 0 1 2.5 2.5v2h-2v-2h-1v4.5h4.5A2.5 2.5 0 0 1 17 12.5v1a2.5 2.5 0 0 1-2.5 2.5h-2v2h-1v-4.5H7A2.5 2.5 0 0 1 4.5 11v-1h-2Z"/>',
   rules: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
   wallets:
     '<path d="M20 13v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2"/><path d="M14 13h5v4h-5a2 2 0 0 1 0-4z"/>',

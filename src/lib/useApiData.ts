@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { ApiError } from "@/services/api/client";
 
-type Result<T> = { key: number; data: T | null; error: string | null };
+type Result<T> = { key: string; data: T | null; error: string | null };
 
 type State<T> = {
   data: T | null;
@@ -16,8 +16,11 @@ type State<T> = {
 /**
  * Fetches data on mount. Authenticated app data is fetched from the browser
  * so the proxy can refresh the session and persist the rotated tokens.
+ *
+ * Pass `key` when the request depends on something that resolves later (a
+ * provider slug, for example) — changing it refetches.
  */
-export function useApiData<T>(fetcher: () => Promise<T>): State<T> {
+export function useApiData<T>(fetcher: () => Promise<T>, key?: string): State<T> {
   const [result, setResult] = useState<Result<T> | null>(null);
   const [nonce, setNonce] = useState(0);
 
@@ -26,17 +29,19 @@ export function useApiData<T>(fetcher: () => Promise<T>): State<T> {
     fetcherRef.current = fetcher;
   }, [fetcher]);
 
+  const requestKey = `${nonce}:${key ?? ""}`;
+
   useEffect(() => {
     let cancelled = false;
 
     fetcherRef.current()
       .then((data) => {
-        if (!cancelled) setResult({ key: nonce, data, error: null });
+        if (!cancelled) setResult({ key: requestKey, data, error: null });
       })
       .catch((cause: unknown) => {
         if (cancelled) return;
         setResult({
-          key: nonce,
+          key: requestKey,
           data: null,
           error:
             cause instanceof ApiError
@@ -48,9 +53,9 @@ export function useApiData<T>(fetcher: () => Promise<T>): State<T> {
     return () => {
       cancelled = true;
     };
-  }, [nonce]);
+  }, [requestKey]);
 
-  const settled = result !== null && result.key === nonce;
+  const settled = result !== null && result.key === requestKey;
 
   return {
     data: settled ? result.data : null,
