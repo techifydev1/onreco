@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════════════════════
+   ONRECO DESIGN SYSTEM
+   Source of truth: onreco-redesign/styles.css (landing page).
+   Warm off-white paper, deep forest green ink, Lora editorial
+   serif + Inter sans, rule-based accounting UI.
+   Tokens not visible on the landing (forms, tables, empty
+   states) are derived from these primitives by analogy.
+   ═══════════════════════════════════════════════════════════ */
+
+@theme {
+  /* ── Surfaces ─────────────────────────────────────────── */
+  --color-paper: #f7f6f0;        /* page background */
+  --color-paper-warm: #eeede5;   /* alternating sections */
+  --color-paper-card: #fffefa;   /* card surfaces (aliased as cream) */
+  --color-sage: #f0f3ea;         /* sidebar, tinted panels */
+  --color-sage2: #e8ede1;        /* compat strip, audience bg */
+  --color-sand: #f4eedd;         /* pending states */
+
+  /* ── Ink (text) ───────────────────────────────────────── */
+  --color-forest: #285742;       /* green accent, links */
+  --color-forest-deep: #203d31;  /* dark section bg (how/cta) */
+  --color-pine: #285742;
+  --color-moss: #4f5b51;         /* secondary text */
+  --color-stone: #7a8176;        /* tertiary text, labels */
+  --color-ink: #233d32;          /* primary text */
+
+  /* ── Dark section text ────────────────────────────────── */
+  --color-dark-text: #f3f4e9;
+  --color-dark-muted: #bac8bb;
+  --color-dark-border: #476052;
+
+  /* ── Lines ────────────────────────────────────────────── */
+  --color-hairline: #daddd2;     /* general borders */
+  --color-hairline-strong: #c9cabc;
+
+  /* ── Status ───────────────────────────────────────────── */
+  --color-amber: #89652c;
+  --color-status-green-bg: #e8ede1;
+  --color-status-green-text: #285742;
+  --color-status-amber-bg: #f4eedd;
+  --color-status-amber-text: #89652c;
+
+  /* ── Fonts ────────────────────────────────────────────── */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-serif: var(--font-lora), Georgia, serif;
+
+  /* ── Radii (landing uses 2/3/4/5/6/8/12px) ────────────── */
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius: 4px;
+  --radius-chip: 5px;
+  --radius-card: 6px;
+  --radius-frame: 8px;
+  --radius-shell: 12px;
+  --radius-pill: 999px;
+
+  /* ── Layout metrics ───────────────────────────────────── */
+  --spacing-page-x: 80px;   /* responsive 80 → 48 → 32 → 20 */
+  --spacing-section-y: 88px;
+}
+
+/* Page gutter steps mirror the landing's media queries. */
+:root {
+  --page-x: 80px;
+  --section-y: 88px;
+}
+@media (max-width: 1200px) { :root { --page-x: 48px; } }
+@media (max-width: 960px)  { :root { --page-x: 32px; } }
+@media (max-width: 700px)  { :root { --page-x: 20px; --section-y: 64px; } }
+
+/* Scroll reveal — elements fade/rise once when they enter the viewport.
+   The hidden state is gated behind `.js` (set pre-paint by an inline script in
+   the root layout) so the content is still readable without JavaScript. */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition-delay: var(--delay, 0ms);
+}
+.js .reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero entrance — pure CSS so it plays and ends visible without JavaScript. */
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hero-entrance {
+  animation: hero-rise 0.7s ease both;
+  animation-delay: var(--hero-delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .hero-entrance {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@theme inline {
+  --spacing-page: var(--page-x);
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
