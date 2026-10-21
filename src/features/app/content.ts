@@ -325,7 +325,10 @@ export const integrations = {
   subtitle:
     "Your accounting software stays at the centre. Onreco only sends what your rules matched.",
   connect: "Connect",
+  connecting: "Opening…",
+  connectFailed: "Could not start the connection. Please try again.",
   disconnect: "Disconnect",
+  disconnectFailed: "Could not disconnect. Please try again.",
   connected: "Connected",
   notConnected: "Not connected",
   unavailable: "Not available yet",

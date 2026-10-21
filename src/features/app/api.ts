@@ -109,6 +109,15 @@ export function disconnectAccounting(provider: string): Promise<void> {
   return api.delete<void>(`/api/integration/${provider}/disconnect`);
 }
 
+/**
+ * The provider hands back the URL to send the user to. The browser has to
+ * be the one that navigates there, so the URL is returned rather than
+ * followed.
+ */
+export function getConnectUrl(provider: string): Promise<{ authorizationUrl: string }> {
+  return api.get<{ authorizationUrl: string }>(`/api/integration/${provider}/connect`);
+}
+
 /* ── Reports ────────────────────────────────────────────────────── */
 
 export function getReportTypes(): Promise<ReportType[]> {

@@ -1,10 +1,11 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { useApiData } from "@/lib/useApiData";
 
-import { disconnectAccounting, getSupportedAccounting } from "../api";
+import { disconnectAccounting, getConnectUrl, getSupportedAccounting } from "../api";
 import { integrations as copy } from "../content";
 import { formatDate, timeAgo } from "../format";
 import { AppIcon } from "./AppIcon";
@@ -12,10 +13,44 @@ import { AppCard } from "./primitives";
 import { AppButton, EmptyState, PageHeader } from "./page";
 import { Modal } from "./form";
 
-export function IntegrationsPage() {
+export function IntegrationsContent() {
+  const searchParams = useSearchParams();
   const { data, error, loading, reload } = useApiData(getSupportedAccounting);
+
+  const [connecting, setConnecting] = useState<string | null>(null);
   const [disconnecting, setDisconnecting] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState<{ tone: "ok" | "warn"; text: string } | null>(null);
+
+  // The provider redirects back here with ?<provider>=connected once the
+  // OAuth round trip finishes. That is a fresh page load, so the list below
+  // is fetched again on its own.
+  const justConnected = ["quickbooks", "xero"].find(
+    (provider) => searchParams.get(provider) === "connected",
+  );
+
+  const connectedName = justConnected
+    ? (data ?? []).find((provider) => provider.slug === justConnected)?.name
+    : undefined;
+
+  const notice = justConnected
+    ? {
+        tone: "ok" as const,
+        text: `${connectedName ?? copy.connected} — you can start syncing now.`,
+      }
+    : message;
+
+  async function onConnect(provider: string) {
+    setConnecting(provider);
+    setMessage(null);
+    try {
+      const { authorizationUrl } = await getConnectUrl(provider);
+      window.location.assign(authorizationUrl);
+    } catch {
+      setMessage({ tone: "warn", text: copy.connectFailed });
+      setConnecting(null);
+    }
+  }
 
   async function onDisconnect() {
     if (!disconnecting) return;
@@ -24,6 +59,8 @@ export function IntegrationsPage() {
       await disconnectAccounting(disconnecting);
       setDisconnecting(null);
       reload();
+    } catch {
+      setMessage({ tone: "warn", text: copy.disconnectFailed });
     } finally {
       setBusy(false);
     }
@@ -34,6 +71,19 @@ export function IntegrationsPage() {
   return (
     <div className="flex flex-col gap-6">
       <PageHeader eyebrow={copy.eyebrow} title={copy.title} subtitle={copy.subtitle} />
+
+      {notice && (
+        <p
+          className={
+            notice.tone === "ok"
+              ? "rounded border border-status-green-text/25 bg-status-green-bg px-3.5 py-2.5 text-[13px] text-status-green-text"
+              : "rounded border border-status-amber-text/25 bg-status-amber-bg px-3.5 py-2.5 text-[13px] text-status-amber-text"
+          }
+          role="status"
+        >
+          {notice.text}
+        </p>
+      )}
 
       <AppCard className="flex flex-wrap items-center justify-between gap-4">
         <span className="inline-flex items-center gap-2 text-[13px] font-medium text-status-green-text">
@@ -138,13 +188,14 @@ export function IntegrationsPage() {
                     {copy.disconnect}
                   </button>
                 ) : (
-                  <a
-                    href={`/api/integration/${provider.slug}/connect`}
-                    className="inline-flex h-10 w-fit items-center gap-2 rounded bg-forest px-4 text-[13px] font-medium text-paper-card transition-opacity duration-200 hover:opacity-90"
+                  <AppButton
+                    onClick={() => onConnect(provider.slug)}
+                    disabled={connecting !== null}
+                    className="self-start"
                   >
                     <AppIcon name="plus" size={15} />
-                    {copy.connect}
-                  </a>
+                    {connecting === provider.slug ? copy.connecting : copy.connect}
+                  </AppButton>
                 ))}
             </AppCard>
           ))}

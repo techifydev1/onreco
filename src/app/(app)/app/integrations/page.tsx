@@ -1,5 +1,11 @@
-import { IntegrationsPage } from "@/features/app/components/IntegrationsPage";
+import { Suspense } from "react";
+
+import { IntegrationsContent } from "@/features/app/components/IntegrationsPage";
 
 export default function Page() {
-  return <IntegrationsPage />;
+  return (
+    <Suspense fallback={null}>
+      <IntegrationsContent />
+    </Suspense>
+  );
 }
