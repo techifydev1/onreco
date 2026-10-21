@@ -41,6 +41,13 @@
   --color-status-green-text: #285742;
   --color-status-amber-bg: #f4eedd;
   --color-status-amber-text: #89652c;
+  --color-status-red-bg: #f7e3e0;
+  --color-status-red-text: #8f3527;
+
+  /* ── Networks ──────────────────────────────────────────── */
+  --color-chain-base: #0052ff;
+  --color-chain-solana: #7c4dff;
+  --color-chain-tron: #d1361f;
 
   /* ── Fonts ────────────────────────────────────────────── */
   --font-sans: var(--font-inter), system-ui, sans-serif;
@@ -59,6 +66,8 @@
   /* ── Layout metrics ───────────────────────────────────── */
   --spacing-page-x: 80px;   /* responsive 80 → 48 → 32 → 20 */
   --spacing-section-y: 88px;
+  --spacing-sidebar: 264px; /* app shell */
+  --spacing-topbar: 64px;
 }
 
 /* Page gutter steps mirror the landing's media queries. */

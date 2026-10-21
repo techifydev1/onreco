@@ -1,6 +1,14 @@
 import type { ReactNode } from "react";
 
-// Authenticated product shell. Route access is guarded in middleware.ts.
+import { RevealObserver } from "@/components/RevealObserver";
+import { AppShell } from "@/features/app/components/AppShell";
+
+// Authenticated product shell. Route access is guarded in src/proxy.ts.
 export default function AppLayout({ children }: { children: ReactNode }) {
-  return <div data-theme="app">{children}</div>;
+  return (
+    <AppShell>
+      {children}
+      <RevealObserver />
+    </AppShell>
+  );
 }
