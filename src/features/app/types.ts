@@ -1,4 +1,4 @@
-// Shapes returned by the Onreco backend for the app shell and overview.
+// Shapes returned by the Onreco backend for the app shell and pages.
 
 export type Chain = "SOLANA" | "BASE" | "TRON" | (string & {});
 export type Currency = "USDC" | "USDT" | (string & {});
@@ -76,4 +76,89 @@ export type SubscriptionPlan = {
   transactionCount: number;
   price: number;
   description: string;
+};
+
+/* ── Ledger ─────────────────────────────────────────────────────── */
+
+export type LedgerTransaction = {
+  id: string;
+  date: string;
+  direction: TransactionType;
+  asset: Currency;
+  amount: number;
+  usd: number;
+  wallet: string;
+  category: string;
+  counterparty: string;
+  status: SyncStatus;
+  gasAmount: number | null;
+  gasCurrency: string | null;
+  convertedAmount: number | null;
+  convertedCurrency: string | null;
+};
+
+export type CategorizeEntry = {
+  id: string;
+  txHash: string;
+  amount: number;
+  currency: Currency;
+  chain: Chain;
+  type: TransactionType;
+  txDate: string;
+  walletAddress: string;
+  counterpartyAddress: string;
+  syncStatus: SyncStatus;
+  errorMessage: string | null;
+};
+
+/* ── Rules ──────────────────────────────────────────────────────── */
+
+export type Rule = {
+  id: string;
+  name: string;
+  walletId: string | null;
+  walletLabel: string | null;
+  walletAddress: string | null;
+  walletChain: string | null;
+  direction: TransactionType | null;
+  counterpartyAddress: string | null;
+  offsetAccountId: string;
+  active: boolean;
+  priority: number;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type RuleInput = {
+  name: string;
+  walletId?: string | null;
+  direction?: TransactionType | null;
+  counterpartyAddress?: string | null;
+  offsetAccountId: string;
+  priority: number;
+  active?: boolean;
+};
+
+/* ── Accounting integrations ────────────────────────────────────── */
+
+export type SupportedAccounting = {
+  name: string;
+  slug: string;
+  available: boolean;
+  connected: boolean;
+  connectedAt: string | null;
+  picUrl: string | null;
+  blurb: string | null;
+};
+
+/* ── Reports ────────────────────────────────────────────────────── */
+
+export type ReportFormat = "CSV" | "PDF" | "XLSX";
+
+export type ReportType = {
+  type: string;
+  name: string;
+  blurb: string;
+  formats: ReportFormat[];
+  cadence: string;
 };

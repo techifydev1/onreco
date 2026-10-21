@@ -46,7 +46,7 @@ export function AppCard({
   className,
   padded = true,
 }: {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   padded?: boolean;
 }) {
