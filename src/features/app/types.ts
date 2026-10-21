@@ -129,6 +129,37 @@ export type BatchSyncResult = {
   }>;
 };
 
+/* ── Reconciliation ─────────────────────────────────────────────── */
+
+export type InvoiceMatch = {
+  id: string;
+  docNumber: string;
+  customerName: string;
+  totalAmount: number;
+  balance: number;
+  dueDate: string;
+};
+
+export type ReconcileMatch = {
+  journalEntryId: string;
+  txHash: string;
+  amount: number;
+  currency: Currency;
+  chain: Chain;
+  type: TransactionType;
+  txDate: string;
+  walletAddress: string;
+  counterpartyAddress: string;
+  invoice: InvoiceMatch | null;
+  confidence: number;
+};
+
+export type ReconcileResult = {
+  matches: ReconcileMatch[];
+  totalPending: number;
+  totalOpenInvoices: number;
+};
+
 /* ── Rules ──────────────────────────────────────────────────────── */
 
 export type Rule = {

@@ -178,6 +178,19 @@ export function CategorizePage() {
 
       {pending.loading || failed.loading ? (
         <AppCard className="h-64 animate-pulse bg-sage2" />
+      ) : pending.error || failed.error ? (
+        <AppCard>
+          <EmptyState
+            icon="pause"
+            title={pending.error ?? failed.error ?? "Something went wrong."}
+            action={
+              <AppButton onClick={refresh}>
+                <AppIcon name="refresh" size={15} />
+                Try again
+              </AppButton>
+            }
+          />
+        </AppCard>
       ) : !connected ? (
         <AppCard>
           <EmptyState

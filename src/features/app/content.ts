@@ -13,6 +13,7 @@ export const appNav: AppNavItem[] = [
   { id: "overview", label: "Overview", href: "/app", icon: "overview", available: true },
   { id: "transactions", label: "Transactions", href: "/app/transactions", icon: "transactions", available: true },
   { id: "categorize", label: "Categorize", href: "/app/categorize", icon: "categorize", available: true },
+  { id: "reconcile", label: "Reconciliation", href: "/app/reconcile", icon: "reconciliation", available: true },
   { id: "rules", label: "Rules", href: "/app/rules", icon: "rules", available: true },
   { id: "wallets", label: "Wallets", href: "/app/wallets", icon: "wallets", available: true },
   { id: "integrations", label: "Integrations", href: "/app/integrations", icon: "integrations", available: true },
@@ -124,6 +125,53 @@ export const transactions = {
   emptyFiltered: {
     title: "Nothing matches this filter",
     hint: "Try a different filter to see the rest of your ledger.",
+  },
+};
+
+export const reconcile = {
+  eyebrow: "MATCHING",
+  title: "Reconciliation",
+  subtitle:
+    "Payments we think settle an open invoice. Confirm the match and it is booked against that invoice.",
+  refresh: "Refresh",
+  stats: {
+    pending: "Pending entries",
+    invoices: "Open invoices",
+    matches: "Suggested matches",
+  },
+  columns: {
+    date: "Date",
+    payment: "Payment",
+    amount: "Amount",
+    chain: "Chain",
+    invoice: "Suggested invoice",
+    confidence: "Confidence",
+    action: "Action",
+  },
+  invoice: {
+    doc: (value: string) => `Invoice ${value}`,
+    due: (value: string) => `Due ${value}`,
+    outstanding: (value: number) => `${value.toLocaleString()} outstanding`,
+  },
+  confidence: {
+    high: "Strong match",
+    medium: "Likely match",
+    low: "Weak match",
+  },
+  confirm: "Confirm",
+  confirming: "Confirming…",
+  confirmed: (count: number) =>
+    `${count} match${count === 1 ? "" : "es"} confirmed and sent to your books`,
+  confirmFailed: "Could not confirm that match",
+  noInvoice: "No open invoice suggested",
+  empty: {
+    title: "Nothing to reconcile",
+    hint: "When a payment looks like it settles an open invoice, it shows up here for you to confirm.",
+  },
+  noProvider: {
+    title: "Connect your accounting software first",
+    hint: "Reconciliation compares your payments against the open invoices in your books.",
+    action: "Go to integrations",
   },
 };
 

@@ -8,6 +8,7 @@ import type {
   LedgerTransaction,
   ReportType,
   Rule,
+  ReconcileResult,
   RuleInput,
   SubscriptionPlan,
   SupportedAccounting,
@@ -49,6 +50,16 @@ export function batchSync(
 
 export function getAccountingAccounts(provider: string): Promise<AccountingAccount[]> {
   return api.get<AccountingAccount[]>(`/api/integration/${provider}/accounts`);
+}
+
+/* ── Reconciliation ─────────────────────────────────────────────── */
+
+export function getReconciliations(): Promise<ReconcileResult> {
+  return api.get<ReconcileResult>("/api/reconcile");
+}
+
+export function confirmMatch(journalEntryId: string, invoiceId: string): Promise<void> {
+  return api.post<void>("/api/reconcile/confirm", { journalEntryId, invoiceId });
 }
 
 /* ── Rules ──────────────────────────────────────────────────────── */
