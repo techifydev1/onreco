@@ -182,6 +182,37 @@ export function SettingsPage() {
             </p>
           </AppCard>
 
+          {/* ── Verification ─────────────────────────────── */}
+          <AppCard className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              <h2 className="font-serif text-[20px] font-normal text-ink">
+                {copy.verification.title}
+              </h2>
+              <p className="text-[12px] text-moss">{copy.verification.hint}</p>
+            </div>
+
+            <div className="flex items-center justify-between gap-3 border-t border-hairline pt-4">
+              <span className="text-[12px] text-moss">{copy.verification.email}</span>
+              <span className="truncate text-[13px] text-ink">{profile.data?.email ?? "—"}</span>
+            </div>
+
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex flex-col gap-0.5">
+                <span className="text-[12px] text-moss">{copy.verification.identity}</span>
+                <span className="text-[11px] text-stone">{copy.verification.identityHint}</span>
+              </div>
+              <span
+                className={
+                  profile.data?.emailVerified
+                    ? "shrink-0 rounded-sm bg-status-green-bg px-2 py-1 text-[11px] font-medium text-status-green-text"
+                    : "shrink-0 rounded-sm bg-sand px-2 py-1 text-[11px] font-medium text-status-amber-text"
+                }
+              >
+                {copy.verification.verifyIdentity}
+              </span>
+            </div>
+          </AppCard>
+
           {/* ── Session ──────────────────────────────────── */}
           <AppCard className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">

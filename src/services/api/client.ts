@@ -46,6 +46,13 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     } catch {
       /* non-JSON error body */
     }
+
+    // A 401 outside the auth endpoints means the session is gone for good.
+    // Bad credentials on the login form also return 401, so leave those alone.
+    if (response.status === 401 && !path.includes("/auth/") && typeof window !== "undefined") {
+      window.location.replace("/login");
+    }
+
     throw new ApiError(message, response.status);
   }
 

@@ -10,13 +10,14 @@ import { formatDate } from "../format";
 import type { Rule, RuleInput } from "../types";
 import { AppIcon } from "./AppIcon";
 import { AppCard, ChainTag } from "./primitives";
-import { AppButton, EmptyState, PageHeader } from "./page";
+import { AppButton, EmptyState, FilterChips, PageHeader } from "./page";
 import { Modal, Select, TextInput, Toggle } from "./form";
 
 export function RulesPage() {
   const rules = useApiData(getRules);
   const wallets = useApiData(getWallets);
 
+  const [tab, setTab] = useState<"all" | "active" | "paused">("all");
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [walletId, setWalletId] = useState("");
@@ -90,7 +91,12 @@ export function RulesPage() {
     }
   }
 
-  const list = rules.data ?? [];
+  const allRules = rules.data ?? [];
+  const list = allRules.filter((rule) => {
+    if (tab === "active") return rule.active;
+    if (tab === "paused") return !rule.active;
+    return true;
+  });
 
   return (
     <div className="flex flex-col gap-6">
@@ -111,6 +117,33 @@ export function RulesPage() {
           </AppButton>
         }
       />
+
+      <AppCard className="flex flex-wrap items-center justify-between gap-4">
+        <FilterChips
+          options={[
+            { value: "all", label: copy.tabs.all, count: allRules.length },
+            { value: "active", label: copy.tabs.active, count: allRules.filter((r) => r.active).length },
+            { value: "paused", label: copy.tabs.paused, count: allRules.filter((r) => !r.active).length },
+          ]}
+          value={tab}
+          onChange={(value) => setTab(value as "all" | "active" | "paused")}
+        />
+
+        <div className="flex flex-col items-end gap-1.5 text-right">
+          <span className="text-[13px] font-medium text-ink">{copy.suggest.title}</span>
+          <span className="max-w-100 text-[12px] leading-[1.5] text-moss">{copy.suggest.body}</span>
+          <button
+            type="button"
+            onClick={() => {
+              resetForm();
+              setOpen(true);
+            }}
+            className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
+          >
+            {copy.suggest.action} →
+          </button>
+        </div>
+      </AppCard>
 
       {rules.error ? (
         <AppCard>

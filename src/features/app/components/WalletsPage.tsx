@@ -4,12 +4,12 @@ import { useState } from "react";
 
 import { useApiData } from "@/lib/useApiData";
 
-import { connectWallet, deleteWallet, getWallets } from "../api";
+import { connectWallet, deleteWallet, getDashboardSummary, getWallets } from "../api";
 import { wallets as copy } from "../content";
-import { formatDate, shortHash, timeAgo } from "../format";
+import { formatAmount, formatDate, shortHash, timeAgo } from "../format";
 import { AppIcon } from "./AppIcon";
 import { AppCard, ChainTag } from "./primitives";
-import { AppButton, EmptyState, PageHeader } from "./page";
+import { AppButton, EmptyState, Figure, PageHeader } from "./page";
 import { Modal, Select, TextInput } from "./form";
 
 const CHAINS = [
@@ -21,6 +21,7 @@ const CURRENCIES = ["USDC", "USDT"];
 
 export function WalletsPage() {
   const wallets = useApiData(getWallets);
+  const summary = useApiData(getDashboardSummary);
 
   const [open, setOpen] = useState(false);
   const [label, setLabel] = useState("");
@@ -104,6 +105,31 @@ export function WalletsPage() {
           </AppButton>
         }
       />
+
+      <AppCard className="flex flex-wrap gap-8">
+        <Figure
+          label={copy.stats.connected}
+          value={(wallets.data?.length ?? 0).toLocaleString()}
+        />
+        <Figure
+          label={copy.stats.networks}
+          value={[
+            ...new Set((wallets.data ?? []).map((wallet) => wallet.chain)),
+          ]
+            .map((chain) => (chain === "BASE" ? "Base" : chain === "SOLANA" ? "Solana" : chain))
+            .join(", ") || "—"}
+        />
+        <Figure
+          label={copy.stats.balance}
+          value={formatAmount(Number(summary.data?.inflow30d ?? 0))}
+          tone="positive"
+        />
+        <Figure
+          label={copy.stats.inReview}
+          value={(summary.data?.pendingSync ?? 0).toLocaleString()}
+          tone={(summary.data?.pendingSync ?? 0) > 0 ? "warning" : "default"}
+        />
+      </AppCard>
 
       {wallets.error ? (
         <AppCard>
@@ -206,13 +232,21 @@ export function WalletsPage() {
                 </div>
               </div>
 
-              <button
-                type="button"
-                onClick={() => setRemoving(wallet.id)}
-                className="self-start text-[11px] font-medium text-status-red-text transition-opacity duration-200 hover:opacity-70"
-              >
-                {copy.card.remove}
-              </button>
+              <div className="flex items-center gap-4">
+                <a
+                  href="/app/transactions"
+                  className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
+                >
+                  {copy.card.viewActivity} →
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setRemoving(wallet.id)}
+                  className="text-[11px] font-medium text-status-red-text transition-opacity duration-200 hover:opacity-70"
+                >
+                  {copy.card.remove}
+                </button>
+              </div>
             </AppCard>
           ))}
         </div>

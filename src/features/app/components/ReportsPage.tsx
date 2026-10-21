@@ -80,6 +80,19 @@ export function ReportsPage() {
           ))}
         </div>
       )}
+
+      <AppCard className="flex flex-wrap items-center justify-between gap-4">
+        <div className="flex max-w-130 flex-col gap-1">
+          <span className="text-[13px] font-medium text-ink">{copy.note.title}</span>
+          <span className="text-[12px] leading-[1.6] text-moss">{copy.note.body}</span>
+        </div>
+        <a
+          href="/app/settings"
+          className="inline-flex h-10 items-center gap-2 rounded border border-hairline-strong bg-paper-card px-4 text-[13px] font-medium text-ink transition-colors duration-200 hover:bg-sage"
+        >
+          {copy.note.action}
+        </a>
+      </AppCard>
     </div>
   );
 }

@@ -103,13 +103,19 @@ export const transactions = {
     synced: "Synced",
     pending: "Needs review",
     failed: "Failed",
+    income: "Income",
+    expense: "Expense",
+    usdc: "USDC",
+    usdt: "USDT",
   },
+  exportCsv: "Export CSV",
   searchPlaceholder: "Search by hash, wallet or account…",
   columns: {
     date: "Date",
     transaction: "Transaction",
     wallet: "Wallet",
     account: "Account",
+    asset: "Asset",
     amount: "Amount",
     status: "Status",
   },
@@ -135,6 +141,16 @@ export const rules = {
   subtitle:
     "Each rule decides how a matching payment is treated. A transaction that matches nothing stays pending.",
   newRule: "New rule",
+  tabs: {
+    all: "All rules",
+    active: "Active",
+    paused: "Paused",
+  },
+  suggest: {
+    title: "Got a repeating vendor?",
+    body: "Rules learn from your approval history too — review a few transactions and Onreco will offer to build one for you.",
+    action: "Draft from history",
+  },
   empty: {
     title: "No rules yet",
     hint: "Create a rule and matching transactions will start syncing to your books automatically.",
@@ -182,6 +198,14 @@ export const wallets = {
   subtitle:
     "Onreco watches these addresses on Base and Solana and brings what moves through them into your books.",
   add: "Add wallet",
+  stats: {
+    connected: "Connected wallets",
+    networks: "Networks",
+    balance: "Received (30 days)",
+    inReview: "In review",
+    balanceHint: "Across all connected wallets",
+    reviewHint: "Nothing queued — all caught up",
+  },
   empty: {
     title: "No wallets connected",
     hint: "Add the address you receive stablecoin payments on to get started.",
@@ -193,6 +217,7 @@ export const wallets = {
     lastSync: (ago: string) => `Last sync ${ago} ago`,
     never: "Not synced yet",
     remove: "Remove wallet",
+    viewActivity: "View activity",
   },
   form: {
     title: "Add a wallet",
@@ -222,6 +247,11 @@ export const integrations = {
   lastSync: (ago: string) => `Last sync ${ago} ago`,
   neverSynced: "No sync yet",
   entries: (count: number) => `${count.toLocaleString()} entries pushed (30 days)`,
+  operational: "All systems operational",
+  note: {
+    title: "Connect once. Stay quiet.",
+    body: "Onreco never stores your bookkeeping credentials — integrations exchange OAuth tokens scoped to read and write only.",
+  },
   empty: {
     title: "No integrations available",
     hint: "We will let you know as soon as your accounting software is supported.",
@@ -236,6 +266,11 @@ export const reports = {
   cadence: (value: string) => `Refreshes ${value.toLowerCase()}`,
   download: "Download",
   formats: "Formats",
+  note: {
+    title: "Make a habit of it",
+    body: "Set up automatic monthly exports once Standard is enabled — delivered every 1st to your inbox and your accountant.",
+    action: "Explore plans",
+  },
   empty: {
     title: "No reports available",
     hint: "Reports appear once your workspace is connected.",
@@ -267,6 +302,14 @@ export const settings = {
     used: "Used this month",
     usage: (used: number, limit: number) => `${used.toLocaleString()} of ${limit.toLocaleString()} transactions`,
     upgrade: "Talk to us about upgrading",
+  },
+  verification: {
+    title: "Verification",
+    hint: "Trust signals for the billing account and support queue.",
+    email: "Email address",
+    identity: "Identity check",
+    identityHint: "Required before checkout on paid plans",
+    verifyIdentity: "Verify identity",
   },
   session: {
     title: "Session",

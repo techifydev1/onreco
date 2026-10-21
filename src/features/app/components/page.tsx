@@ -109,7 +109,7 @@ export function FilterChips({
   onChange: (value: string) => void;
 }) {
   return (
-    <div className="flex flex-wrap items-center gap-1 rounded-pill bg-sage p-1">
+    <div className="flex flex-wrap items-center gap-1 rounded-card bg-sage p-1">
       {options.map((option) => {
         const active = option.value === value;
         return (
@@ -118,7 +118,7 @@ export function FilterChips({
             type="button"
             onClick={() => onChange(option.value)}
             className={cn(
-              "rounded-pill px-3 py-1.5 text-[12px] transition-colors duration-200",
+              "rounded-chip px-3 py-1.5 text-[12px] transition-colors duration-200",
               active
                 ? "bg-paper-card font-medium text-ink shadow-[0_1px_2px_rgba(35,61,50,0.06)]"
                 : "text-moss hover:text-ink",

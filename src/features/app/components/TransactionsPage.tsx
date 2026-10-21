@@ -13,33 +13,73 @@ import { AppIcon } from "./AppIcon";
 import { AppCard, StatusPill } from "./primitives";
 import { AppButton, EmptyState, Figure, FilterChips, PageHeader } from "./page";
 
-type Filter = "all" | "synced" | "pending" | "failed";
+type StatusFilter = "all" | "synced" | "pending" | "failed";
+type AssetFilter = "all" | "USDC" | "USDT";
+type DirectionFilter = "all" | "RECEIVED" | "SENT";
+
+/** Build a CSV of the rows currently on screen. */
+function toCsv(rows: LedgerTransaction[]): string {
+  const header = [
+    "Date",
+    "Direction",
+    "Asset",
+    "Amount",
+    "Wallet",
+    "Account",
+    "Counterparty",
+    "Status",
+  ];
+  const escape = (value: unknown) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+
+  const body = rows.map((tx) =>
+    [
+      tx.date,
+      tx.direction,
+      tx.asset,
+      tx.amount,
+      tx.wallet,
+      tx.category,
+      tx.counterparty,
+      tx.status,
+    ]
+      .map(escape)
+      .join(","),
+  );
+
+  return [header.join(","), ...body].join("\n");
+}
 
 export function TransactionsPage() {
   const router = useRouter();
   const { data, error, loading, reload } = useApiData(getTransactions);
-  const [filter, setFilter] = useState<Filter>("all");
+
+  const [status, setStatus] = useState<StatusFilter>("all");
+  const [asset, setAsset] = useState<AssetFilter>("all");
+  const [direction, setDirection] = useState<DirectionFilter>("all");
   const [query, setQuery] = useState("");
 
+  const list = useMemo(() => data ?? [], [data]);
+
   const rows = useMemo(() => {
-    const list = data ?? [];
     const term = query.trim().toLowerCase();
 
     return list.filter((tx) => {
-      const status = String(tx.status).toUpperCase() as SyncStatus;
-      if (filter === "synced" && status !== "SYNCED") return false;
-      if (filter === "pending" && status !== "PENDING") return false;
-      if (filter === "failed" && status !== "FAILED") return false;
+      const txStatus = String(tx.status).toUpperCase() as SyncStatus;
+      if (status === "synced" && txStatus !== "SYNCED") return false;
+      if (status === "pending" && txStatus !== "PENDING") return false;
+      if (status === "failed" && txStatus !== "FAILED") return false;
+
+      if (asset !== "all" && tx.asset !== asset) return false;
+      if (direction !== "all" && tx.direction !== direction) return false;
 
       if (!term) return true;
       return [tx.counterparty, tx.wallet, tx.category, tx.asset]
         .filter(Boolean)
         .some((field) => String(field).toLowerCase().includes(term));
     });
-  }, [data, filter, query]);
+  }, [list, status, asset, direction, query]);
 
   const totals = useMemo(() => {
-    const list = data ?? [];
     const sum = (predicate: (tx: LedgerTransaction) => boolean) =>
       list.filter(predicate).reduce((acc, tx) => acc + Number(tx.amount ?? 0), 0);
 
@@ -49,38 +89,81 @@ export function TransactionsPage() {
       synced: list.filter((tx) => tx.status === "SYNCED").length,
       pending: list.filter((tx) => tx.status === "PENDING").length,
     };
-  }, [data]);
+  }, [list]);
 
-  const filters: Array<{ value: string; label: string; count?: number }> = [
-    { value: "all", label: copy.filters.all, count: data?.length },
-    {
-      value: "synced",
-      label: copy.filters.synced,
-      count: data?.filter((tx) => tx.status === "SYNCED").length,
-    },
-    {
-      value: "pending",
-      label: copy.filters.pending,
-      count: data?.filter((tx) => tx.status === "PENDING").length,
-    },
-    {
-      value: "failed",
-      label: copy.filters.failed,
-      count: data?.filter((tx) => tx.status === "FAILED").length,
-    },
+  const count = {
+    all: list.length,
+    synced: list.filter((tx) => tx.status === "SYNCED").length,
+    pending: list.filter((tx) => tx.status === "PENDING").length,
+    failed: list.filter((tx) => tx.status === "FAILED").length,
+    usdc: list.filter((tx) => tx.asset === "USDC").length,
+    usdt: list.filter((tx) => tx.asset === "USDT").length,
+    income: list.filter((tx) => tx.direction === "RECEIVED").length,
+    expense: list.filter((tx) => tx.direction === "SENT").length,
+  };
+
+  const statusFilters = [
+    { value: "all", label: copy.filters.all, count: count.all },
+    { value: "synced", label: copy.filters.synced, count: count.synced },
+    { value: "pending", label: copy.filters.pending, count: count.pending },
+    { value: "failed", label: copy.filters.failed, count: count.failed },
   ];
+
+  const assetFilters = [
+    { value: "all", label: copy.filters.all },
+    { value: "USDC", label: copy.filters.usdc, count: count.usdc },
+    { value: "USDT", label: copy.filters.usdt, count: count.usdt },
+  ];
+
+  const directionFilters = [
+    { value: "all", label: copy.filters.all },
+    { value: "RECEIVED", label: copy.filters.income, count: count.income },
+    { value: "SENT", label: copy.filters.expense, count: count.expense },
+  ];
+
+  function exportCsv() {
+    const blob = new Blob([toCsv(rows)], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `onreco-transactions-${new Date().toISOString().slice(0, 10)}.csv`;
+    link.click();
+    URL.revokeObjectURL(url);
+  }
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader eyebrow={copy.eyebrow} title={copy.title} subtitle={copy.subtitle} />
+      <PageHeader
+        eyebrow={copy.eyebrow}
+        title={copy.title}
+        subtitle={copy.subtitle}
+        actions={
+          <AppButton onClick={exportCsv} disabled={rows.length === 0}>
+            <AppIcon name="download" size={15} />
+            {copy.exportCsv}
+          </AppButton>
+        }
+      />
 
       <AppCard className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <FilterChips
-            options={filters}
-            value={filter}
-            onChange={(value) => setFilter(value as Filter)}
-          />
+          <div className="flex flex-wrap items-center gap-3">
+            <FilterChips
+              options={statusFilters}
+              value={status}
+              onChange={(value) => setStatus(value as StatusFilter)}
+            />
+            <FilterChips
+              options={assetFilters}
+              value={asset}
+              onChange={(value) => setAsset(value as AssetFilter)}
+            />
+            <FilterChips
+              options={directionFilters}
+              value={direction}
+              onChange={(value) => setDirection(value as DirectionFilter)}
+            />
+          </div>
 
           <div className="relative min-w-56 flex-1 sm:max-w-72">
             <AppIcon
@@ -130,10 +213,10 @@ export function TransactionsPage() {
         <AppCard>
           <EmptyState
             icon="transactions"
-            title={(data?.length ?? 0) === 0 ? copy.empty.title : copy.emptyFiltered.title}
-            hint={(data?.length ?? 0) === 0 ? copy.empty.hint : copy.emptyFiltered.hint}
+            title={list.length === 0 ? copy.empty.title : copy.emptyFiltered.title}
+            hint={list.length === 0 ? copy.empty.hint : copy.emptyFiltered.hint}
             action={
-              (data?.length ?? 0) === 0 ? (
+              list.length === 0 ? (
                 <AppButton variant="primary" onClick={() => router.push("/app/wallets")}>
                   <AppIcon name="plus" size={15} />
                   Add a wallet
@@ -159,6 +242,9 @@ export function TransactionsPage() {
                   </th>
                   <th scope="col" className="px-3 py-3 font-medium">
                     {copy.columns.account}
+                  </th>
+                  <th scope="col" className="px-3 py-3 font-medium">
+                    {copy.columns.asset}
                   </th>
                   <th scope="col" className="px-3 py-3 text-right font-medium">
                     {copy.columns.amount}
@@ -187,6 +273,7 @@ export function TransactionsPage() {
                     </td>
                     <td className="px-3 py-3 text-[12px] whitespace-nowrap text-moss">{tx.wallet}</td>
                     <td className="px-3 py-3 text-[12px] whitespace-nowrap text-moss">{tx.category}</td>
+                    <td className="px-3 py-3 text-[12px] whitespace-nowrap text-moss">{tx.asset}</td>
                     <td className="px-3 py-3 text-right text-[13px] font-medium whitespace-nowrap tabular-nums text-ink">
                       {tx.direction === "RECEIVED" ? "+" : "−"}
                       {formatAmount(Number(tx.amount ?? 0)).replace("-", "")}
