@@ -12,6 +12,7 @@ import {
   getRules,
   getSupportedAccounting,
   getWallets,
+  updateRule,
 } from "../api";
 import { rules as copy } from "../content";
 import { formatDate } from "../format";
@@ -28,6 +29,7 @@ export function RulesPage() {
 
   const [tab, setTab] = useState<"all" | "active" | "paused">("all");
   const [open, setOpen] = useState(false);
+  const [editing, setEditing] = useState<Rule | null>(null);
   const [name, setName] = useState("");
   const [walletId, setWalletId] = useState("");
   const [direction, setDirection] = useState("");
@@ -74,6 +76,19 @@ export function RulesPage() {
     [accountOptions],
   );
 
+  // A rule can point at an account that is no longer offered — the provider may
+  // be disconnected, or the account may be gone. Keep it selectable so editing
+  // the rule does not silently drop it.
+  const pickerOptions = useMemo(() => {
+    if (!offsetAccountId || accountOptions.some((option) => option.value === offsetAccountId)) {
+      return accountOptions;
+    }
+    return [
+      ...accountOptions,
+      { value: offsetAccountId, label: `${copy.form.accountMissing} (${offsetAccountId})` },
+    ];
+  }, [accountOptions, offsetAccountId]);
+
   function resetForm() {
     setName("");
     setWalletId("");
@@ -85,11 +100,30 @@ export function RulesPage() {
     setFormError(null);
   }
 
+  function openCreate() {
+    resetForm();
+    setEditing(null);
+    setOpen(true);
+  }
+
+  function openEdit(rule: Rule) {
+    setName(rule.name);
+    setWalletId(rule.walletId ?? "");
+    setDirection(rule.direction ?? "");
+    setCounterparty(rule.counterpartyAddress ?? "");
+    setOffsetAccountId(rule.offsetAccountId);
+    setPriority(String(rule.priority));
+    setActive(rule.active);
+    setFormError(null);
+    setEditing(rule);
+    setOpen(true);
+  }
+
   async function onSubmit() {
     setSaving(true);
     setFormError(null);
     try {
-      await createRule({
+      const input: RuleInput = {
         name: name.trim(),
         walletId: walletId || null,
         direction: (direction || null) as RuleInput["direction"],
@@ -97,12 +131,18 @@ export function RulesPage() {
         offsetAccountId: offsetAccountId.trim(),
         priority: Number(priority) || 1,
         active,
-      });
+      };
+      if (editing) {
+        await updateRule(editing.id, input);
+      } else {
+        await createRule(input);
+      }
       setOpen(false);
+      setEditing(null);
       resetForm();
       rules.reload();
     } catch (cause) {
-      setFormError(cause instanceof Error ? cause.message : "Could not create the rule.");
+      setFormError(cause instanceof Error ? cause.message : "Could not save the rule.");
     } finally {
       setSaving(false);
     }
@@ -138,10 +178,7 @@ export function RulesPage() {
         actions={
           <AppButton
             variant="primary"
-            onClick={() => {
-              resetForm();
-              setOpen(true);
-            }}
+            onClick={openCreate}
           >
             <AppIcon name="plus" size={15} />
             {copy.newRule}
@@ -185,10 +222,7 @@ export function RulesPage() {
             action={
               <AppButton
                 variant="primary"
-                onClick={() => {
-                  resetForm();
-                  setOpen(true);
-                }}
+                onClick={openCreate}
               >
                 <AppIcon name="plus" size={15} />
                 {copy.newRule}
@@ -244,13 +278,22 @@ export function RulesPage() {
                   {rule.walletChain && <ChainTag chain={rule.walletChain} />}
                   <span>{formatDate(rule.createdAt)}</span>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setRemoving(rule)}
-                  className="text-[11px] font-medium text-status-red-text transition-opacity duration-200 hover:opacity-70"
-                >
-                  {copy.card.delete}
-                </button>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => openEdit(rule)}
+                    className="font-medium text-ink transition-opacity duration-200 hover:opacity-70"
+                  >
+                    {copy.card.edit}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRemoving(rule)}
+                    className="font-medium text-status-red-text transition-opacity duration-200 hover:opacity-70"
+                  >
+                    {copy.card.delete}
+                  </button>
+                </div>
               </div>
             </AppCard>
           ))}
@@ -260,8 +303,8 @@ export function RulesPage() {
       <Modal
         open={open}
         onClose={() => setOpen(false)}
-        title={copy.form.title}
-        subtitle={copy.form.subtitle}
+        title={editing ? copy.form.editTitle : copy.form.title}
+        subtitle={editing ? copy.form.editSubtitle : copy.form.subtitle}
         footer={
           <>
             <AppButton onClick={() => setOpen(false)}>{copy.form.cancel}</AppButton>
@@ -270,7 +313,13 @@ export function RulesPage() {
               onClick={onSubmit}
               disabled={saving || !name.trim() || !offsetAccountId.trim()}
             >
-              {saving ? "Creating…" : copy.form.submit}
+              {saving
+                ? editing
+                  ? copy.form.saving
+                  : copy.form.creating
+                : editing
+                  ? copy.form.save
+                  : copy.form.submit}
             </AppButton>
           </>
         }
@@ -326,15 +375,27 @@ export function RulesPage() {
             value={offsetAccountId}
             options={[
               { value: "", label: copy.form.accountPlaceholder },
-              ...accountOptions,
+              ...pickerOptions,
             ]}
             onChange={setOffsetAccountId}
             hint={copy.form.accountHint}
-            disabled={accounts.loading || accountOptions.length === 0}
+            disabled={accounts.loading || pickerOptions.length === 0}
           />
 
           {accounts.loading ? (
             <p className="text-[11px] leading-[1.5] text-stone">{copy.form.accountLoading}</p>
+          ) : accounts.error ? (
+            <>
+              <p className="text-[11px] leading-[1.5] text-status-amber-text">{accounts.error}</p>
+              <p className="text-[11px] leading-[1.5] text-stone">
+                <Link
+                  href="/app/integrations"
+                  className="font-medium text-forest underline underline-offset-2"
+                >
+                  {copy.form.accountReconnect}
+                </Link>
+              </p>
+            </>
           ) : !provider ? (
             <p className="text-[11px] leading-[1.5] text-stone">
               <Link
