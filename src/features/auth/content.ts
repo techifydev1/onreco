@@ -32,6 +32,37 @@ export const signUp = {
   alternate: { lead: "Already have an account?", action: "Sign in", href: "/login" },
 };
 
+export const verifyEmail = {
+  heading: "Check your email",
+  body: "We've sent a verification link to your email address. Click the link to verify your account and start using Onreco.",
+  expiry: "The verification link expires in 1 hour. Check your spam folder if you don't see the email.",
+  resend: "Resend verification email",
+  sending: "Sending…",
+  sent: "Verification email sent. Check your inbox.",
+  failed: "Failed to send the verification email. Please try again.",
+  backToLogin: "Back to login",
+};
+
+export const verifyConfirm = {
+  loading: {
+    heading: "Verifying your email…",
+    body: "Please wait while we verify your email address.",
+  },
+  success: {
+    heading: "Email verified!",
+    body: "Your email has been verified. You can now use all features of Onreco.",
+    action: "Continue to login",
+  },
+  error: {
+    heading: "Verification failed",
+    action: "Resend verification email",
+  },
+  invalid: {
+    heading: "Invalid link",
+    body: "No verification token was provided. Please check your email for the correct link.",
+  },
+};
+
 export const authAgreement = {
   lead: "By continuing you agree to our",
   terms: { label: "Terms of Service", href: "/terms" },

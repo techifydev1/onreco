@@ -26,7 +26,7 @@ export function SignupForm() {
     });
 
     if (result.ok) {
-      router.replace("/app");
+      router.replace("/verify-email");
       return;
     }
 

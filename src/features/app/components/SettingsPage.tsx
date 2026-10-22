@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { useApiData } from "@/lib/useApiData";
+import { sendVerificationEmail } from "@/services/auth";
 import { AppIcon } from "@/components/ui/AppIcon";
 
 import { getDashboardSummary, getPlans, getUserProfile, updateProfile } from "../api";
@@ -20,6 +21,9 @@ function ProfileForm({ profile }: { profile: UserProfile }) {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sendingVerification, setSendingVerification] = useState(false);
+  const [verificationSent, setVerificationSent] = useState(false);
+  const [verificationError, setVerificationError] = useState<string | null>(null);
 
   async function onSave() {
     setSaving(true);
@@ -32,6 +36,23 @@ function ProfileForm({ profile }: { profile: UserProfile }) {
       setError(cause instanceof Error ? cause.message : "Could not save your profile.");
     } finally {
       setSaving(false);
+    }
+  }
+
+  async function onSendVerification() {
+    if (sendingVerification) return;
+    setSendingVerification(true);
+    setVerificationSent(false);
+    setVerificationError(null);
+    try {
+      await sendVerificationEmail();
+      setVerificationSent(true);
+    } catch (cause) {
+      setVerificationError(
+        cause instanceof Error ? cause.message : copy.profile.emailSendFailed,
+      );
+    } finally {
+      setSendingVerification(false);
     }
   }
 
@@ -69,18 +90,48 @@ function ProfileForm({ profile }: { profile: UserProfile }) {
         <span className="text-[13px] font-medium text-ink">{copy.profile.email}</span>
         <div className="flex items-center justify-between gap-3 rounded border border-hairline bg-sage px-3.5 py-2.5">
           <span className="truncate text-[13px] text-moss">{profile.email}</span>
-          <span
-            className={
-              profile.emailVerified
-                ? "shrink-0 rounded-sm bg-status-green-bg px-2 py-1 text-[11px] font-medium text-status-green-text"
-                : "shrink-0 rounded-sm bg-status-amber-bg px-2 py-1 text-[11px] font-medium text-status-amber-text"
-            }
-          >
-            {profile.emailVerified ? copy.profile.emailVerified : copy.profile.emailUnverified}
-          </span>
+          <div className="flex shrink-0 items-center gap-2">
+            <span
+              className={
+                profile.emailVerified
+                  ? "rounded-sm bg-status-green-bg px-2 py-1 text-[11px] font-medium text-status-green-text"
+                  : "rounded-sm bg-status-amber-bg px-2 py-1 text-[11px] font-medium text-status-amber-text"
+              }
+            >
+              {profile.emailVerified ? copy.profile.emailVerified : copy.profile.emailUnverified}
+            </span>
+
+            {!profile.emailVerified && (
+              <button
+                type="button"
+                onClick={onSendVerification}
+                disabled={sendingVerification}
+                className="inline-flex h-7 items-center gap-1.5 rounded border border-hairline-strong bg-paper-card px-2.5 text-[11px] font-medium text-ink transition-colors duration-200 hover:bg-sage disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <AppIcon
+                  name="refresh"
+                  size={13}
+                  className={sendingVerification ? "animate-spin" : undefined}
+                />
+                {sendingVerification ? copy.profile.emailSending : copy.profile.emailVerify}
+              </button>
+            )}
+          </div>
         </div>
+
         {!profile.emailVerified && (
           <p className="text-[11px] leading-[1.5] text-stone">{copy.profile.emailHint}</p>
+        )}
+
+        {verificationSent && (
+          <p className="flex items-center gap-1.5 text-[11px] text-status-green-text">
+            <AppIcon name="check" size={13} />
+            {copy.profile.emailSent}
+          </p>
+        )}
+
+        {verificationError && (
+          <p className="text-[11px] leading-[1.5] text-status-red-text">{verificationError}</p>
         )}
       </div>
 
