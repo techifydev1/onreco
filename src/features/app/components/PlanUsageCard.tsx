@@ -12,7 +12,7 @@ export function PlanUsageCard({
   plans: SubscriptionPlan[];
   summary: DashboardSummary;
 }) {
-  const slug = profile?.plan.toLowerCase() ?? "basic";
+  const slug = profile?.plan?.toLowerCase() ?? "basic";
   const plan = plans.find((p) => p.slug.toLowerCase() === slug);
   const limit = plan?.transactionCount ?? 0;
   const used = summary.pushed30d ?? 0;

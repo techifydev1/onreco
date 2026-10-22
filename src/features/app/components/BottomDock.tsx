@@ -34,7 +34,7 @@ export function BottomDock() {
                 className="flex shrink-0 cursor-default items-center gap-2 rounded-chip px-2.5 py-2 text-stone opacity-45"
               >
                 {icon}
-                <span className="hidden text-[12px] lg:inline">{item.label}</span>
+                <span className="hidden text-[12px] xl:inline">{item.label}</span>
               </span>
             );
           }
@@ -51,7 +51,7 @@ export function BottomDock() {
               )}
             >
               {icon}
-              <span className="hidden text-[12px] lg:inline">{item.label}</span>
+              <span className="hidden text-[12px] xl:inline">{item.label}</span>
             </Link>
           );
         })}

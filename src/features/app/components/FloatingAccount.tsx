@@ -14,7 +14,8 @@ export function FloatingAccount() {
   }
 
   const initials = `${profile.firstName?.[0] ?? ""}${profile.lastName?.[0] ?? ""}`.toUpperCase();
-  const plan = PLAN_LABELS[profile.plan.toLowerCase()] ?? profile.plan;
+  const planSlug = profile.plan?.toLowerCase() ?? "basic";
+  const plan = PLAN_LABELS[planSlug] ?? planSlug;
 
   return (
     <div className="fixed top-5 right-5 z-40 flex items-center gap-3 rounded border border-hairline bg-paper-card/92 py-1.5 pr-4 pl-1.5 shadow-[0_10px_30px_-14px_rgba(35,61,50,0.24)] backdrop-blur-md">

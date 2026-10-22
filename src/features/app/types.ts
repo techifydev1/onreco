@@ -67,7 +67,7 @@ export type UserProfile = {
   email: string;
   emailVerified: boolean;
   id: string;
-  plan: Plan;
+  plan?: Plan;
 };
 
 export type SubscriptionPlan = {
