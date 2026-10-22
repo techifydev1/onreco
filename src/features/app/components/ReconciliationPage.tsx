@@ -13,7 +13,7 @@ import {
 import { reconcile as copy } from "../content";
 import { formatAmount, formatDayMonth, shortHash } from "../format";
 import type { ReconcileMatch } from "../types";
-import { AppIcon } from "./AppIcon";
+import { AppIcon } from "@/components/ui/AppIcon";
 import { AppCard, ChainTag } from "./primitives";
 import { AppButton, EmptyState, Figure, PageHeader } from "./page";
 

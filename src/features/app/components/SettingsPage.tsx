@@ -4,12 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { useApiData } from "@/lib/useApiData";
+import { AppIcon } from "@/components/ui/AppIcon";
 
 import { getDashboardSummary, getPlans, getUserProfile, updateProfile } from "../api";
 import { settings as copy } from "../content";
 import { formatAmount } from "../format";
 import type { UserProfile } from "../types";
-import { AppIcon } from "./AppIcon";
 import { AppCard } from "./primitives";
 import { AppButton, PageHeader } from "./page";
 import { TextInput } from "./form";

@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 
 import { cn } from "@/lib/cn";
 
-import { AppIcon } from "./AppIcon";
+import { AppIcon } from "@/components/ui/AppIcon";
 
 /**
  * `false` while server-rendered, `true` in the browser. Portalling needs a

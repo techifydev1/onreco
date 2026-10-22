@@ -16,7 +16,7 @@ import {
 import { categorize as copy } from "../content";
 import { formatAmount, formatDayMonth, shortHash } from "../format";
 import type { CategorizeEntry } from "../types";
-import { AppIcon } from "./AppIcon";
+import { AppIcon } from "@/components/ui/AppIcon";
 import { AppCard, ChainTag } from "./primitives";
 import { AppButton, EmptyState, FilterChips, PageHeader } from "./page";
 

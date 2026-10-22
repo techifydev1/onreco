@@ -1,7 +1,7 @@
 import type { ChartPoint } from "../types";
 import { formatDayMonth } from "../format";
 import { overview } from "../content";
-import { AppIcon } from "./AppIcon";
+import { AppIcon } from "@/components/ui/AppIcon";
 
 const WIDTH = 640;
 const HEIGHT = 200;

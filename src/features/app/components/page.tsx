@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 import { cn } from "@/lib/cn";
 
-import { AppIcon, type AppIconName } from "./AppIcon";
+import { AppIcon, type AppIconName } from "@/components/ui/AppIcon";
 
 /** Page heading: eyebrow, serif title, supporting line, optional actions. */
 export function PageHeader({

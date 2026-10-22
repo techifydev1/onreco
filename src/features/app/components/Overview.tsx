@@ -5,7 +5,7 @@ import { overview } from "../content";
 import { formatAmount, formatPercent } from "../format";
 import { useApiData } from "@/lib/useApiData";
 import { ActivityChart } from "./ActivityChart";
-import { AppIcon } from "./AppIcon";
+import { AppIcon } from "@/components/ui/AppIcon";
 import { OverviewError } from "./OverviewError";
 import { OverviewSkeleton } from "./OverviewSkeleton";
 import { PlanUsageCard } from "./PlanUsageCard";

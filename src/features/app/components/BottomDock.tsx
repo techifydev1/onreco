@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { cn } from "@/lib/cn";
 
 import { appNav } from "../content";
-import { AppIcon, type AppIconName } from "./AppIcon";
+import { AppIcon, type AppIconName } from "@/components/ui/AppIcon";
 
 /**
  * Floating navigation dock, pinned to the bottom of the viewport.

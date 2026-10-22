@@ -1,4 +1,4 @@
-import { AppIcon } from "./AppIcon";
+import { AppIcon } from "@/components/ui/AppIcon";
 
 export function OverviewError({ message, onRetry }: { message: string; onRetry: () => void }) {
   return (

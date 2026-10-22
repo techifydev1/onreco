@@ -9,7 +9,7 @@ import { getTransactions } from "../api";
 import { transactions as copy } from "../content";
 import { formatAmount, formatDate, shortHash } from "../format";
 import type { LedgerTransaction } from "../types";
-import { AppIcon } from "./AppIcon";
+import { AppIcon } from "@/components/ui/AppIcon";
 import { AppCard, StatusPill } from "./primitives";
 import { AppButton, EmptyState, FilterChips, PageHeader } from "./page";
 

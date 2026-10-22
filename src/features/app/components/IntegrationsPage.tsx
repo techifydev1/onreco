@@ -8,7 +8,7 @@ import { useApiData } from "@/lib/useApiData";
 import { disconnectAccounting, getConnectUrl, getSupportedAccounting } from "../api";
 import { integrations as copy } from "../content";
 import { formatDate, timeAgo } from "../format";
-import { AppIcon } from "./AppIcon";
+import { AppIcon } from "@/components/ui/AppIcon";
 import { AppCard } from "./primitives";
 import { AppButton, EmptyState, PageHeader } from "./page";
 import { Modal } from "./form";

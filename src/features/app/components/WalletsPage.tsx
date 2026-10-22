@@ -7,7 +7,7 @@ import { useApiData } from "@/lib/useApiData";
 import { connectWallet, deleteWallet, getDashboardSummary, getWallets } from "../api";
 import { wallets as copy } from "../content";
 import { formatAmount, formatDate, shortHash, timeAgo } from "../format";
-import { AppIcon } from "./AppIcon";
+import { AppIcon } from "@/components/ui/AppIcon";
 import { AppCard, ChainTag } from "./primitives";
 import { AppButton, EmptyState, Figure, PageHeader } from "./page";
 import { Modal, Select, TextInput } from "./form";

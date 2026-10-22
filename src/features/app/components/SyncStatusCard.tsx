@@ -1,7 +1,7 @@
 import { overview } from "../content";
 import { timeAgo } from "../format";
 import type { IntegrationStatus } from "../types";
-import { AppIcon } from "./AppIcon";
+import { AppIcon } from "@/components/ui/AppIcon";
 import { AppCard, CardTitle } from "./primitives";
 
 export function SyncStatusCard({ integrations }: { integrations: IntegrationStatus[] }) {

@@ -7,7 +7,7 @@ import { useApiData } from "@/lib/useApiData";
 import { getReportTypes, reportDownloadUrl } from "../api";
 import { reports as copy } from "../content";
 import { formatMonth } from "../format";
-import { AppIcon } from "./AppIcon";
+import { AppIcon } from "@/components/ui/AppIcon";
 import { AppCard } from "./primitives";
 import { AppButton, EmptyState, PageHeader } from "./page";
 

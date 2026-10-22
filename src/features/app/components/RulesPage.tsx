@@ -8,7 +8,7 @@ import { createRule, deleteRule, getRules, getWallets } from "../api";
 import { rules as copy } from "../content";
 import { formatDate } from "../format";
 import type { Rule, RuleInput } from "../types";
-import { AppIcon } from "./AppIcon";
+import { AppIcon } from "@/components/ui/AppIcon";
 import { AppCard, ChainTag } from "./primitives";
 import { AppButton, EmptyState, FilterChips, PageHeader } from "./page";
 import { Modal, Select, TextInput, Toggle } from "./form";

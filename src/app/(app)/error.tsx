@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { AppIcon } from "@/features/app/components/AppIcon";
+import { AppIcon } from "@/components/ui/AppIcon";
 
 /**
  * Error boundary for the authenticated shell. Without it a single bad field

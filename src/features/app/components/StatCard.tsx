@@ -1,6 +1,6 @@
 import { cn } from "@/lib/cn";
 
-import { AppIcon, type AppIconName } from "./AppIcon";
+import { AppIcon, type AppIconName } from "@/components/ui/AppIcon";
 
 export function StatCard({
   label,

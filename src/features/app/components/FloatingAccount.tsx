@@ -7,7 +7,7 @@ import { useApiData } from "@/lib/useApiData";
 
 import { createBillingPortal, getUserProfile, logout } from "../api";
 import { account as copy, PLAN_LABELS } from "../content";
-import { AppIcon } from "./AppIcon";
+import { AppIcon } from "@/components/ui/AppIcon";
 import { Modal } from "./form";
 import { AppButton } from "./page";
 
