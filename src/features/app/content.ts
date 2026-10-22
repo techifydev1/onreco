@@ -355,10 +355,10 @@ export const reports = {
   cadence: (value: string) => `Refreshes ${value.toLowerCase()}`,
   download: "Download",
   formats: "Formats",
-  note: {
-    title: "Make a habit of it",
-    body: "Set up automatic monthly exports once Standard is enabled — delivered every 1st to your inbox and your accountant.",
-    action: "Explore plans",
+  period: {
+    label: "Period",
+    hint: (month: string) => `Reports include transactions for ${month}.`,
+    pending: "Reports include transactions for the month you pick.",
   },
   empty: {
     title: "No reports available",

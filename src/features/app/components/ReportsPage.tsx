@@ -1,9 +1,12 @@
 "use client";
 
+import { useState, useSyncExternalStore } from "react";
+
 import { useApiData } from "@/lib/useApiData";
 
 import { getReportTypes, reportDownloadUrl } from "../api";
 import { reports as copy } from "../content";
+import { formatMonth } from "../format";
 import { AppIcon } from "./AppIcon";
 import { AppCard } from "./primitives";
 import { AppButton, EmptyState, PageHeader } from "./page";
@@ -14,13 +17,75 @@ const FORMAT_ICON: Record<string, "download" | "reports"> = {
   XLSX: "reports",
 };
 
+/** Current month as `YYYY-MM`, matching the native month input format. */
+function currentMonth(): string {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
+}
+
+function subscribeToMonth(): () => void {
+  return () => {};
+}
+
+/**
+ * The current month is only knowable in the browser. The server snapshot is
+ * empty and the real value is swapped in after hydration, so the clock is
+ * never read while the prerendered shell is being rendered.
+ */
+function useCurrentMonth(): string {
+  return useSyncExternalStore(
+    subscribeToMonth,
+    currentMonth,
+    () => "",
+  );
+}
+
+/** First and last day of the selected month. */
+function monthRange(month: string): { from: string; to: string } {
+  const [year, mon] = month.split("-").map(Number);
+  const iso = (date: Date) => date.toISOString().slice(0, 10);
+  return {
+    from: iso(new Date(Date.UTC(year, mon - 1, 1))),
+    to: iso(new Date(Date.UTC(year, mon, 0))),
+  };
+}
+
 export function ReportsPage() {
   const { data, error, loading, reload } = useApiData(getReportTypes);
   const list = data ?? [];
 
+  const today = useCurrentMonth();
+  const [picked, setPicked] = useState<string | null>(null);
+
+  const month = picked ?? today;
+  const range = month ? monthRange(month) : null;
+
   return (
     <div className="flex flex-col gap-6">
       <PageHeader eyebrow={copy.eyebrow} title={copy.title} subtitle={copy.subtitle} />
+
+      <AppCard className="flex flex-wrap items-center gap-3">
+        <label
+          htmlFor="report-period"
+          className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.07em] text-stone"
+        >
+          <AppIcon name="calendar" size={15} />
+          {copy.period.label}
+        </label>
+
+        <input
+          id="report-period"
+          type="month"
+          value={month}
+          max={today || undefined}
+          onChange={(event) => setPicked(event.target.value)}
+          className="h-9 rounded border border-hairline-strong bg-paper-card px-3 text-[12px] text-ink outline-none transition-colors duration-200 focus:border-forest focus:ring-2 focus:ring-forest/12 [color-scheme:light]"
+        />
+
+        <span className="text-[12px] text-moss">
+          {month ? copy.period.hint(formatMonth(month)) : copy.period.pending}
+        </span>
+      </AppCard>
 
       {error ? (
         <AppCard>
@@ -58,7 +123,7 @@ export function ReportsPage() {
                   {report.formats.map((format) => (
                     <a
                       key={format}
-                      href={reportDownloadUrl(report.type, format)}
+                      href={reportDownloadUrl(report.type, format, range?.from, range?.to)}
                       className="inline-flex h-9 items-center gap-2 rounded border border-hairline-strong bg-paper-card px-3 text-[12px] font-medium text-ink transition-colors duration-200 hover:bg-sage"
                     >
                       <AppIcon name={FORMAT_ICON[format] ?? "download"} size={14} />
@@ -80,19 +145,6 @@ export function ReportsPage() {
           ))}
         </div>
       )}
-
-      <AppCard className="flex flex-wrap items-center justify-between gap-4">
-        <div className="flex max-w-130 flex-col gap-1">
-          <span className="text-[13px] font-medium text-ink">{copy.note.title}</span>
-          <span className="text-[12px] leading-[1.6] text-moss">{copy.note.body}</span>
-        </div>
-        <a
-          href="/app/settings"
-          className="inline-flex h-10 items-center gap-2 rounded border border-hairline-strong bg-paper-card px-4 text-[13px] font-medium text-ink transition-colors duration-200 hover:bg-sage"
-        >
-          {copy.note.action}
-        </a>
-      </AppCard>
     </div>
   );
 }

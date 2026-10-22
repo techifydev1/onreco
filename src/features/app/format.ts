@@ -16,6 +16,29 @@ const MONTHS = [
   "Dec",
 ];
 
+const MONTH_NAMES = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+/** `2026-10` → `October 2026`. */
+export function formatMonth(value: string | null | undefined): string {
+  if (!value) return "—";
+  const [year, mon] = value.split("-").map(Number);
+  if (!year || !mon || mon < 1 || mon > 12) return "—";
+  return `${MONTH_NAMES[mon - 1]} ${year}`;
+}
+
 /** `2026-10-20T13:04:00` → `20 Oct 2026`. */
 export function formatDate(value: string | null | undefined): string {
   if (!value) return "—";
