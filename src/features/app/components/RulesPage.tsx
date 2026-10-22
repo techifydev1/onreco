@@ -1,10 +1,18 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 
 import { useApiData } from "@/lib/useApiData";
 
-import { createRule, deleteRule, getRules, getWallets } from "../api";
+import {
+  createRule,
+  deleteRule,
+  getAccountingAccounts,
+  getRules,
+  getSupportedAccounting,
+  getWallets,
+} from "../api";
 import { rules as copy } from "../content";
 import { formatDate } from "../format";
 import type { Rule, RuleInput } from "../types";
@@ -16,6 +24,7 @@ import { Modal, Select, TextInput, Toggle } from "./form";
 export function RulesPage() {
   const rules = useApiData(getRules);
   const wallets = useApiData(getWallets);
+  const providers = useApiData(getSupportedAccounting);
 
   const [tab, setTab] = useState<"all" | "active" | "paused">("all");
   const [open, setOpen] = useState(false);
@@ -41,6 +50,28 @@ export function RulesPage() {
       })),
     ],
     [wallets.data],
+  );
+
+  // The offset account is one of the accounts in the connected accounting
+  // software, so the picker follows whichever provider is connected.
+  const provider = (providers.data ?? []).find((entry) => entry.connected);
+  const accounts = useApiData(
+    () => (provider ? getAccountingAccounts(provider.slug) : Promise.resolve([])),
+    provider?.slug,
+  );
+
+  const accountOptions = useMemo(
+    () =>
+      (accounts.data ?? []).map((account) => ({
+        value: account.id,
+        label: account.label,
+      })),
+    [accounts.data],
+  );
+
+  const accountLabels = useMemo(
+    () => new Map(accountOptions.map((account) => [account.value, account.label])),
+    [accountOptions],
   );
 
   function resetForm() {
@@ -128,21 +159,6 @@ export function RulesPage() {
           value={tab}
           onChange={(value) => setTab(value as "all" | "active" | "paused")}
         />
-
-        <div className="flex flex-col items-end gap-1.5 text-right">
-          <span className="text-[13px] font-medium text-ink">{copy.suggest.title}</span>
-          <span className="max-w-100 text-[12px] leading-[1.5] text-moss">{copy.suggest.body}</span>
-          <button
-            type="button"
-            onClick={() => {
-              resetForm();
-              setOpen(true);
-            }}
-            className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
-          >
-            {copy.suggest.action} →
-          </button>
-        </div>
       </AppCard>
 
       {rules.error ? (
@@ -217,7 +233,9 @@ export function RulesPage() {
                   <span className="rounded-sm bg-forest px-2 py-1 text-[10px] font-semibold tracking-[0.05em] text-paper-card">
                     THEN
                   </span>
-                  <span className="text-[12px] text-ink">{rule.offsetAccountId}</span>
+                  <span className="text-[12px] text-ink">
+                    {accountLabels.get(rule.offsetAccountId) ?? rule.offsetAccountId}
+                  </span>
                 </div>
               </div>
 
@@ -302,14 +320,34 @@ export function RulesPage() {
             hint={copy.form.counterpartyHint}
           />
 
-          <TextInput
+          <Select
             id="rule-account"
             label={copy.form.account}
             value={offsetAccountId}
+            options={[
+              { value: "", label: copy.form.accountPlaceholder },
+              ...accountOptions,
+            ]}
             onChange={setOffsetAccountId}
-            placeholder={copy.form.accountPlaceholder}
             hint={copy.form.accountHint}
+            disabled={accounts.loading || accountOptions.length === 0}
           />
+
+          {accounts.loading ? (
+            <p className="text-[11px] leading-[1.5] text-stone">{copy.form.accountLoading}</p>
+          ) : !provider ? (
+            <p className="text-[11px] leading-[1.5] text-stone">
+              <Link
+                href="/app/integrations"
+                className="font-medium text-forest underline underline-offset-2"
+              >
+                {copy.form.accountConnect}
+              </Link>{" "}
+              {copy.form.accountConnectHint}
+            </p>
+          ) : accountOptions.length === 0 ? (
+            <p className="text-[11px] leading-[1.5] text-stone">{copy.form.accountEmpty}</p>
+          ) : null}
 
           <div className="grid grid-cols-2 items-end gap-4 max-[620px]:grid-cols-1">
             <TextInput
