@@ -1,11 +1,28 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect } from "react";
+import { useEffect, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 
 import { cn } from "@/lib/cn";
 
 import { AppIcon } from "./AppIcon";
+
+/**
+ * `false` while server-rendered, `true` in the browser. Portalling needs a
+ * real document, so the dialog waits for the client.
+ */
+function subscribe(): () => void {
+  return () => {};
+}
+
+function useIsClient(): boolean {
+  return useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false,
+  );
+}
 
 /** Labelled text input. */
 export function TextInput({
@@ -163,6 +180,8 @@ export function Modal({
   children: ReactNode;
   footer?: ReactNode;
 }) {
+  const isClient = useIsClient();
+
   useEffect(() => {
     if (!open) return;
     const onKey = (event: KeyboardEvent) => {
@@ -172,10 +191,24 @@ export function Modal({
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
-  if (!open) return null;
+  // Freeze the page behind the dialog so it cannot scroll while the popup is
+  // open. The previous value is restored when the dialog closes.
+  useEffect(() => {
+    if (!open) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+  if (!open || !isClient) return null;
+
+  // The dialog is portalled to the body so it escapes the stacking context of
+  // whatever rendered it. Otherwise a floating chrome element with a lower
+  // z-index — the bottom dock, for one — would paint over the overlay.
+  return createPortal(
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
       <button
         type="button"
         aria-label="Close dialog"
@@ -211,6 +244,7 @@ export function Modal({
           </div>
         )}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
