@@ -144,3 +144,15 @@ export function updateProfile(input: {
 }): Promise<UserProfile> {
   return api.put<UserProfile>("/api/users/me", input);
 }
+
+/* ── Account ────────────────────────────────────────────────────── */
+
+/** Opens the billing portal for the signed-in customer. */
+export function createBillingPortal(): Promise<{ customerPortalUrl: string }> {
+  return api.post<{ customerPortalUrl: string }>("/api/payment/portal", {});
+}
+
+/** Ends the session server-side and clears the auth cookies. */
+export function logout(): Promise<void> {
+  return api.post<void>("/api/auth/logout");
+}

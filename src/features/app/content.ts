@@ -366,6 +366,22 @@ export const reports = {
   },
 };
 
+export const account = {
+  menuLabel: "Account menu",
+  profile: "Your Profile",
+  manageBilling: "Manage Billing",
+  openingBilling: "Opening…",
+  billingFailed: "Could not open the billing portal. Try again in a moment.",
+  signOut: "Sign Out",
+  footer: "Onreco",
+  signOutTitle: "Sign out of Onreco?",
+  signOutHint:
+    "You'll need to sign in again with your work email to access your stablecoin accounting, reconciliation history, and QuickBooks or Xero sync.",
+  signOutCancel: "Cancel",
+  signOutConfirm: "Yes, sign out",
+  signOutFailed: "Could not sign out. Try again.",
+};
+
 export const settings = {
   eyebrow: "SETTINGS",
   title: "Settings",

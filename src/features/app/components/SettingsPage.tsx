@@ -36,7 +36,7 @@ function ProfileForm({ profile }: { profile: UserProfile }) {
   }
 
   return (
-    <AppCard className="flex flex-col gap-5">
+    <AppCard id="profile" className="flex flex-col gap-5">
       <div className="flex flex-col gap-1">
         <h2 className="font-serif text-[20px] font-normal text-ink">{copy.profile.title}</h2>
         <p className="text-[12px] text-moss">{copy.profile.hint}</p>

@@ -45,13 +45,16 @@ export function AppCard({
   children,
   className,
   padded = true,
+  id,
 }: {
   children?: React.ReactNode;
   className?: string;
   padded?: boolean;
+  id?: string;
 }) {
   return (
     <section
+      id={id}
       className={cn(
         "rounded-frame border border-hairline bg-paper-card",
         padded && "p-5",
