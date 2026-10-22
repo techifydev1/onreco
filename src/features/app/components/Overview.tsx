@@ -110,13 +110,13 @@ export function Overview() {
         <AppCard className="flex h-full flex-col gap-5">
           <CardTitle
             action={
-              <div className="flex items-center gap-1 rounded-pill bg-sage p-1">
+              <div className="flex items-center gap-1 rounded-card bg-sage p-1">
                 {overview.chart.periods.map((period) => (
                   <span
                     key={period}
                     className={
                       period === overview.chart.activePeriod
-                        ? "rounded-pill bg-paper-card px-2.5 py-1 text-[11px] font-medium text-ink"
+                        ? "rounded-chip bg-paper-card px-2.5 py-1 text-[11px] font-medium text-ink"
                         : "px-2.5 py-1 text-[11px] text-moss"
                     }
                   >

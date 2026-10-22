@@ -35,7 +35,7 @@ export const signUp = {
 export const verifyEmail = {
   heading: "Check your email",
   body: "We've sent a verification link to your email address. Click the link to verify your account and start using Onreco.",
-  expiry: "The verification link expires in 1 hour. Check your spam folder if you don't see the email.",
+  expiry: "The verification link expires in 15 minutes. Check your spam folder if you don't see the email.",
   resend: "Resend verification email",
   sending: "Sending…",
   sent: "Verification email sent. Check your inbox.",
