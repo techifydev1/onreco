@@ -65,7 +65,12 @@ function ArticleJsonLd({ post }: { post: ReturnType<typeof getPost> }) {
     if (!post) return null;
     const jsonLd = {
         "@context": "https://schema.org",
-        "@type": "Article",
+        "@type": "BlogPosting",
+        "@id": `https://www.onreco.xyz/blog/${post.slug}`,
+        mainEntityOfPage: {
+            "@type": "WebPage",
+            "@id": `https://www.onreco.xyz/blog/${post.slug}`,
+        },
         headline: post.title,
         description: post.description,
         datePublished: post.publishedTime,
@@ -81,10 +86,6 @@ function ArticleJsonLd({ post }: { post: ReturnType<typeof getPost> }) {
                 "@type": "ImageObject",
                 url: `https://www.onreco.xyz/favicon.ico`,
             },
-        },
-        mainEntityOfPage: {
-            "@type": "WebPage",
-            "@id": `https://www.onreco.xyz/blog/${post.slug}`,
         },
         image: `https://www.onreco.xyz${post.image || "/blog_banner_image_1.jpg"}`,
     };

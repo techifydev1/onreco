@@ -4,11 +4,12 @@ import { ArrowRight, Clock } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { blogPosts } from "./_data/posts";
+import { blogIndexSchema, jsonLd } from "@/lib/schema";
 
 export const metadata: Metadata = {
-    title: "Blog | Onreco",
+    title: "Stablecoin Accounting Blog: USDT & USDC Guides | Onreco",
     description:
-        "Guides and insights on stablecoin accounting, USDT/USDC bookkeeping, and QuickBooks / Xero automation.",
+        "Practical guides on stablecoin accounting, recording USDT and USDC transactions, and automating QuickBooks and Xero bookkeeping.",
     keywords: [
         "stablecoin accounting",
         "USDT QuickBooks",
@@ -22,9 +23,9 @@ export const metadata: Metadata = {
         canonical: "/blog",
     },
     openGraph: {
-        title: "Blog | Onreco",
+        title: "Stablecoin Accounting Blog: USDT & USDC Guides | Onreco",
         description:
-            "Guides and insights on stablecoin accounting, USDT/USDC bookkeeping, and QuickBooks / Xero automation.",
+            "Practical guides on stablecoin accounting, recording USDT and USDC transactions, and automating QuickBooks and Xero bookkeeping.",
         type: "website",
         url: "/blog",
         siteName: "Onreco",
@@ -40,9 +41,9 @@ export const metadata: Metadata = {
     },
     twitter: {
         card: "summary_large_image",
-        title: "Blog | Onreco",
+        title: "Stablecoin Accounting Blog: USDT & USDC Guides | Onreco",
         description:
-            "Guides and insights on stablecoin accounting, USDT/USDC bookkeeping, and QuickBooks / Xero automation.",
+            "Practical guides on stablecoin accounting, recording USDT and USDC transactions, and automating QuickBooks and Xero bookkeeping.",
         images: ["/onreco_main_blog_banner.jpg"],
     },
 };
@@ -115,6 +116,12 @@ export default function BlogIndexPage() {
                 />
             </main>
             <Footer hrefPrefix="/" />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: jsonLd(blogIndexSchema(posts)),
+                }}
+            />
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{

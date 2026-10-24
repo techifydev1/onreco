@@ -87,6 +87,38 @@ export function contactPageSchema() {
   };
 }
 
+export function blogIndexSchema(
+  posts: { slug: string; title: string; publishedTime: string; modifiedTime?: string }[],
+) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "Onreco Blog",
+    url: `${env.siteUrl}/blog`,
+    description:
+      "Guides and insights on stablecoin accounting, USDT/USDC bookkeeping, and QuickBooks / Xero automation.",
+    publisher: { "@id": `${env.siteUrl}/#organization` },
+    mainEntity: {
+      "@type": "ItemList",
+      itemListElement: posts.map((post, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        name: post.title,
+        url: `${env.siteUrl}/blog/${post.slug}`,
+      })),
+    },
+    blogPost: posts.map((post) => ({
+      "@type": "BlogPosting",
+      "@id": `${env.siteUrl}/blog/${post.slug}`,
+      headline: post.title,
+      url: `${env.siteUrl}/blog/${post.slug}`,
+      datePublished: post.publishedTime,
+      dateModified: post.modifiedTime ?? post.publishedTime,
+      publisher: { "@id": `${env.siteUrl}/#organization` },
+    })),
+  };
+}
+
 /** Serialises JSON-LD for a <script> tag without letting copy break the markup. */
 export function jsonLd(data: unknown): string {
   return JSON.stringify(data).replace(/</g, "\\u003c");
