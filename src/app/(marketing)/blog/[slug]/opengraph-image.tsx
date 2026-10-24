@@ -14,7 +14,7 @@ export default async function Image({
     params: Promise<{ slug: string }>;
 }) {
     const { slug } = await params;
-    const post = (await import("../_data/posts")).getPost(slug);
+    const post = getPost(slug);
 
     if (!post) {
         return new ImageResponse(
@@ -119,7 +119,7 @@ export default async function Image({
                     textTransform: "uppercase",
                     letterSpacing: "0.08em",
                     color: "#285742",
-                    display: "inline-flex",
+                    display: "flex",
                     alignItems: "center",
                     gap: 8,
                 }}>

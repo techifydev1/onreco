@@ -14,15 +14,25 @@ export const social = {
 };
 
 export const nav = {
-  links: [
+  primary: [
     { label: "How it works", href: "#how" },
-    { label: "Rules", href: "#rules" },
     { label: "Integrations", href: "#integrations" },
     { label: "Pricing", href: "#pricing" },
-    { label: "Who it's for", href: "#audience" },
-    { label: "FAQs", href: "#faq" },
-    { label: "Product tour", href: "/demo", page: true },
+    { label: "Blog", href: "/blog" },
   ],
+  dropdown: {
+    product: [
+      { label: "How it works", href: "#how" },
+      { label: "Rules", href: "#rules" },
+      { label: "Integrations", href: "#integrations" },
+      { label: "Product tour", href: "/demo", page: true },
+    ],
+    resources: [
+      { label: "Blog", href: "/blog" },
+      { label: "FAQs", href: "#faq" },
+      { label: "Who it's for", href: "#audience" },
+    ],
+  },
   cta: { label: "Book a demo", href: "/contact" },
 };
 

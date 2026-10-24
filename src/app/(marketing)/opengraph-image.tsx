@@ -75,7 +75,7 @@ export default function Image() {
                     gap: 16,
                 }}>
                     <span style={{
-                        display: "inline-flex",
+                        display: "flex",
                         alignItems: "center",
                         gap: 8,
                         padding: "12px 24px",
@@ -88,7 +88,7 @@ export default function Image() {
                         → Book a demo
                     </span>
                     <span style={{
-                        display: "inline-flex",
+                        display: "flex",
                         alignItems: "center",
                         gap: 8,
                         padding: "12px 24px",
