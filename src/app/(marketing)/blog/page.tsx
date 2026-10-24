@@ -56,19 +56,17 @@ export default function BlogIndexPage() {
             <main className="pt-24">
                 <section className="px-(--page-x) pt-17 pb-21 max-[961px]:pb-16">
                     <div className="mx-auto max-w-3xl">
-                        <div className="text-center">
-                            <span className="text-[10px] font-semibold tracking-[0.08em] uppercase text-forest">
-                                Onreco Blog
-                            </span>
-                            <h1 className="font-serif text-[clamp(2.5rem,5vw,4rem)] leading-[1.1] text-ink mt-3 mb-4">
-                                Stablecoin accounting, explained.
-                            </h1>
-                            <p className="mx-auto max-w-2xl text-[16px] leading-[1.7] text-moss mb-12">
-                                Practical guides on recording USDT and USDC
-                                transactions, reconciling wallets, and automating
-                                your books.
-                            </p>
-                        </div>
+                        <span className="text-[10px] font-semibold tracking-[0.08em] uppercase text-forest">
+                            Onreco Blog
+                        </span>
+                        <h1 className="font-serif text-[clamp(2.5rem,5vw,4rem)] leading-[1.1] text-ink mt-3 mb-4">
+                            Stablecoin accounting, explained.
+                        </h1>
+                        <p className="max-w-2xl text-[16px] leading-[1.7] text-moss mb-12">
+                            Practical guides on recording USDT and USDC
+                            transactions, reconciling wallets, and automating
+                            your books.
+                        </p>
 
                         <ul className="flex flex-col gap-5">
                             {posts.map((post) => (
