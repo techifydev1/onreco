@@ -156,3 +156,8 @@ export function createBillingPortal(): Promise<{ customerPortalUrl: string }> {
 export function logout(): Promise<void> {
   return api.post<void>("/api/auth/logout");
 }
+
+/** Initializes a payment for a paid plan and returns the authorization URL to redirect to. */
+export function initializePayment(planSlug: string): Promise<{ authorizationUrl: string }> {
+  return api.post<{ authorizationUrl: string }>(`/api/payment/initialize/${planSlug}`, {});
+}

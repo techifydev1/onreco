@@ -6,6 +6,7 @@ import { env } from "@/config/env";
 import { site } from "@/config/site";
 
 import { VisitTracker } from "@/components/VisitTracker";
+import Toast from "@/components/shared/Toast";
 
 import "./globals.css";
 
@@ -28,6 +29,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(env.siteUrl),
   title: `${site.name} — ${site.description}`,
   description: site.description,
+  icons: {
+    icon: "/onreco-logo.png",
+    shortcut: "/onreco-logo.png",
+    apple: "/onreco-logo.png",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -40,6 +46,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex min-h-full flex-col bg-paper text-ink">
         <TopLoader color="#285742" />
         <VisitTracker />
+        <Toast />
         {children}
       </body>
     </html>

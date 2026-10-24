@@ -3,15 +3,43 @@
 import type { CSSProperties } from "react";
 
 import { pricing } from "../content";
-import { Eyebrow, LoraHeading, Btn } from "./primitives";
+import { Eyebrow, LoraHeading } from "./primitives";
 import { Icon } from "./Icon";
 import { usePlans } from "@/providers/plan-store";
+import { initializePayment } from "@/features/app/api";
+import { useToastStore } from "@/providers/toast-provider";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import type { SubscriptionPlan } from "@/features/app/types";
 
 const formatPrice = (price: number) => (price === 0 ? "$0" : `$${price}`);
 
 export function Pricing() {
+  const { show } = useToastStore();
+  const router = useRouter();
+  const [pendingSlug, setPendingSlug] = useState<string | null>(null);
   const plans = usePlans();
   const displayPlans = plans.length > 0 ? plans : pricing.plans;
+
+  const handleChoose = async (slug: string, price: number) => {
+    if (price === 0) {
+      router.push("/signup");
+      return;
+    }
+    if (pendingSlug) return;
+    setPendingSlug(slug);
+    try {
+      const { authorizationUrl } = await initializePayment(slug);
+      window.open(authorizationUrl, "_self");
+    } catch (err) {
+      show(
+        err instanceof Error ? err.message : "Something went wrong. Please try again.",
+        "error"
+      );
+    } finally {
+      setPendingSlug(null);
+    }
+  };
 
   return (
     <section id="pricing" className="border-t border-hairline px-(--page-x) py-(--section-y)">
@@ -29,7 +57,7 @@ export function Pricing() {
         </div>
 
         <div className="grid grid-cols-3 gap-6 max-[961px]:grid-cols-1">
-          {displayPlans.map((plan, i) => {
+          {displayPlans.map((plan: SubscriptionPlan, i: number) => {
             const highlighted = plan.slug === pricing.highlighted;
             const txLabel = plan.transactionCount === 1 ? "transaction" : "transactions";
             return (
@@ -67,13 +95,42 @@ export function Pricing() {
                   </span>
                 </div>
 
-                <Btn
-                  href="#demo"
-                  variant={highlighted ? "primary" : "ghost"}
-                  className="mt-2 w-full justify-center"
-                >
-                  {Number(plan.price) === 0 ? "Start free" : "Book a demo"}
-                </Btn>
+                {plan.price === 0 ? (
+                  <a
+                    href="/signup"
+                    className={`
+                      mt-auto block w-full rounded-lg px-5 py-3 text-center text-sm font-medium transition-opacity hover:opacity-90 ${
+                        highlighted
+                          ? "bg-forest text-paper-card"
+                          : "border border-hairline-strong bg-paper-card text-ink hover:border-forest/50 hover:text-forest"
+                      }
+                    `}
+                  >
+                    Get Started Free
+                  </a>
+                ) : (
+                  <button
+                    type="button"
+                    disabled={pendingSlug !== null}
+                    onClick={() => handleChoose(plan.slug, plan.price)}
+                    className={`
+                      mt-auto w-full rounded-lg px-5 py-3 text-sm font-medium transition-opacity hover:opacity-90 cursor-pointer ${
+                        highlighted
+                          ? "bg-forest text-paper-card"
+                          : "border border-hairline-strong bg-paper-card text-ink hover:border-forest/50 hover:text-forest"
+                      }
+                    `}
+                  >
+                    {pendingSlug === plan.slug ? (
+                      <span className="inline-flex items-center justify-center gap-2">
+                        Opening checkout…
+                        <span className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                      </span>
+                    ) : (
+                      `Choose ${plan.name}`
+                    )}
+                  </button>
+                )}
               </div>
             );
           })}
