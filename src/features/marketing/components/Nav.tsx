@@ -4,6 +4,7 @@ import { nav } from "../content";
 import { resolveHref } from "./href";
 import { Icon } from "./Icon";
 import { WordmarkMark } from "./Wordmark";
+import { routes } from "@/config/routes";
 
 export function Nav({ hrefPrefix = "" }: { hrefPrefix?: string }) {
   return (
@@ -25,6 +26,15 @@ export function Nav({ hrefPrefix = "" }: { hrefPrefix?: string }) {
             </Link>
           ))}
         </nav>
+
+        <div className="hidden min-[961px]:flex items-center gap-3">
+          <Link href={routes.login} className="text-[13px] text-moss transition-colors duration-200 hover:text-ink">
+            Log in
+          </Link>
+          <Link href={routes.signup} className="text-[13px] text-moss transition-colors duration-200 hover:text-ink">
+            Sign up
+          </Link>
+        </div>
 
         <Link
           href={resolveHref(nav.cta.href, hrefPrefix)}

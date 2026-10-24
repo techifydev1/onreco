@@ -16,7 +16,9 @@ export const social = {
 export const nav = {
   links: [
     { label: "How it works", href: "#how" },
+    { label: "Rules", href: "#rules" },
     { label: "Integrations", href: "#integrations" },
+    { label: "Pricing", href: "#pricing" },
     { label: "Who it's for", href: "#audience" },
     { label: "FAQs", href: "#faq" },
     { label: "Product tour", href: "/demo", page: true },
