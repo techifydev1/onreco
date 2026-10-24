@@ -4,7 +4,7 @@ import { Icon } from "./Icon";
 
 export function Rules() {
   return (
-    <section className="border-t border-hairline px-(--page-x) py-(--section-y)">
+    <section id="rules" className="border-t border-hairline px-(--page-x) py-(--section-y)">
       <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] items-start gap-17.5 max-[961px]:grid-cols-1 max-[961px]:gap-12">
         <div className="flex flex-col gap-6">
           <Eyebrow>{rules.eyebrow}</Eyebrow>

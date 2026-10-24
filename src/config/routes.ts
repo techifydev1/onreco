@@ -6,7 +6,9 @@ export const routes = {
   login: "/login",
   signup: "/signup",
   verifyEmail: "/verify-email",
+  contact: "/contact",
   app: "/app",
+  admin: "/admin",
 } as const;
 
 export type RouteKey = keyof typeof routes;

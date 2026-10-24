@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { seo } from "@/features/marketing/content";
+import { faqSchema, jsonLd, organizationSchema, softwareApplicationSchema } from "@/lib/schema";
 import { Nav } from "@/features/marketing/components/Nav";
 import { Hero } from "@/features/marketing/components/Hero";
 import { CompatStrip } from "@/features/marketing/components/CompatStrip";
@@ -19,11 +20,31 @@ import { ScrollReveal } from "@/features/marketing/components/ScrollReveal";
 export const metadata: Metadata = {
   title: seo.title,
   description: seo.description,
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: seo.title,
+    description: seo.description,
+    url: "/",
+    siteName: "Onreco",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@onrecohq",
+    title: seo.title,
+    description: seo.description,
+  },
 };
 
 export default function LandingPage() {
   return (
     <div className="bg-paper">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: jsonLd([organizationSchema(), softwareApplicationSchema(), faqSchema()]),
+        }}
+      />
       <Nav />
       <main>
         <Hero />

@@ -1,7 +1,8 @@
 import { footer } from "../content";
+import { resolveHref } from "./href";
 import { WordmarkMark } from "./Wordmark";
 
-export function Footer() {
+export function Footer({ hrefPrefix = "" }: { hrefPrefix?: string }) {
   return (
     <footer className="bg-paper pt-15 pb-7">
       <div className="flex flex-col gap-13.5 px-(--page-x)">
@@ -27,7 +28,7 @@ export function Footer() {
                 {group.links.map((link) => (
                   <a
                     key={link.label}
-                    href={link.href}
+                    href={resolveHref(link.href, hrefPrefix)}
                     className="text-[12px] text-moss transition-colors duration-200 hover:text-ink"
                   >
                     {link.label}
@@ -45,7 +46,7 @@ export function Footer() {
             {footer.legal.map((link) => (
               <a
                 key={link.label}
-                href={link.href}
+                href={resolveHref(link.href, hrefPrefix)}
                 className="text-moss transition-colors duration-200 hover:text-ink"
               >
                 {link.label}

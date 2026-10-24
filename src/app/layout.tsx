@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Inter, Lora } from "next/font/google";
 
+import { env } from "@/config/env";
 import { site } from "@/config/site";
+
+import { VisitTracker } from "@/components/VisitTracker";
 
 import "./globals.css";
 
@@ -21,6 +25,7 @@ const lora = Lora({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(env.siteUrl),
   title: `${site.name} — ${site.description}`,
   description: site.description,
 };
@@ -33,12 +38,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
-      <head>
-        {/* Marks the document as script-enabled before first paint, so
-            scroll-reveal styles only hide content when JS can reveal it. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
-      </head>
-      <body className="flex min-h-full flex-col bg-paper text-ink">{children}</body>
+      <body className="flex min-h-full flex-col bg-paper text-ink">
+        <Script id="js-class" strategy="beforeInteractive">
+          {`document.documentElement.classList.add('js')`}
+        </Script>
+        {children}
+        <VisitTracker />
+      </body>
     </html>
   );
 }

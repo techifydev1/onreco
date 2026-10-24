@@ -1,0 +1,17 @@
+import type { MetadataRoute } from "next";
+
+import { env } from "@/config/env";
+
+export default function robots(): MetadataRoute.Robots {
+  return {
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/api/", "/app", "/admin", "/login", "/signup", "/verify-email"],
+      },
+    ],
+    sitemap: `${env.siteUrl}/sitemap.xml`,
+    host: env.siteUrl,
+  };
+}

@@ -62,7 +62,7 @@ export async function proxy(request: NextRequest) {
   }
 
   // 3. Guard the product area without hitting the backend.
-  if (path.startsWith(routes.app)) {
+  if (path.startsWith(routes.app) || path.startsWith(routes.admin)) {
     const refreshToken = request.cookies.get(authCookies.refreshToken)?.value;
     const accessToken = request.cookies.get(authCookies.accessToken)?.value;
 
