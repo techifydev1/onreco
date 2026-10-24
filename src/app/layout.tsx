@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Inter, Lora } from "next/font/google";
 import type React from "react";
 import TopLoader from "nextjs-toploader";
@@ -41,12 +40,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
+        />
+      </head>
       <body className="flex min-h-full flex-col bg-paper text-ink">
-        <Script id="js-class" strategy="beforeInteractive">
-          {`document.documentElement.classList.add('js')`}
-        </Script>
+        <TopLoader />
         {children}
-        <TopLoader color="#285742" />
         <VisitTracker />
       </body>
     </html>

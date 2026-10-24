@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import type { SubscriptionPlan } from "@/features/app/types";
+
 import { seo } from "@/features/marketing/content";
 import { faqSchema, jsonLd, organizationSchema, softwareApplicationSchema } from "@/lib/schema";
 import { Nav } from "@/features/marketing/components/Nav";
@@ -16,6 +18,10 @@ import { Faq } from "@/features/marketing/components/Faq";
 import { Cta } from "@/features/marketing/components/Cta";
 import { Footer } from "@/features/marketing/components/Footer";
 import { ScrollReveal } from "@/features/marketing/components/ScrollReveal";
+import { getPlans } from "@/features/app/api";
+import PlansStoreInitializer from "@/providers/PlansStoreInitializer";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: seo.title,
@@ -36,7 +42,14 @@ export const metadata: Metadata = {
   },
 };
 
-export default function LandingPage() {
+export default async function LandingPage() {
+  let plans: SubscriptionPlan[] = [];
+  try {
+    plans = await getPlans();
+  } catch {
+    plans = [];
+  }
+
   return (
     <div className="bg-paper">
       <script
@@ -47,6 +60,7 @@ export default function LandingPage() {
       />
       <Nav />
       <main>
+        <PlansStoreInitializer plans={plans} />
         <Hero />
         <CompatStrip />
         <Gap />

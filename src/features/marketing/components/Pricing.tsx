@@ -3,10 +3,14 @@ import type { CSSProperties } from "react";
 import { pricing } from "../content";
 import { Eyebrow, LoraHeading, Btn } from "./primitives";
 import { Icon } from "./Icon";
+import { usePlans } from "@/providers/plan-store";
 
 const formatPrice = (price: number) => (price === 0 ? "$0" : `$${price}`);
 
 export function Pricing() {
+  const plans = usePlans();
+  const displayPlans = plans.length > 0 ? plans : pricing.plans;
+
   return (
     <section id="pricing" className="border-t border-hairline px-(--page-x) py-(--section-y)">
       <div className="flex flex-col gap-12">
@@ -23,7 +27,7 @@ export function Pricing() {
         </div>
 
         <div className="grid grid-cols-3 gap-6 max-[961px]:grid-cols-1">
-          {pricing.plans.map((plan, i) => {
+          {displayPlans.map((plan, i) => {
             const highlighted = plan.slug === pricing.highlighted;
             const txLabel = plan.transactionCount === 1 ? "transaction" : "transactions";
             return (
