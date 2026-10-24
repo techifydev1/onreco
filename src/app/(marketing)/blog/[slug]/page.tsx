@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Clock, Calendar } from "lucide-react";
+import { Clock, Calendar } from "lucide-react";
 import { Nav } from "@/features/marketing/components/Nav";
 import { Footer } from "@/features/marketing/components/Footer";
 import { getAllPostSlugs, getPost, type BlogBlock } from "@/features/marketing/content";
@@ -177,7 +177,7 @@ export default async function BlogPostPage({
             <Nav hrefPrefix="/" />
             <main className="pt-24">
                 <section className="px-(--page-x) pt-17 pb-21 max-[961px]:pb-16">
-                    <div className="max-w-3xl">
+                    <div className="mx-auto max-w-3xl">
                         <Link
                             href="/blog"
                             className="inline-flex items-center gap-2 text-xs font-semibold tracking-[0.08em] uppercase text-moss hover:text-forest transition-colors mb-8"
@@ -195,7 +195,7 @@ export default async function BlogPostPage({
                             </span>
                             <span className="text-[12px] text-moss flex items-center gap-1.5">
                                 <Calendar className="w-3.5 h-3.5" />
-                                {new Date(post.publishedTime).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
+                                {formattedDate}
                                 <span aria-hidden="true">·</span>
                                 <Clock className="w-3.5 h-3.5" />
                                 {post.readingMinutes} min read
@@ -213,7 +213,7 @@ export default async function BlogPostPage({
                         <div className="flex items-center gap-3 text-xs text-moss">
                             <span>{post.author}</span>
                             <span aria-hidden="true">·</span>
-                            <span>{new Date(post.publishedTime).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
+                            <span>{formattedDate}</span>
                             {post.modifiedTime && (
                                 <>
                                     <span aria-hidden="true">·</span>
@@ -226,15 +226,14 @@ export default async function BlogPostPage({
 
                 <ArticleJsonLd post={post} />
 
-                <section className="px-(--page-x) py-(--section-y) max-w-3xl">
-                    <div className="prose max-w-none">
+                <section className="px-(--page-x) py-(--section-y)">
+                    <div className="mx-auto max-w-3xl">
                         {post.content.map((block, i) => (
                             <Block key={i} block={block} />
                         ))}
                     </div>
                 </section>
             </main>
-            <Footer hrefPrefix="/" />
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{

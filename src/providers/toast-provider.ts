@@ -10,8 +10,6 @@ interface ToastState {
   dismiss: () => void;
 }
 
-const toastTimerId: ReturnType<typeof setTimeout> | null = null;
-
 export const useToastStore = create<ToastState>((set) => ({
   type: "info",
   message: "",
