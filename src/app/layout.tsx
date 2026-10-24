@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Inter, Lora } from "next/font/google";
-import type React from "react";
 import TopLoader from "nextjs-toploader";
 
 import { env } from "@/config/env";
@@ -29,7 +28,6 @@ export const metadata: Metadata = {
   metadataBase: new URL(env.siteUrl),
   title: `${site.name} — ${site.description}`,
   description: site.description,
-  icons: [{ url: "/onreco-logo.png" }],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -38,17 +36,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="en"
       className={`${inter.variable} ${lora.variable} h-full antialiased`}
       data-scroll-behavior="smooth"
-      suppressHydrationWarning
     >
-      <head>
-        <script
-          dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }}
-        />
-      </head>
       <body className="flex min-h-full flex-col bg-paper text-ink">
-        <TopLoader />
-        {children}
+        <TopLoader color="#285742" />
         <VisitTracker />
+        {children}
       </body>
     </html>
   );
