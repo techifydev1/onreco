@@ -28,6 +28,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(env.siteUrl),
   title: `${site.name} — ${site.description}`,
   description: site.description,
+  icons: [{ url: "/onreco-logo.png" }],
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
