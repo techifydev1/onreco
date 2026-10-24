@@ -29,14 +29,6 @@ export const metadata: Metadata = {
         type: "website",
         url: "/blog",
         siteName: "Onreco",
-        images: [
-            {
-                url: "/onreco_main_blog_banner.jpg",
-                width: 1200,
-                height: 630,
-                alt: "Onreco Blog - Stablecoin accounting, explained.",
-            },
-        ],
         locale: "en_US",
     },
     twitter: {
@@ -44,7 +36,6 @@ export const metadata: Metadata = {
         title: "Stablecoin Accounting Blog: USDT & USDC Guides | Onreco",
         description:
             "Practical guides on stablecoin accounting, recording USDT and USDC transactions, and automating QuickBooks and Xero bookkeeping.",
-        images: ["/onreco_main_blog_banner.jpg"],
     },
 };
 
