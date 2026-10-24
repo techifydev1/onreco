@@ -105,7 +105,7 @@ export function Btn({
       className={cn(
         "inline-flex items-center gap-2 rounded px-5.75 h-12.5",
         "font-sans text-[14px] font-medium whitespace-nowrap",
-        "transition-[opacity,transform] duration-[200ms] hover:opacity-[0.88] hover:-translate-y-px",
+        "transition-[opacity] duration-[200ms] hover:opacity-[0.88]",
         variantClass,
         className,
       )}

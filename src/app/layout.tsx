@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Inter, Lora } from "next/font/google";
+import type React from "react";
+import TopLoader from "nextjs-toploader";
 
 import { env } from "@/config/env";
 import { site } from "@/config/site";
@@ -31,7 +33,7 @@ export const metadata: Metadata = {
   icons: [{ url: "/onreco-logo.png" }],
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
@@ -44,6 +46,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {`document.documentElement.classList.add('js')`}
         </Script>
         {children}
+        <TopLoader color="#285742" />
         <VisitTracker />
       </body>
     </html>

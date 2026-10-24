@@ -19,7 +19,7 @@ export function Cta() {
         <div className="flex flex-1 flex-col gap-6">
           <a
             href={cta.button.href}
-            className="inline-flex h-12.5 w-fit items-center gap-2 rounded bg-dark-text px-5.75 text-[14px] font-medium whitespace-nowrap text-ink transition-[opacity,transform] duration-200 hover:opacity-[0.88] hover:-translate-y-px"
+            className="inline-flex h-12.5 w-fit items-center gap-2 rounded bg-dark-text px-5.75 text-[14px] font-medium whitespace-nowrap text-ink transition-[opacity] duration-200 hover:opacity-[0.88]"
           >
             {cta.button.label}
             <Icon name="arrow-up-right-2" size={16} />

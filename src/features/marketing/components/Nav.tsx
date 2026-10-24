@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { nav } from "../content";
 import { resolveHref } from "./href";
 import { Icon } from "./Icon";
@@ -7,30 +9,30 @@ export function Nav({ hrefPrefix = "" }: { hrefPrefix?: string }) {
   return (
     <header className="fixed inset-x-0 top-0 z-[100] border-b border-hairline bg-paper">
       <div className="flex h-24 items-center justify-between px-(--page-x)">
-        <a href={hrefPrefix || "#top"} className="flex items-center gap-2.25" aria-label="Onreco home">
+        <Link href={hrefPrefix || "#top"} className="flex items-center gap-2.25" aria-label="Onreco home">
           <WordmarkMark />
           <span className="text-[30px] font-semibold tracking-[-0.01em] text-ink">onreco</span>
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-8.5 min-[961px]:flex" aria-label="Main navigation">
           {nav.links.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={resolveHref(link.href, hrefPrefix)}
               className="nav-link text-[13px] text-moss transition-colors duration-200 hover:text-ink"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </nav>
 
-        <a
+        <Link
           href={resolveHref(nav.cta.href, hrefPrefix)}
           className="inline-flex h-10 items-center gap-2 rounded bg-forest px-5 text-[14px] font-medium text-paper-card transition-opacity duration-200 hover:opacity-[0.88]"
         >
           <span>{nav.cta.label}</span>
           <Icon name="arrow-up-right" size={14} className="hidden min-[701px]:block" />
-        </a>
+        </Link>
       </div>
     </header>
   );

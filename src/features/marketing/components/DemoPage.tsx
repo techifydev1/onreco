@@ -77,14 +77,14 @@ export function DemoPage() {
             <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
               <a
                 href={demoPage.cta.primary.href}
-                className="inline-flex h-12.5 items-center gap-2 rounded bg-forest px-5.75 text-[14px] font-medium whitespace-nowrap text-paper-card transition-[opacity,transform] duration-200 hover:opacity-[0.88] hover:-translate-y-px"
+                className="inline-flex h-12.5 items-center gap-2 rounded bg-forest px-5.75 text-[14px] font-medium whitespace-nowrap text-paper-card transition-[opacity] duration-200 hover:opacity-[0.88]"
               >
                 {demoPage.cta.primary.label}
                 <Icon name="arrow-up-right" size={14} />
               </a>
               <a
                 href={demoPage.cta.secondary.href}
-                className="inline-flex h-12.5 items-center gap-2 rounded border border-hairline-strong bg-paper-card px-5.75 text-[14px] font-medium whitespace-nowrap text-ink transition-[opacity,transform] duration-200 hover:opacity-[0.88] hover:-translate-y-px"
+                className="inline-flex h-12.5 items-center gap-2 rounded border border-hairline-strong bg-paper-card px-5.75 text-[14px] font-medium whitespace-nowrap text-ink transition-[opacity] duration-200 hover:opacity-[0.88]"
               >
                 {demoPage.cta.secondary.label}
                 <Icon name="arrow-up-right-2" size={15} />
