@@ -21,8 +21,6 @@ import { ScrollReveal } from "@/features/marketing/components/ScrollReveal";
 import { getPlans } from "@/features/app/api";
 import PlansStoreInitializer from "@/providers/PlansStoreInitializer";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: seo.title,
   description: seo.description,
