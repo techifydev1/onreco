@@ -540,3 +540,4 @@ export const demoPage = {
     secondary: { label: "Open the workspace", href: "/app" },
   },
 };
+export { getAllPostSlugs, getPost, type BlogPost, type BlogBlock } from "@/app/(marketing)/blog/_data/posts";
