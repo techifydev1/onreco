@@ -33,7 +33,7 @@ export const nav = {
       { label: "Who it's for", href: "/#audience" },
     ],
   },
-  cta: { label: "Book a demo", href: "/contact" },
+  cta: { label: "Book a demo", shortLabel: "Demo", href: "/contact" },
 };
 
 export const hero = {
