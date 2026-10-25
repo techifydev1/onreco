@@ -219,12 +219,71 @@ export function SettingsPage() {
     <div className="flex flex-col gap-6">
       <PageHeader eyebrow={copy.eyebrow} title={copy.title} subtitle={copy.subtitle} />
 
-      <div className="grid grid-cols-2 gap-4 max-[900px]:grid-cols-1">
-        {profile.data ? (
-          <ProfileForm key={profile.data.id} profile={profile.data} />
-        ) : (
-          <AppCard className="h-96 animate-pulse bg-sage2" />
-        )}
+      <div className="grid grid-cols-2 items-start gap-4 max-[900px]:grid-cols-1">
+        <div className="flex flex-col gap-4">
+          {profile.data ? (
+            <ProfileForm key={profile.data.id} profile={profile.data} />
+          ) : (
+            <AppCard className="h-96 animate-pulse bg-sage2" />
+          )}
+
+            {/* ── Support ───────────────────────────────────── */}
+            <AppCard className="flex flex-col gap-4">
+              <div className="flex flex-col gap-1">
+                <h2 className="font-serif text-[20px] font-normal text-ink">{copy.support.title}</h2>
+                <p className="text-[12px] text-moss">{copy.support.hint}</p>
+              </div>
+
+              <div className="flex items-center justify-between gap-3 border-t border-hairline pt-4">
+                <div className="flex min-w-0 items-center gap-2.5">
+                  <AppIcon name="mail" size={15} className="shrink-0 text-stone" />
+                  <span className="truncate text-[13px] text-ink">{copy.support.email.value}</span>
+                </div>
+                <div className="flex shrink-0 items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => onCopy(copy.support.email.value, "email")}
+                    className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
+                  >
+                    {copied === "email" ? copy.support.copied : copy.support.copy}
+                  </button>
+                  <a
+                    href={copy.support.email.href}
+                    className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
+                  >
+                    {copy.support.open}
+                  </a>
+                </div>
+              </div>
+
+              {copy.support.channels.map((channel) => (
+                <div key={channel.label} className="flex items-center justify-between gap-3">
+                  <div className="flex min-w-0 items-center gap-2.5">
+                    <span className="text-[13px] font-medium text-ink">{channel.label}</span>
+                    <span className="truncate text-[12px] text-moss">{channel.value}</span>
+                  </div>
+                  <div className="flex shrink-0 items-center gap-3">
+                    <button
+                      type="button"
+                      onClick={() => onCopy(channel.value, channel.label)}
+                      className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
+                    >
+                      {copied === channel.label ? copy.support.copied : copy.support.copy}
+                    </button>
+                    <a
+                      href={channel.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
+                    >
+                      {copy.support.open}
+                    </a>
+                  </div>
+                </div>
+              ))}
+            </AppCard>
+
+        </div>
 
         <div className="flex flex-col gap-4">
           {/* ── Plan ─────────────────────────────────────── */}
@@ -310,62 +369,6 @@ export function SettingsPage() {
                 {copy.verification.verifyIdentity}
               </span>
             </div>
-          </AppCard>
-
-          {/* ── Support ───────────────────────────────────── */}
-          <AppCard className="flex flex-col gap-4">
-            <div className="flex flex-col gap-1">
-              <h2 className="font-serif text-[20px] font-normal text-ink">{copy.support.title}</h2>
-              <p className="text-[12px] text-moss">{copy.support.hint}</p>
-            </div>
-
-            <div className="flex items-center justify-between gap-3 border-t border-hairline pt-4">
-              <div className="flex min-w-0 items-center gap-2.5">
-                <AppIcon name="mail" size={15} className="shrink-0 text-stone" />
-                <span className="truncate text-[13px] text-ink">{copy.support.email.value}</span>
-              </div>
-              <div className="flex shrink-0 items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => onCopy(copy.support.email.value, "email")}
-                  className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
-                >
-                  {copied === "email" ? copy.support.copied : copy.support.copy}
-                </button>
-                <a
-                  href={copy.support.email.href}
-                  className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
-                >
-                  {copy.support.open}
-                </a>
-              </div>
-            </div>
-
-            {copy.support.channels.map((channel) => (
-              <div key={channel.label} className="flex items-center justify-between gap-3">
-                <div className="flex min-w-0 items-center gap-2.5">
-                  <span className="text-[13px] font-medium text-ink">{channel.label}</span>
-                  <span className="truncate text-[12px] text-moss">{channel.value}</span>
-                </div>
-                <div className="flex shrink-0 items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={() => onCopy(channel.value, channel.label)}
-                    className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
-                  >
-                    {copied === channel.label ? copy.support.copied : copy.support.copy}
-                  </button>
-                  <a
-                    href={channel.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
-                  >
-                    {copy.support.open}
-                  </a>
-                </div>
-              </div>
-            ))}
           </AppCard>
 
           {/* ── Session ──────────────────────────────────── */}
