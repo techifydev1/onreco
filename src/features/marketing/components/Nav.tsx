@@ -5,12 +5,11 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 
 import { nav } from "../content";
-import { resolveHref } from "./href";
 import { Icon } from "./Icon";
 import { WordmarkMark } from "./Wordmark";
 import { routes } from "@/config/routes";
 
-function Dropdown({ label, items, hrefPrefix }: { label: string; items: typeof nav.dropdown.product; hrefPrefix: string }) {
+function Dropdown({ label, items }: { label: string; items: typeof nav.dropdown.product }) {
   const [open, setOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -50,7 +49,7 @@ function Dropdown({ label, items, hrefPrefix }: { label: string; items: typeof n
           {items.map((item) => (
             <Link
               key={item.href}
-              href={resolveHref(item.href, hrefPrefix)}
+              href={item.href}
               className="block px-4 py-2.5 text-[13px] text-moss transition-colors hover:text-ink hover:bg-sage/20"
             >
               {item.label}
@@ -62,11 +61,11 @@ function Dropdown({ label, items, hrefPrefix }: { label: string; items: typeof n
   );
 }
 
-export function Nav({ hrefPrefix = "" }: { hrefPrefix?: string }) {
+export function Nav() {
   return (
     <header className="fixed inset-x-0 top-0 z-[100] border-b border-hairline bg-paper">
       <div className="flex h-24 items-center justify-between px-(--page-x)">
-        <Link href={hrefPrefix || "#top"} className="flex items-center gap-2.25" aria-label="Onreco home">
+        <Link href="/#top" className="flex items-center gap-2.25" aria-label="Onreco home">
           <WordmarkMark />
           <span className="text-[30px] font-semibold tracking-[-0.01em] text-ink">onreco</span>
         </Link>
@@ -75,15 +74,15 @@ export function Nav({ hrefPrefix = "" }: { hrefPrefix?: string }) {
           {nav.primary.map((link) => (
             <Link
               key={link.href}
-              href={resolveHref(link.href, hrefPrefix)}
+              href={link.href}
               className="nav-link text-[13px] text-moss transition-colors duration-200 hover:text-ink"
             >
               {link.label}
             </Link>
           ))}
 
-          <Dropdown label="Product" items={nav.dropdown.product} hrefPrefix={hrefPrefix} />
-          <Dropdown label="Resources" items={nav.dropdown.resources} hrefPrefix={hrefPrefix} />
+          <Dropdown label="Product" items={nav.dropdown.product} />
+          <Dropdown label="Resources" items={nav.dropdown.resources} />
         </nav>
 
         <div className="hidden min-[961px]:flex items-center gap-3">
@@ -96,7 +95,7 @@ export function Nav({ hrefPrefix = "" }: { hrefPrefix?: string }) {
         </div>
 
         <Link
-          href={resolveHref(nav.cta.href, hrefPrefix)}
+          href={nav.cta.href}
           className="inline-flex h-10 items-center gap-2 rounded bg-forest px-5 text-[14px] font-medium text-paper-card transition-opacity duration-200 hover:opacity-[0.88]"
         >
           <span>{nav.cta.label}</span>

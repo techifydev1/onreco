@@ -42,7 +42,7 @@ export function ContactPage() {
 
   return (
     <div className="bg-paper">
-      <Nav hrefPrefix="/" />
+      <Nav />
 
       <main className="pt-24">
         <section className="px-(--page-x) pt-17 pb-21 max-[961px]:pb-16">
@@ -214,7 +214,7 @@ export function ContactPage() {
         </section>
       </main>
 
-      <Footer hrefPrefix="/" />
+      <Footer />
       <ScrollReveal />
     </div>
   );

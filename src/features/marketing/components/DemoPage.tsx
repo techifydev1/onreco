@@ -9,7 +9,7 @@ import { ScrollReveal } from "./ScrollReveal";
 export function DemoPage() {
   return (
     <div className="bg-paper">
-      <Nav hrefPrefix="/" />
+      <Nav />
       <main>
         <section id="tour" className="pt-24">
           <div className="flex flex-col gap-9.5 px-(--page-x) pt-17 pb-16">

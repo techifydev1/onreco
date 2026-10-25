@@ -1,16 +1,15 @@
 import Link from "next/link";
 
 import { footer } from "../content";
-import { resolveHref } from "./href";
 import { WordmarkMark } from "./Wordmark";
 
-export function Footer({ hrefPrefix = "" }: { hrefPrefix?: string }) {
+export function Footer() {
   return (
     <footer className="bg-paper pt-15 pb-7">
       <div className="flex flex-col gap-13.5 px-(--page-x)">
         <div className="flex items-start justify-between max-[961px]:flex-col max-[961px]:gap-10">
           <div className="flex flex-[0_0_430px] flex-col gap-5 max-[961px]:flex-none">
-            <Link href="#top" className="flex items-center gap-2.25" aria-label="Onreco home">
+            <Link href="/#top" className="flex items-center gap-2.25" aria-label="Onreco home">
               <WordmarkMark />
               <span className="text-[30px] font-semibold text-ink">onreco</span>
             </Link>
@@ -30,7 +29,7 @@ export function Footer({ hrefPrefix = "" }: { hrefPrefix?: string }) {
                 {group.links.map((link) => (
                   <Link
                     key={link.label}
-                    href={resolveHref(link.href, hrefPrefix)}
+                    href={link.href}
                     className="text-[12px] text-moss transition-colors duration-200 hover:text-ink"
                   >
                     {link.label}
@@ -48,7 +47,7 @@ export function Footer({ hrefPrefix = "" }: { hrefPrefix?: string }) {
             {footer.legal.map((link) => (
               <Link
                 key={link.label}
-                href={resolveHref(link.href, hrefPrefix)}
+                href={link.href}
                 className="text-moss transition-colors duration-200 hover:text-ink"
               >
                 {link.label}

@@ -15,22 +15,22 @@ export const social = {
 
 export const nav = {
   primary: [
-    { label: "How it works", href: "#how" },
-    { label: "Integrations", href: "#integrations" },
-    { label: "Pricing", href: "#pricing" },
+    { label: "How it works", href: "/#how" },
+    { label: "Integrations", href: "/#integrations" },
+    { label: "Pricing", href: "/#pricing" },
     { label: "Blog", href: "/blog" },
   ],
   dropdown: {
     product: [
-      { label: "How it works", href: "#how" },
-      { label: "Rules", href: "#rules" },
-      { label: "Integrations", href: "#integrations" },
+      { label: "How it works", href: "/#how" },
+      { label: "Rules", href: "/#rules" },
+      { label: "Integrations", href: "/#integrations" },
       { label: "Product tour", href: "/demo", page: true },
     ],
     resources: [
       { label: "Blog", href: "/blog" },
-      { label: "FAQs", href: "#faq" },
-      { label: "Who it's for", href: "#audience" },
+      { label: "FAQs", href: "/#faq" },
+      { label: "Who it's for", href: "/#audience" },
     ],
   },
   cta: { label: "Book a demo", href: "/contact" },
@@ -41,7 +41,7 @@ export const hero = {
   headline: ["Stablecoin accounting", "that lands in your books."],
   sub: "Onreco watches your Base and Solana wallets, matches USDC and USDT payments against rules you write, and posts the matches to QuickBooks or Xero. If nothing matches, the payment waits for you.",
   primaryCta: { label: "Book a demo", href: "/contact" },
-  ghostLink: { label: "See the flow ↓", href: "#how" },
+  ghostLink: { label: "See the flow ↓", href: "/#how" },
   demo: {
     captionLabel: "FROM PAYMENT TO BOOKS, WITHOUT THE GUESSWORK",
     captionNote: "Illustrative workspace · Sample transactions",
@@ -327,18 +327,18 @@ export const footer = {
     {
       title: "Product",
       links: [
-        { label: "How it works", href: "#how" },
-        { label: "Rules & pending review", href: "#rules" },
-        { label: "Integrations", href: "#integrations" },
-        { label: "Pricing", href: "#pricing" },
+        { label: "How it works", href: "/#how" },
+        { label: "Rules & pending review", href: "/#rules" },
+        { label: "Integrations", href: "/#integrations" },
+        { label: "Pricing", href: "/#pricing" },
       ],
     },
     {
       title: "For your team",
       links: [
-        { label: "Accountants", href: "#audience" },
-        { label: "Bookkeepers", href: "#audience" },
-        { label: "Founders & CEOs", href: "#audience" },
+        { label: "Accountants", href: "/#audience" },
+        { label: "Bookkeepers", href: "/#audience" },
+        { label: "Founders & CEOs", href: "/#audience" },
       ],
     },
     {

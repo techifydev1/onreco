@@ -115,7 +115,7 @@ export default function BlogIndexPage() {
                     }}
                 />
             </main>
-            <Footer hrefPrefix="/" />
+            <Footer />
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{

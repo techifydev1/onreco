@@ -176,7 +176,7 @@ export default async function BlogPostPage({
 
     return (
         <div className="bg-paper">
-            <Nav hrefPrefix="/" />
+            <Nav />
             <main className="pt-24">
                 <section className="px-(--page-x) pt-17 pb-21 max-[961px]:pb-16">
                     <div className="mx-auto max-w-3xl">
@@ -250,7 +250,7 @@ export default async function BlogPostPage({
                     }),
                 }}
             />
-            <Footer hrefPrefix="/" />
+            <Footer />
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{
