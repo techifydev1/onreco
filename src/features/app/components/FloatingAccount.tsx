@@ -84,7 +84,7 @@ export function FloatingAccount() {
         aria-expanded={open}
         aria-haspopup="menu"
         onClick={() => setOpen((value) => !value)}
-        className="flex items-center gap-3 rounded border border-hairline bg-paper-card/92 py-1.5 pr-3 pl-1.5 shadow-[0_10px_30px_-14px_rgba(35,61,50,0.24)] backdrop-blur-md transition-colors duration-200 hover:bg-sage/70"
+        className="flex items-center gap-3 rounded border border-hairline bg-paper-card/92 py-1.5 pr-3 pl-1.5 shadow-[0_4px_14px_-8px_rgba(35,61,50,0.14)] backdrop-blur-md transition-colors duration-200 hover:bg-sage/70"
       >
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-sage2 text-[11px] font-semibold text-forest">
           {initials || "O"}
@@ -114,7 +114,7 @@ export function FloatingAccount() {
         <div
           role="menu"
           aria-label={copy.menuLabel}
-          className="absolute top-full right-0 mt-2 w-72 overflow-hidden rounded-frame border border-hairline bg-paper-card/96 shadow-[0_30px_70px_-30px_rgba(35,61,50,0.4)] backdrop-blur-md"
+          className="absolute top-full right-0 mt-2 w-72 overflow-hidden rounded-frame border border-hairline bg-paper-card/96 shadow-[0_16px_36px_-22px_rgba(35,61,50,0.26)] backdrop-blur-md"
         >
           {/* Identity */}
           <div className="flex items-center gap-3 border-b border-hairline p-4">
