@@ -5,6 +5,7 @@ import { Clock, Calendar } from "lucide-react";
 import { Nav } from "@/features/marketing/components/Nav";
 import { Footer } from "@/features/marketing/components/Footer";
 import { getAllPostSlugs, getPost, type BlogBlock } from "@/features/marketing/content";
+import { env } from "@/config/env";
 
 type RouteParams = { slug: string };
 
@@ -45,7 +46,7 @@ export async function generateMetadata({
             authors: [post.author],
             images: [
                 {
-                    url: post.image || "/blog_banner_image_1.jpg",
+                    url: `/blog/${post.slug}/og.png`,
                     width: 1200,
                     height: 630,
                     alt: post.title,
@@ -56,7 +57,7 @@ export async function generateMetadata({
             card: "summary_large_image",
             title: post.title,
             description: post.description,
-            images: [post.image || "/blog_banner_image_1.jpg"],
+            images: [`/blog/${post.slug}/og.png`],
         },
     };
 }
@@ -87,7 +88,7 @@ function ArticleJsonLd({ post }: { post: ReturnType<typeof getPost> }) {
                 url: `https://www.onreco.xyz/favicon.ico`,
             },
         },
-        image: `https://www.onreco.xyz${post.image || "/blog_banner_image_1.jpg"}`,
+        image: `${env.siteUrl}/blog/${post.slug}/og.png`,
     };
     return (
         <script
