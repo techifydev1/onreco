@@ -349,6 +349,13 @@ export const footer = {
         { label: social.inbox, href: `mailto:${social.inbox}` },
       ],
     },
+    {
+      title: "Legal",
+      links: [
+        { label: "Terms of Service", href: "/terms" },
+        { label: "Privacy Policy", href: "/privacy" },
+      ],
+    },
   ],
   copyright: "© 2026 Onreco",
   tag: "Built around your books, not the other way around.",
