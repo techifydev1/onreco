@@ -10,6 +10,28 @@ export const metadata: Metadata = {
   title: "Create account · Onreco",
   description: "Create your Onreco account and start accounting for stablecoin payments.",
   robots: { index: false, follow: true },
+  openGraph: {
+    title: "Create account · Onreco",
+    description: "Create your Onreco account and start accounting for stablecoin payments.",
+    url: "/signup",
+    siteName: "Onreco",
+    type: "website",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Onreco - Stablecoin accounting that lands in your books.",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@onrecohq",
+    title: "Create account · Onreco",
+    description: "Create your Onreco account and start accounting for stablecoin payments.",
+    images: ["/og.png"],
+  },
 };
 
 export default function SignupPage() {

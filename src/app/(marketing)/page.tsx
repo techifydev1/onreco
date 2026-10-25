@@ -31,12 +31,21 @@ export const metadata: Metadata = {
     url: "/",
     siteName: "Onreco",
     type: "website",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Onreco - Stablecoin accounting that lands in your books.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     site: "@onrecohq",
     title: seo.title,
     description: seo.description,
+    images: ["/og.png"],
   },
 };
 
