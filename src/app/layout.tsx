@@ -30,9 +30,12 @@ export const metadata: Metadata = {
   title: `${site.name} | ${site.description}`,
   description: site.description,
   icons: {
-    icon: "/onreco-logo.png",
-    shortcut: "/onreco-logo.png",
-    apple: "/onreco-logo.png",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/onreco-logo.png", type: "image/png", sizes: "1254x1254" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
 };
 

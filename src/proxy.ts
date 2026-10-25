@@ -13,6 +13,9 @@ const getForwardedHeaders = (headers: Headers) => {
   return forwarded;
 };
 
+// Match on whole path segments so "/apple-touch-icon.png" is not treated as "/app".
+const isPath = (path: string, prefix: string) => path === prefix || path.startsWith(`${prefix}/`);
+
 export async function proxy(request: NextRequest) {
   const url = request.nextUrl;
   const path = url.pathname;
@@ -57,12 +60,12 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (path.startsWith(routes.verifyEmail)) {
+  if (isPath(path, routes.verifyEmail)) {
     return NextResponse.next();
   }
 
   // 3. Guard the product area without hitting the backend.
-  if (path.startsWith(routes.app) || path.startsWith(routes.admin)) {
+  if (isPath(path, routes.app) || isPath(path, routes.admin)) {
     const refreshToken = request.cookies.get(authCookies.refreshToken)?.value;
     const accessToken = request.cookies.get(authCookies.accessToken)?.value;
 
@@ -97,7 +100,7 @@ export async function proxy(request: NextRequest) {
   }
 
   // 4. API passthrough: inject bearer token, retry once on 401 after refresh.
-  if (path.startsWith("/api")) {
+  if (isPath(path, "/api")) {
     const accessToken = request.cookies.get(authCookies.accessToken)?.value;
     const refreshToken = request.cookies.get(authCookies.refreshToken)?.value;
 
