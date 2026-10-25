@@ -1,13 +1,22 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { useApiData } from "@/lib/useApiData";
 import { sendVerificationEmail } from "@/services/auth";
 import { AppIcon } from "@/components/ui/AppIcon";
+import { useToastStore } from "@/providers/toast-provider";
 
-import { getDashboardSummary, getPlans, getUserProfile, updateProfile } from "../api";
+import {
+  createBillingPortal,
+  getDashboardSummary,
+  getPlans,
+  getUserProfile,
+  logout,
+  updateProfile,
+} from "../api";
 import { settings as copy } from "../content";
 import { formatAmount } from "../format";
 import type { UserProfile } from "../types";
@@ -156,23 +165,47 @@ function ProfileForm({ profile }: { profile: UserProfile }) {
 
 export function SettingsPage() {
   const router = useRouter();
+  const { show } = useToastStore();
   const profile = useApiData(getUserProfile);
   const plans = useApiData(getPlans);
   const summary = useApiData(getDashboardSummary);
 
   const [signingOut, setSigningOut] = useState(false);
+  const [openingBilling, setOpeningBilling] = useState(false);
+  const [copied, setCopied] = useState<string | null>(null);
 
   async function onSignOut() {
+    if (signingOut) return;
     setSigningOut(true);
     try {
-      await fetch("/api/auth/logout", {
-        method: "POST",
-        headers: { "X-Client-Type": "web" },
-        credentials: "include",
-      });
-    } finally {
+      await logout();
       router.replace("/login");
       router.refresh();
+    } catch {
+      setSigningOut(false);
+      show(copy.session.signOutFailed, "error");
+    }
+  }
+
+  async function onManageBilling() {
+    if (openingBilling) return;
+    setOpeningBilling(true);
+    try {
+      const { customerPortalUrl } = await createBillingPortal();
+      window.location.assign(customerPortalUrl);
+    } catch {
+      setOpeningBilling(false);
+      show(copy.plan.billingFailed, "error");
+    }
+  }
+
+  async function onCopy(value: string, key: string) {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(key);
+      window.setTimeout(() => setCopied(null), 1200);
+    } catch {
+      show(copy.support.copyFailed, "error");
     }
   }
 
@@ -231,6 +264,21 @@ export function SettingsPage() {
             <p className="text-[12px] leading-[1.6] text-moss">
               {plan?.description ?? "Start free and upgrade as your bookkeeping grows."}
             </p>
+
+            <div className="flex flex-wrap items-center gap-2 border-t border-hairline pt-4">
+              <Link
+                href="/#pricing"
+                className="inline-flex h-10 items-center gap-2 rounded border border-hairline-strong bg-paper-card px-4 text-[13px] font-medium text-ink transition-colors duration-200 hover:bg-sage"
+              >
+                <AppIcon name="bolt" size={15} />
+                {copy.plan.viewPlans}
+              </Link>
+
+              <AppButton onClick={onManageBilling} disabled={openingBilling}>
+                <AppIcon name="credit-card" size={15} />
+                {openingBilling ? copy.plan.openingBilling : copy.plan.manageBilling}
+              </AppButton>
+            </div>
           </AppCard>
 
           {/* ── Verification ─────────────────────────────── */}
@@ -264,6 +312,62 @@ export function SettingsPage() {
             </div>
           </AppCard>
 
+          {/* ── Support ───────────────────────────────────── */}
+          <AppCard className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1">
+              <h2 className="font-serif text-[20px] font-normal text-ink">{copy.support.title}</h2>
+              <p className="text-[12px] text-moss">{copy.support.hint}</p>
+            </div>
+
+            <div className="flex items-center justify-between gap-3 border-t border-hairline pt-4">
+              <div className="flex min-w-0 items-center gap-2.5">
+                <AppIcon name="mail" size={15} className="shrink-0 text-stone" />
+                <span className="truncate text-[13px] text-ink">{copy.support.email.value}</span>
+              </div>
+              <div className="flex shrink-0 items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => onCopy(copy.support.email.value, "email")}
+                  className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
+                >
+                  {copied === "email" ? copy.support.copied : copy.support.copy}
+                </button>
+                <a
+                  href={copy.support.email.href}
+                  className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
+                >
+                  {copy.support.open}
+                </a>
+              </div>
+            </div>
+
+            {copy.support.channels.map((channel) => (
+              <div key={channel.label} className="flex items-center justify-between gap-3">
+                <div className="flex min-w-0 items-center gap-2.5">
+                  <span className="text-[13px] font-medium text-ink">{channel.label}</span>
+                  <span className="truncate text-[12px] text-moss">{channel.value}</span>
+                </div>
+                <div className="flex shrink-0 items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={() => onCopy(channel.value, channel.label)}
+                    className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
+                  >
+                    {copied === channel.label ? copy.support.copied : copy.support.copy}
+                  </button>
+                  <a
+                    href={channel.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[12px] font-medium text-forest transition-opacity duration-200 hover:opacity-75"
+                  >
+                    {copy.support.open}
+                  </a>
+                </div>
+              </div>
+            ))}
+          </AppCard>
+
           {/* ── Session ──────────────────────────────────── */}
           <AppCard className="flex flex-col gap-4">
             <div className="flex flex-col gap-1">
@@ -272,7 +376,7 @@ export function SettingsPage() {
             </div>
             <AppButton className="self-start" onClick={onSignOut} disabled={signingOut}>
               <AppIcon name="close" size={15} />
-              {signingOut ? "Signing out…" : copy.session.signOut}
+              {signingOut ? copy.session.signingOut : copy.session.signOut}
             </AppButton>
           </AppCard>
         </div>

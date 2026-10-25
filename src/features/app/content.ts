@@ -418,6 +418,11 @@ export const settings = {
     used: "Used this month",
     usage: (used: number, limit: number) => `${used.toLocaleString()} of ${limit.toLocaleString()} transactions`,
     upgrade: "Talk to us about upgrading",
+    manageBilling: "Manage billing",
+    openingBilling: "Opening billing…",
+    billingFailed: "Could not open the billing portal. Try again in a moment.",
+    viewPlans: "View plans",
+    plansHint: "Compare plans or start checkout.",
   },
   verification: {
     title: "Verification",
@@ -427,10 +432,33 @@ export const settings = {
     identityHint: "Required before checkout on paid plans",
     verifyIdentity: "Verify identity",
   },
+  support: {
+    title: "Support",
+    hint: "Questions about a payment, a sync or a plan? Reach us here.",
+    email: {
+      label: "Email",
+      value: "hello@onreco.xyz",
+      href: "mailto:hello@onreco.xyz",
+    },
+    channels: [
+      { label: "X", value: "@onrecohq", href: "https://x.com/onrecohq" },
+      {
+        label: "LinkedIn",
+        value: "Onreco",
+        href: "https://www.linkedin.com/company/onreco",
+      },
+    ],
+    copy: "Copy",
+    copied: "Copied",
+    open: "Open",
+    copyFailed: "Could not copy. Copy the address manually.",
+  },
   session: {
     title: "Session",
     hint: "Sign out of this workspace.",
     signOut: "Sign out",
+    signingOut: "Signing out…",
+    signOutFailed: "Could not sign out. Try again.",
   },
 };
 
