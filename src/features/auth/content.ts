@@ -71,6 +71,27 @@ export const authAgreement = {
   note: "Free forever on Basic. No card, no surprises.",
 };
 
+export const forgotPassword = {
+  heading: "Reset your password",
+  subheading: "Enter your email and we will send you a link to choose a new password.",
+  submit: "Send reset link",
+  sending: "Sending…",
+  sent: "If an account exists for that email, a password reset link has been sent.",
+  backToLogin: "Back to login",
+};
+
+export const resetPassword = {
+  heading: "Choose a new password",
+  subheading: "Set a new password for your Onreco account.",
+  submit: "Update password",
+  updating: "Updating…",
+  success: "Password updated successfully. Sign in with your new password.",
+  invalidTitle: "Invalid link",
+  invalidBody: "No reset token was provided. Please check your email for the correct link.",
+  requestNew: "Request a new reset link",
+  backToLogin: "Back to login",
+};
+
 export const authFooter = {
   backHome: "Back to home",
 };

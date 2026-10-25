@@ -51,3 +51,9 @@ export const register = (fields: {
   email: string;
   password: string;
 }) => postAuth("/api/auth/register", fields);
+
+export const requestPasswordReset = (email: string) =>
+  postAuth("/api/auth/password/forgot", { email });
+
+export const resetPassword = (token: string, newPassword: string) =>
+  postAuth("/api/auth/password/reset", { token, newPassword });

@@ -26,6 +26,8 @@ export async function proxy(request: NextRequest) {
     path.includes("/auth/login") ||
     path.includes("/auth/register") ||
     path.includes("/auth/logout") ||
+    path.includes("/auth/password/forgot") ||
+    path.includes("/auth/password/reset") ||
     path.includes("/api/subscription")
   ) {
     const body = request.method === "GET" || request.method === "HEAD"
