@@ -30,7 +30,7 @@ export default function AppError({
           Something went wrong
         </h2>
         <p className="max-w-sm text-[13px] text-moss">
-          This screen failed to load. Your data is safe — try again, and if it
+          This screen failed to load. Your data is safe. Try again, and if it
           keeps happening we&apos;ll look into it.
         </p>
       </div>

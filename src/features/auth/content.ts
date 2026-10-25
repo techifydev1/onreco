@@ -27,7 +27,7 @@ export const signIn = {
 
 export const signUp = {
   heading: "Create your account",
-  subheading: "Start on Basic — free, no card required.",
+  subheading: "Start on Basic. Free, no card required.",
   submit: "Create account",
   alternate: { lead: "Already have an account?", action: "Sign in", href: "/login" },
 };
@@ -68,7 +68,7 @@ export const authAgreement = {
   terms: { label: "Terms of Service", href: "/terms" },
   and: "and",
   privacy: { label: "Privacy Policy", href: "/privacy" },
-  note: "Free forever on Basic — no card, no surprises.",
+  note: "Free forever on Basic. No card, no surprises.",
 };
 
 export const authFooter = {

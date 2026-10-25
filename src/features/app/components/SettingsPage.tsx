@@ -292,7 +292,7 @@ export function SettingsPage() {
 
             <div className="flex items-center justify-between gap-3 border-t border-hairline pt-4">
               <span className="text-[12px] text-moss">{copy.verification.email}</span>
-              <span className="truncate text-[13px] text-ink">{profile.data?.email ?? "—"}</span>
+              <span className="truncate text-[13px] text-ink">{profile.data?.email ?? "Not available"}</span>
             </div>
 
             <div className="flex items-center justify-between gap-3">

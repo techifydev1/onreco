@@ -21,8 +21,8 @@ export function VerifyConfirm() {
   const [message, setMessage] = useState("");
 
   // The verification token is single use, so the request has to happen exactly
-  // once. A ref guard keeps a re-run of the effect — StrictMode double-invokes
-  // it in development — from spending the token a second time.
+  // once. A ref guard keeps a re-run of the effect; StrictMode double-invokes
+  // it in development, from spending the token a second time.
   const requested = useRef(false);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export function VerifyConfirm() {
         try {
           await renewSessionTokens();
         } catch {
-          // No session on this browser — the next sign in picks up the claim.
+          // No session on this browser; the next sign in picks up the claim.
         }
         setStatus("success");
       } catch (cause) {

@@ -9,11 +9,13 @@ export function PageHeader({
   eyebrow,
   title,
   subtitle,
+  aside,
   actions,
 }: {
   eyebrow: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
+  aside?: ReactNode;
   actions?: ReactNode;
 }) {
   return (
@@ -25,9 +27,14 @@ export function PageHeader({
         <h1 className="font-serif text-[clamp(1.8rem,3vw,2.4rem)] font-normal leading-[1.1] text-ink">
           {title}
         </h1>
-        <p className="max-w-120 text-[14px] leading-[1.6] text-moss">{subtitle}</p>
+        {subtitle && <p className="max-w-120 text-[14px] leading-[1.6] text-moss">{subtitle}</p>}
       </div>
-      {actions && <div className="flex items-center gap-2.5">{actions}</div>}
+      {(aside || actions) && (
+        <div className="flex flex-col items-end gap-3">
+          {aside}
+          {actions && <div className="flex items-center gap-2.5">{actions}</div>}
+        </div>
+      )}
     </div>
   );
 }

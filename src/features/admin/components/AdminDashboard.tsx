@@ -326,7 +326,7 @@ export function AdminDashboard() {
                               month: "short",
                               day: "numeric",
                               timeZone: "UTC",
-                            }) : "—"}
+                            }) : "–"}
                           </span>
                         </div>
                       </li>

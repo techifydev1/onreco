@@ -18,7 +18,7 @@ export async function proxy(request: NextRequest) {
   const path = url.pathname;
   const { backendUrl, isProd } = env;
 
-  // 1. Public auth pipeline — forward straight to the backend.
+  // 1. Public auth pipeline: forward straight to the backend.
   if (
     path.includes("/auth/login") ||
     path.includes("/auth/register") ||
@@ -96,7 +96,7 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // 4. API passthrough — inject bearer token, retry once on 401 after refresh.
+  // 4. API passthrough: inject bearer token, retry once on 401 after refresh.
   if (path.startsWith("/api")) {
     const accessToken = request.cookies.get(authCookies.accessToken)?.value;
     const refreshToken = request.cookies.get(authCookies.refreshToken)?.value;

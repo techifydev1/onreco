@@ -243,7 +243,7 @@ export const categorize = {
   eyebrow: "THE OTHER PATH",
   title: "Categorize",
   subtitle:
-    "Transactions no rule matched. Give them an account and they sync — nothing is ever sent to your books on a guess.",
+    "Transactions no rule matched. Give them an account and they sync. Nothing is ever sent to your books on a guess.",
   tabs: {
     pending: "Needs review",
     failed: "Failed",
@@ -297,7 +297,7 @@ export const wallets = {
     balance: "Received (30 days)",
     inReview: "In review",
     balanceHint: "Across all connected wallets",
-    reviewHint: "Nothing queued — all caught up",
+    reviewHint: "Nothing queued, all caught up",
   },
   empty: {
     title: "No wallets connected",
@@ -329,8 +329,6 @@ export const wallets = {
 export const integrations = {
   eyebrow: "WHERE YOU KEEP BOOKS",
   title: "Integrations",
-  subtitle:
-    "Your accounting software stays at the centre. Onreco only sends what your rules matched.",
   connect: "Connect",
   connecting: "Opening…",
   connectFailed: "Could not start the connection. Please try again.",
@@ -343,10 +341,9 @@ export const integrations = {
   lastSync: (ago: string) => `Last sync ${ago} ago`,
   neverSynced: "No sync yet",
   entries: (count: number) => `${count.toLocaleString()} entries pushed (30 days)`,
-  operational: "All systems operational",
   note: {
     title: "Connect once. Stay quiet.",
-    body: "Onreco never stores your bookkeeping credentials — integrations exchange OAuth tokens scoped to read and write only.",
+    body: "Onreco never stores your bookkeeping credentials. Integrations exchange OAuth tokens scoped to read and write only.",
   },
   empty: {
     title: "No integrations available",

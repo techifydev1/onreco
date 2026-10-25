@@ -76,7 +76,7 @@ export function RulesPage() {
     [accountOptions],
   );
 
-  // A rule can point at an account that is no longer offered — the provider may
+  // A rule can point at an account that is no longer offered; the provider may
   // be disconnected, or the account may be gone. Keep it selectable so editing
   // the rule does not silently drop it.
   const pickerOptions = useMemo(() => {

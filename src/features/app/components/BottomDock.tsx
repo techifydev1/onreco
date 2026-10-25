@@ -30,7 +30,7 @@ export function BottomDock() {
               <span
                 key={item.id}
                 aria-disabled="true"
-                title={`${item.label} — coming soon`}
+                title={`${item.label}: coming soon`}
                 className="flex shrink-0 cursor-default items-center gap-2 rounded-chip px-2.5 py-2 text-stone opacity-45"
               >
                 {icon}

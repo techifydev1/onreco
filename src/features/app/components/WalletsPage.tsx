@@ -117,7 +117,7 @@ export function WalletsPage() {
             ...new Set((wallets.data ?? []).map((wallet) => wallet.chain)),
           ]
             .map((chain) => (chain === "BASE" ? "Base" : chain === "SOLANA" ? "Solana" : chain))
-            .join(", ") || "—"}
+            .join(", ") || "Not set"}
         />
         <Figure
           label={copy.stats.balance}

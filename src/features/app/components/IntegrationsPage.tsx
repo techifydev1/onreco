@@ -36,7 +36,7 @@ export function IntegrationsContent() {
   const notice = justConnected
     ? {
         tone: "ok" as const,
-        text: `${connectedName ?? copy.connected} — you can start syncing now.`,
+        text: `${connectedName ?? copy.connected} is connected. You can start syncing now.`,
       }
     : message;
 
@@ -70,7 +70,16 @@ export function IntegrationsContent() {
 
   return (
     <div className="flex flex-col gap-6">
-      <PageHeader eyebrow={copy.eyebrow} title={copy.title} subtitle={copy.subtitle} />
+      <PageHeader
+        eyebrow={copy.eyebrow}
+        title={copy.title}
+        aside={
+          <div className="flex max-w-130 flex-col gap-1 text-right">
+            <span className="text-[13px] font-medium text-ink">{copy.note.title}</span>
+            <span className="text-[12px] leading-[1.6] text-moss">{copy.note.body}</span>
+          </div>
+        }
+      />
 
       {notice && (
         <p
@@ -84,17 +93,6 @@ export function IntegrationsContent() {
           {notice.text}
         </p>
       )}
-
-      <AppCard className="flex flex-wrap items-center justify-between gap-4">
-        <span className="inline-flex items-center gap-2 text-[13px] font-medium text-status-green-text">
-          <span className="h-2 w-2 rounded-full bg-status-green-text" aria-hidden="true" />
-          {copy.operational}
-        </span>
-        <div className="flex max-w-130 flex-col gap-1 text-right">
-          <span className="text-[13px] font-medium text-ink">{copy.note.title}</span>
-          <span className="text-[12px] leading-[1.6] text-moss">{copy.note.body}</span>
-        </div>
-      </AppCard>
 
       {error ? (
         <AppCard>

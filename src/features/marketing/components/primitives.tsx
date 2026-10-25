@@ -4,7 +4,7 @@ import { cn } from "@/lib/cn";
 
 import { Icon } from "./Icon";
 
-/** `.eyebrow` — uppercase 11px label; tone picks the color. */
+/** `.eyebrow`: uppercase 11px label; tone picks the color. */
 export function Eyebrow({
   children,
   tone = "faint",
@@ -54,7 +54,7 @@ export function LoraHeading({
   );
 }
 
-/** `.status-badge` — synced (green) or pending (amber). */
+/** `.status-badge`: synced (green) or pending (amber). */
 export function StatusBadge({
   children,
   status,
@@ -115,7 +115,7 @@ export function Btn({
   );
 }
 
-/** `.text-link` — inline forest link with faint ↗ affordance. */
+/** `.text-link`: inline forest link with faint ↗ affordance. */
 export function TextLink({ href, children, className }: { href: string; children: ReactNode; className?: string }) {
   return (
     <a

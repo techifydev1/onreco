@@ -21,7 +21,7 @@ export function ReconciliationPage() {
   const providers = useApiData(getSupportedAccounting);
   const connected = (providers.data ?? []).find((provider) => provider.connected);
 
-  // Only ask the backend to reconcile once something is connected — it needs
+  // Only ask the backend to reconcile once something is connected; it needs
   // the open invoices from the accounting software to match against.
   const { data, error, loading, reload } = useApiData(
     () =>
@@ -255,7 +255,7 @@ function MatchRow({
             {busy ? copy.confirming : copy.confirm}
           </AppButton>
         ) : (
-          <span className="text-[12px] text-stone">—</span>
+          <span className="text-[12px] text-stone">·</span>
         )}
       </td>
     </tr>

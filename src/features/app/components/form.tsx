@@ -206,7 +206,7 @@ export function Modal({
 
   // The dialog is portalled to the body so it escapes the stacking context of
   // whatever rendered it. Otherwise a floating chrome element with a lower
-  // z-index — the bottom dock, for one — would paint over the overlay.
+  // z-index: the bottom dock, for one, would paint over the overlay.
   return createPortal(
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
       <button

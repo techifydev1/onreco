@@ -27,7 +27,7 @@ const lora = Lora({
 
 export const metadata: Metadata = {
   metadataBase: new URL(env.siteUrl),
-  title: `${site.name} — ${site.description}`,
+  title: `${site.name} · ${site.description}`,
   description: site.description,
   icons: {
     icon: "/onreco-logo.png",

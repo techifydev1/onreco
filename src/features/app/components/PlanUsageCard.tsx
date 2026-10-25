@@ -24,7 +24,7 @@ export function PlanUsageCard({
   return (
     <AppCard className="flex flex-col gap-4">
       <CardTitle
-        action={<span className="text-[12px] text-stone">— {label}</span>}
+        action={<span className="text-[12px] text-stone">Plan: {label}</span>}
       >
         {overview.usage.title}
       </CardTitle>

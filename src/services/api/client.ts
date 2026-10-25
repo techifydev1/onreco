@@ -1,6 +1,6 @@
 // Browser-side API client. Authenticated app data is fetched from the client
 // so the proxy in src/proxy.ts can refresh the session and rotate the tokens
-// on a response the browser actually receives — server-rendered fetches would
+// on a response the browser actually receives; server-rendered fetches would
 // discard the rotated refresh token and kill the session.
 
 export class ApiError extends Error {

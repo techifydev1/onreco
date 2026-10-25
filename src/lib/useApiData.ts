@@ -18,7 +18,7 @@ type State<T> = {
  * so the proxy can refresh the session and persist the rotated tokens.
  *
  * Pass `key` when the request depends on something that resolves later (a
- * provider slug, for example) — changing it refetches.
+ * provider slug, for example); changing it refetches.
  */
 export function useApiData<T>(fetcher: () => Promise<T>, key?: string): State<T> {
   const [result, setResult] = useState<Result<T> | null>(null);
