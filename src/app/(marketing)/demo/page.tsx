@@ -15,21 +15,12 @@ export const metadata: Metadata = {
     siteName: "Onreco",
     type: "video.other",
     videos: [{ url: demoPage.tour.src }],
-    images: [
-      {
-        url: "/demo/og.png",
-        width: 1200,
-        height: 630,
-        alt: "Onreco product tour - two minutes from payment to books.",
-      },
-    ],
   },
   twitter: {
-    card: "player",
+    card: "summary_large_image",
     site: "@onrecohq",
     title: demoPage.seo.title,
     description: demoPage.seo.description,
-    images: ["/demo/og.png"],
   },
 };
 

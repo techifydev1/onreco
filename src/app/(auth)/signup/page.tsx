@@ -16,21 +16,12 @@ export const metadata: Metadata = {
     url: "/signup",
     siteName: "Onreco",
     type: "website",
-    images: [
-      {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
-        alt: "Onreco - Stablecoin accounting that lands in your books.",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     site: "@onrecohq",
     title: "Create account · Onreco",
     description: "Create your Onreco account and start accounting for stablecoin payments.",
-    images: ["/og.png"],
   },
 };
 
