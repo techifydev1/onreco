@@ -8,11 +8,11 @@ import { authAgreement, authFooter, signIn } from "@/features/auth/content";
 import { AuthBrand, AuthShell } from "@/features/auth/components/primitives";
 
 export const metadata: Metadata = {
-  title: "Sign in · Onreco",
+  title: "Sign in | Onreco",
   description: "Sign in to Onreco to keep your stablecoin payments and books in order.",
   robots: { index: false, follow: true },
   openGraph: {
-    title: "Sign in · Onreco",
+    title: "Sign in | Onreco",
     description: "Sign in to Onreco to keep your stablecoin payments and books in order.",
     url: "/login",
     siteName: "Onreco",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     site: "@onrecohq",
-    title: "Sign in · Onreco",
+    title: "Sign in | Onreco",
     description: "Sign in to Onreco to keep your stablecoin payments and books in order.",
   },
 };
